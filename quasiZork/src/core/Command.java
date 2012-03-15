@@ -1,14 +1,5 @@
-/**
- * ---------------------------------------------------------------------------
- * File name: Commands.java<br/>
- * Project name: 1260-088-Project4-PaulMatthew<br/>
- * ---------------------------------------------------------------------------
- * Creator's name and email: Matthew Paul, paulmr@goldmail.etsu.edu<br/>
- * Course:  CSCI 1260-088<br/>
- * Creation Date: Mar 13, 2012<br/>
- * Date of Last Modification: Mar 13, 2012
- * ---------------------------------------------------------------------------
- */
+package core;
+
 
 /**
  * Enter type purpose here<br>

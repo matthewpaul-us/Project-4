@@ -1,6 +1,7 @@
+package weapons;
 /**
  * ---------------------------------------------------------------------------
- * File name: Stick.java<br/>
+ * File name: Sword.java<br/>
  * Project name: 1260-088-PROJECT4-MiddaughStephen<br/>
  * ---------------------------------------------------------------------------
  * Creator's name and email: Stephen Middaugh, middaughs@goldmail.etsu.edu<br/>
@@ -19,10 +20,10 @@
  * <hr>
  * @author Stephen Middaugh
  */
-public class Stick extends Weapon
+public class Sword extends Weapon
 {
-	private static final String	DEFAULT_NAME	= "stick";
-	private static final double	DEFAULT_DAMAGE	= 1;
+	private static final String	DEFAULT_NAME	= "sword";
+	private static final double	DEFAULT_DAMAGE	= 3;
 
 	/**
 	 * No-Args Constructor <br>        
@@ -33,7 +34,7 @@ public class Stick extends Weapon
 	 *
 	 * <hr>
 	 */
-	public Stick ()
+	public Sword ()
 	{
 		super (DEFAULT_NAME, DEFAULT_DAMAGE);
 	}
@@ -49,14 +50,14 @@ public class Stick extends Weapon
 	 * @param name
 	 * @param damage
 	 */
-	public Stick (String name, double damage)
+	public Sword (String name, double damage)
 	{
 		super (name, damage);
 	}
 
 	
 	/**
-	 * gets the damage modifier of the stick. <br>        
+	 * gets the damage modifier of the sword. <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
@@ -69,11 +70,11 @@ public class Stick extends Weapon
 	@Override
 	public int getDamage ( )
 	{
-		return 1;
+		return 3;
 	}
 	
 	/**
-	 * gets the name the player will see. <br>        
+	 * returns the name of the sword the player will see. <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
@@ -88,7 +89,7 @@ public class Stick extends Weapon
 	}
 	
 	/**
-	 * sets the name the player will see. <br>        
+	 * Sets the name of the sword the player will see. <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
@@ -103,7 +104,7 @@ public class Stick extends Weapon
 	}
 	
 	/**
-	 * sets the damage modifier of the stick. <br>        
+	 * sets the damage modifier of the sword. <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
@@ -116,4 +117,8 @@ public class Stick extends Weapon
 	{
 		this.damage = damage;
 	}
+
+	
+	
+
 }

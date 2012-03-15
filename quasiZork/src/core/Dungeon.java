@@ -1,16 +1,11 @@
-/**
- * ---------------------------------------------------------------------------
- * File name: Dungeon.java<br/>
- * Project name: 1260-088-PROJECT4-MiddaughStephen<br/>
- * ---------------------------------------------------------------------------
- * Creator's name and email: Stephen Middaugh, middaughs@goldmail.etsu.edu<br/>
- * Course:  CSCI 1260<br/>
- * Creation Date: Mar 13, 2012<br/>
- * Date of Last Modification: Mar 13, 2012
- * ---------------------------------------------------------------------------
- */
+package core;
+
 
 import java.util.Random;
+import weapons.Stick;
+import weapons.Sword;
+import weapons.Weapon;
+import monsters.Monster;
 
 /**
  * Represents a collection of rooms that make up a dungeon.<br>
@@ -30,11 +25,7 @@ public class Dungeon
 	
 	
 	/**
-	 * Constructor <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 13, 2012 <br>
-	 * Date last modified: Mar 14, 2012 <br>
+	 * Constructor <br>        last modified: Mar 14, 2012 <br>
 	 *
 	 * <hr>
 	 */

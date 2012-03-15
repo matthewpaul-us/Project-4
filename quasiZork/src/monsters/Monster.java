@@ -1,3 +1,4 @@
+package monsters;
 import java.util.Random;
 
 /**

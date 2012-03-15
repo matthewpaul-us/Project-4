@@ -1,3 +1,8 @@
+package core;
+import weapons.Weapon;
+import monsters.Monster;
+
+
 /**
  * ---------------------------------------------------------------------------
  * File name: Room.java<br/>
