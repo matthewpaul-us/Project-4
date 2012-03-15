@@ -1,4 +1,3 @@
-package core;
 /**
  * ---------------------------------------------------------------------------
  * File name: Player.java<br/>
@@ -10,9 +9,12 @@ package core;
  * Date of Last Modification: Mar 13, 2012
  * ---------------------------------------------------------------------------
  */
+package core;
 
+import java.util.Random;
+import weapons.Weapon;
 /**
- * Enter type purpose here<br>
+ * Represents a player class in a Zork-like dungeon crawler.<br>
  *
  * <hr>
  * Date created: Mar 13, 2012<br>
@@ -20,8 +22,6 @@ package core;
  * <hr>
  * @author Stephen Middaugh
  */
-import java.util.Random;
-import weapons.Weapon;
 public class Player
 {
 	
