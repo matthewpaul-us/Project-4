@@ -11,7 +11,7 @@
  */
 
 /**
- * Enter type purpose here<br>
+ * Represents a room in a dungeon.<br>
  *
  * <hr>
  * Date created: Mar 13, 2012<br>
@@ -21,8 +21,9 @@
  */
 public class Room
 {
-	Monster monster;
-	Weapon weapon;
+	Monster monster;		// The monster that is in the room, if any
+	Weapon weapon;			// The weapon that is in the room, if any
+	
 	/**
 	 * @return monster
 	 */

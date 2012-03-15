@@ -11,7 +11,8 @@
  */
 
 /**
- * Enter type purpose here<br>
+ * Abstract class that represents an arbitrary weapon. This class must be
+ * derived in order to use it.<br>
  *
  * <hr>
  * Date created: Mar 13, 2012<br>
@@ -21,8 +22,8 @@
  */
 public abstract class Weapon
 {
-	protected String name;
-	protected double damage;
+	protected String name;		// The name of the weapon, to be displayed to the user.
+	protected double damage;	// 
 	
 	
 	/**
@@ -43,6 +44,17 @@ public abstract class Weapon
 		this.damage = damage;
 	}
 
-	public abstract int damage_modifier();
+	/**
+	 * Method that returns the additional damage this weapon does. Must be
+	 * overridden. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @return The damage modifier
+	 */
+	public abstract int getDamage();
 	
 }

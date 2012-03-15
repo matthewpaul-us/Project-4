@@ -21,7 +21,22 @@
  */
 public class Sword extends Weapon
 {
-	
+	private static final String	DEFAULT_NAME	= "sword";
+	private static final double	DEFAULT_DAMAGE	= 3;
+
+	/**
+	 * No-Args Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	public Sword ()
+	{
+		super (DEFAULT_NAME, DEFAULT_DAMAGE);
+	}
 	
 	/**
 	 * Constructor <br>        
@@ -40,27 +55,63 @@ public class Sword extends Weapon
 	}
 
 	
+	/**
+	 * gets the damage modifier of the sword. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 * @see Weapon#getDamage()
+	 */
 	@Override
-	public int damage_modifier ( )
+	public int getDamage ( )
 	{
 		return 3;
 	}
 	
+	/**
+	 * returns the name of the sword the player will see. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
 	public String getName()
 	{
 		return this.name;
 	}
 	
-	public double getDamage()
-	{
-		return this.damage;
-	}
-	
+	/**
+	 * Sets the name of the sword the player will see. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @param name
+	 */
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 	
+	/**
+	 * sets the damage modifier of the sword. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @param damage
+	 */
 	public void setDamage(double damage)
 	{
 		this.damage = damage;

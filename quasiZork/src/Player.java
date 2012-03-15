@@ -22,10 +22,20 @@
 import java.util.Random;
 public class Player
 {
-	private String name;
-	private double health = 100;
-	private final double HIT_CHANCE = 90;
+	private String name;					// The name the player wishes to be called
+	private double health = 100;			// The health of the player. If this reaches 0, the player is dead
+	private final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
 	
+	
+	/**
+	 * No-Args Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 14, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	public Player()
 	{
 		this.name = "player 1";
@@ -50,6 +60,16 @@ public class Player
 		this.health = health;
 	}
 	
+	/**
+	 * Enter method description here <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @return the damage, if any, done by the player
+	 */
 	public int attack()
 	{
 		Random rand = new Random();
@@ -67,6 +87,16 @@ public class Player
 		}
 	}
 	
+	/**
+	 * Subract the appropriate damage from the player's health. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 14, 2012 <br>
+	 * Date last modified: Mar 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @param damage
+	 */
 	public void takeDamage(int damage)
 	{
 		setHealth(getHealth() - damage);
