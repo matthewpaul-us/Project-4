@@ -99,35 +99,6 @@ public class PlayerTest
 		}
 		
 		System.out.println("The average hit percent over 10,000 attacks is " + ((double)attackCount / 10000) + ".");
-		
-//		some code to see how to create a deep copy of a stick that is in a weapon attribute
-		Weapon stickCopy = stick;
-		System.out.println(stick);
-		System.out.println(stickCopy);
-		
-		Class <? extends Weapon> myClass = stick.getClass( );
-		
-		System.out.println(myClass.getSimpleName( ));
-		
-		Constructor<?>[] construct = myClass.getConstructors( );
-		
-		for(Constructor<?> constructor: construct)
-		{
-			System.out.println(constructor);
-		}
-		
-		try
-		{
-			stickCopy = (Weapon) construct[2].newInstance((stick));
-		}
-		catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println(stick);
-		System.out.println(stickCopy);
 	}
 
 }

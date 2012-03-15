@@ -179,7 +179,18 @@ public class Player
 	 */
 	public Weapon getWeapon()
 	{
-		return weapon;
+		Class <? extends Weapon> myClass = weapon.getClass( );
+		Weapon output = null;
+		try
+		{
+			output = (Weapon) myClass.getConstructor(myClass).newInstance((weapon));
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return output;
 	}
 
 	/**
