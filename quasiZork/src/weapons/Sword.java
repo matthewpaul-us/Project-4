@@ -54,6 +54,20 @@ public class Sword extends Weapon
 	{
 		super (name, damage);
 	}
+	
+	/**
+	 * Copy Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 13, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	public Sword (Sword sword)
+	{
+		super (sword);
+	}
 
 	
 	/**
