@@ -21,11 +21,13 @@ package core;
  * @author Stephen Middaugh
  */
 import java.util.Random;
+import weapons.Weapon;
 public class Player
 {
 	private String name;					// The name the player wishes to be called
 	private double health = 100;			// The health of the player. If this reaches 0, the player is dead
 	private final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
+	private Weapon weapon;
 	
 	
 	/**
@@ -133,6 +135,28 @@ public class Player
 	public void setHealth (double health)
 	{
 		this.health = health;
+	}
+	
+	/**
+	 * @return weapon
+	 */
+	public Weapon getWeapon()
+	{
+		return weapon;
+	}
+
+	/**
+	 * @param weapon the weapon to set
+	 */
+	public void setWeapon(Weapon weapon)
+	{
+		this.weapon = weapon;
+	}
+
+	public String toString()
+	{
+		
+		return "Player " + getName() + " has " + getHealth() + " health and is using " + (weapon != null? "a " + weapon.getName(): "nothing") + ".";
 	}
 	
 }
