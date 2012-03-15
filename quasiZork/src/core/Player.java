@@ -26,10 +26,10 @@ public class Player
 {
 	private String name;					// The name the player wishes to be called
 	private double health = 100;			// The health of the player. If this reaches 0, the player is dead
-	private final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
 	private Weapon weapon;
 	
-	
+	private final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
+	private final int DEFAULT_DAMAGE = 5;
 	/**
 	 * No-Args Constructor <br>        
 	 *
@@ -81,7 +81,7 @@ public class Player
 		
 		if(attackRoll <= HIT_CHANCE)
 		{
-			return 5;
+			return DEFAULT_DAMAGE + (weapon != null? weapon.getDamage( ): 0);
 		}
 		
 		else
@@ -153,10 +153,24 @@ public class Player
 		this.weapon = weapon;
 	}
 
+	/**
+	 * Returns a string representing a player. Not currently suitable for displaying to the end-user.
+	 * To be used for testing the classes. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 15, 2012 <br>
+	 * Date last modified: Mar 15, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString()
 	{
 		
-		return "Player " + getName() + " has " + getHealth() + " health and is using " + (weapon != null? "a " + weapon.getName(): "nothing") + ".";
+		return "Player " + getName() + " has " + getHealth() + " health and is using " + (weapon != null? "a " + weapon.getName(): "nothing") + ".\n" +
+			   "     His base damage is " + DEFAULT_DAMAGE + ". With " + (weapon != null? "a " + weapon.getName(): "nothing") + ", he does " + 
+						(DEFAULT_DAMAGE + (weapon != null? weapon.getDamage( ): 0)) + " damage." ;
 	}
 	
 }
