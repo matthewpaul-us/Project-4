@@ -24,12 +24,16 @@ import java.util.Random;
 import weapons.Weapon;
 public class Player
 {
+	
 	private String name;					// The name the player wishes to be called
-	private double health = 100;			// The health of the player. If this reaches 0, the player is dead
+	private double health;					// The health of the player. If this reaches 0, the player is dead
 	private Weapon weapon;
 	
 	private final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
 	private final int DEFAULT_DAMAGE = 5;
+	private static final String	DEFAULT_NAME	= "player 1";
+	private static final double	DEFAULT_HEALTH	= 100;
+	
 	/**
 	 * No-Args Constructor <br>        
 	 *
@@ -41,7 +45,7 @@ public class Player
 	 */
 	public Player()
 	{
-		this.name = "player 1";
+		this(DEFAULT_NAME, DEFAULT_HEALTH, null);
 	}
 	
 	/**
@@ -54,17 +58,50 @@ public class Player
 	 * <hr>
 	 * @param name
 	 * @param health
-	 * @param hitChance
 	 */
 	public Player (String name, double health)
 	{
-		super ( );
-		this.name = name;
-		this.health = health;
+		this(name, health, null);
 	}
 	
+	
 	/**
-	 * Enter method description here <br>        
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 15, 2012 <br>
+	 * Date last modified: Mar 15, 2012 <br>
+	 *
+	 * <hr>
+	 * @param name
+	 * @param health
+	 * @param weapon
+	 */
+	public Player(String name, double health, Weapon weapon)
+	{
+		setName(name);
+		setHealth(health);
+		setWeapon(weapon);
+	}
+	/**
+	 * Copy Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 13, 2012 <br>
+	 *
+	 * <hr>
+	 * @param name
+	 * @param health
+	 */
+	public Player (Player player)
+	{
+		this(player.getName( ), player.getHealth( ), player.getWeapon( ));
+	}
+	
+
+	/**
+	 * Calculates the damage, if any, that an attack from the player will do. <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
