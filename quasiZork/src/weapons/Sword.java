@@ -66,7 +66,12 @@ public class Sword extends Weapon
 	 */
 	public Sword (Sword sword)
 	{
-		super (sword);
+		this(sword.getName( ), sword.getDamage( ));
+	}
+	
+	public Weapon copy()
+	{
+		return new Sword(this);
 	}
 
 	

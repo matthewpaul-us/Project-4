@@ -66,7 +66,12 @@ public class Stick extends Weapon
 	 */
 	public Stick (Stick stick)
 	{
-		super (stick);
+		this(stick.getName( ), stick.getDamage( ));
+	}
+	
+	public Weapon copy()
+	{
+		return new Stick(this);
 	}
 
 	
@@ -84,7 +89,7 @@ public class Stick extends Weapon
 	@Override
 	public int getDamage ( )
 	{
-		return 1;
+		return DEFAULT_DAMAGE;
 	}
 	
 	/**

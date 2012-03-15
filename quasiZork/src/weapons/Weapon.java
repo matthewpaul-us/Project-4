@@ -63,20 +63,17 @@ public abstract class Weapon
 	}
 	
 	/**
-	 * Copy Constructor <br>        
+	 * Copy method for each weapon. Must be overridden. This method needs to use
+	 * good deep copy measures. <br>        
 	 *
 	 * <hr>
-	 * Date created: Mar 13, 2012 <br>
-	 * Date last modified: Mar 13, 2012 <br>
+	 * Date created: Mar 15, 2012 <br>
+	 * Date last modified: Mar 15, 2012 <br>
 	 *
 	 * <hr>
-	 * @param name
-	 * @param damage
+	 * @return copy a copy of the weapon
 	 */
-	public Weapon (Weapon weapon)
-	{
-		this(weapon.getName( ), weapon.getDamage( ));
-	}
+	public abstract Weapon copy();
 	
 
 	/**

@@ -99,6 +99,18 @@ public class PlayerTest
 		}
 		
 		System.out.println("The average hit percent over 10,000 attacks is " + ((double)attackCount / 10000) + ".");
+		
+//		some code to see how to create a deep copy of a stick that is in a weapon attribute
+		Weapon stickCopy = stick;
+		System.out.println(stick);
+		System.out.println(stickCopy);
+		
+		stickCopy = stick.copy();
+		
+		System.out.println(stick);
+		System.out.println(stickCopy);
+		
+		System.out.println("stickCopy " + stickCopy.getDamage( ));
 	}
 
 }

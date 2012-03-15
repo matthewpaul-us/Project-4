@@ -179,18 +179,7 @@ public class Player
 	 */
 	public Weapon getWeapon()
 	{
-		Class <? extends Weapon> myClass = weapon.getClass( );
-		Weapon output = null;
-		try
-		{
-			output = (Weapon) myClass.getConstructor(myClass).newInstance((weapon));
-		}
-		catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return output;
+		return weapon.copy();
 	}
 
 	/**
@@ -198,7 +187,10 @@ public class Player
 	 */
 	public void setWeapon(Weapon weapon)
 	{
-		this.weapon = weapon;
+		if (weapon != null)
+			this.weapon = weapon.copy( );
+		else
+			this.weapon = null;
 	}
 
 	/**
