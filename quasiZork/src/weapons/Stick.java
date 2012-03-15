@@ -23,7 +23,7 @@ package weapons;
 public class Stick extends Weapon
 {
 	private static final String	DEFAULT_NAME	= "stick";
-	private static final double	DEFAULT_DAMAGE	= 1;
+	private static final int	DEFAULT_DAMAGE	= 1;
 
 	/**
 	 * No-Args Constructor <br>        
@@ -74,36 +74,6 @@ public class Stick extends Weapon
 	}
 	
 	/**
-	 * gets the name the player will see. <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 13, 2012 <br>
-	 * Date last modified: Mar 14, 2012 <br>
-	 *
-	 * <hr>
-	 * @return
-	 */
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	/**
-	 * sets the name the player will see. <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 13, 2012 <br>
-	 * Date last modified: Mar 14, 2012 <br>
-	 *
-	 * <hr>
-	 * @param name
-	 */
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	
-	/**
 	 * sets the damage modifier of the stick. <br>        
 	 *
 	 * <hr>
@@ -113,6 +83,7 @@ public class Stick extends Weapon
 	 * <hr>
 	 * @param damage
 	 */
+	@Override
 	public void setDamage(double damage)
 	{
 		this.damage = damage;
