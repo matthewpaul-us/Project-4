@@ -62,6 +62,22 @@ public abstract class Weapon
 		setDamage(damage);
 	}
 	
+	/**
+	 * Copy Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 13, 2012 <br>
+	 *
+	 * <hr>
+	 * @param name
+	 * @param damage
+	 */
+	public Weapon (Weapon weapon)
+	{
+		this(weapon.getName( ), weapon.getDamage( ));
+	}
+	
 
 	/**
 	 * @return name
@@ -99,5 +115,4 @@ public abstract class Weapon
 	 * @return The damage modifier
 	 */
 	public abstract int getDamage();
-	
 }
