@@ -68,7 +68,17 @@ public class Dungeon
 			}
 		}
 		
-		rooms[rand.nextInt(9)].setWeapon(null);
+//		Generate a random weapon to store in the dungeon
+		Weapon weapon;
+		if (rand.nextBoolean( ))
+		{
+			weapon = new Sword();
+		}
+		else
+			weapon = new Stick();
+		
+//		put a weapon randomly in a cell other than the start cell
+		rooms[rand.nextInt(rooms.length - 1) + 1].setWeapon(weapon);
 		
 	}
 }
