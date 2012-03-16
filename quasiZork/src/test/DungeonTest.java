@@ -53,7 +53,7 @@ public class DungeonTest
 		System.out.println(dungeon);
 		
 		System.out.println("Moving player to exit");
-		while(dungeon.getPlayerLocation( ) != dungeon.getDungeonSize( ) - 1 && dungeon.getPlayerLocation( ) != 0)
+		while(dungeon.getPlayerLocation( ) != dungeon.getDungeonSize( ) && dungeon.getPlayerLocation( ) != 0)
 		{
 			dungeon.movePlayer(Command.GO_EAST);
 			System.out.println(dungeon);
