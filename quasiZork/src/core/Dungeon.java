@@ -34,6 +34,10 @@ public class Dungeon
 	{
 		Random rand = new Random();
 		rooms = new Room[rand.nextInt(6) + 5];
+		
+		populateDungeon( );
+		
+		playerLocation = 0;
 	}
 	
 	/**
@@ -108,8 +112,27 @@ public class Dungeon
 			return false;
 	}
 	
+	/**
+	 * Returns a string representation suitable for testing. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 15, 2012 <br>
+	 * Date last modified: Mar 15, 2012 <br>
+	 *
+	 * <hr>
+	 * @return a String representing the dungeon
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString()
 	{
-		return null;
+		StringBuffer output = new StringBuffer("");
+		
+		output.append("Player: " + player.toString( ) + "\tLocation: " + playerLocation + "\n");
+		for (Room room: rooms)
+		{
+			output.append(room);
+		}
+		
+		return output.toString( );
 	}
 }
