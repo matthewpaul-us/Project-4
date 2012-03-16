@@ -179,7 +179,7 @@ public class Player
 	 */
 	public Weapon getWeapon()
 	{
-		return weapon.copy();
+		return (weapon != null? weapon.copy(): null);
 	}
 
 	/**

@@ -26,6 +26,7 @@ import monsters.Monster;
  */
 public class Room
 {
+	Player player;
 	Monster monster;		// The monster that is in the room, if any
 	Weapon weapon;			// The weapon that is in the room, if any
 	
@@ -73,9 +74,25 @@ public class Room
 		this.weapon = (weapon != null? weapon.copy( ): null);
 	}
 	
+	/**
+	 * @return player
+	 */
+	public Player getPlayer()
+	{
+		return (player != null? new Player(player): null);
+	}
+
+	/**
+	 * @param player the player to set
+	 */
+	public void setPlayer(Player player)
+	{
+		this.player = (player != null? new Player(): null);
+	}
+
 	public String toString()
 	{
-		return "|_" + (monster != null? "M": "_") + "_" + (weapon != null? "W": "_") + "_|\n" +
+		return "|_" + (player != null? "P": "_") + (monster != null? "M": "_") + "_" + (weapon != null? "W": "_") + "_|\n" +
 			   "Monster: " + (monster != null? monster.toString( ): "null") + 
 			   "\tWeapon: " + (weapon != null? weapon.toString( ): "null");
 	}
