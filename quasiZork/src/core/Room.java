@@ -29,6 +29,16 @@ public class Room
 	Monster monster;		// The monster that is in the room, if any
 	Weapon weapon;			// The weapon that is in the room, if any
 	
+	public Room()
+	{
+		this(null, null);
+	}
+	
+	public Room(Monster monster, Weapon weapon)
+	{
+		setMonster(monster);
+		setWeapon(weapon);
+	}
 	/**
 	 * @return monster
 	 */
@@ -48,15 +58,20 @@ public class Room
 	 */
 	public void setMonster (Monster monster)
 	{
-		this.monster = monster;
+		this.monster = (monster != null? new Monster(monster): null);
 	}
 	/**
 	 * @param weapon the weapon to set
 	 */
 	public void setWeapon (Weapon weapon)
 	{
-		this.weapon = weapon;
+		this.weapon = (weapon != null? weapon.copy( ): null);
 	}
 	
-	
+	public String toString()
+	{
+		return "|_" + (monster != null? "M": "") + "_" + (weapon != null? "W": "") + "_|\n" +
+			   "Monster: " + (monster != null? monster.toString( ): "null") + 
+			   "\tWeapon: " + (weapon != null? weapon.toString( ): "null");
+	}
 }

@@ -21,6 +21,7 @@ public class Dungeon
 {
 	private int playerLocation;	// The players location in the dungeon. 0 = start.
 	private Room[] rooms;	// The collection of rooms for the player to travel through.
+	private Player player;
 	
 	
 	
@@ -71,5 +72,44 @@ public class Dungeon
 //		put a weapon randomly in a cell other than the start cell
 		rooms[rand.nextInt(rooms.length - 1) + 1].setWeapon(weapon);
 		
+	}
+	
+	/**
+	 * Simulates a battle between the player and the monster in this room. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 15, 2012 <br>
+	 * Date last modified: Mar 15, 2012 <br>
+	 *
+	 * <hr>
+	 * @param roomIndex 
+	 * @return whether or not the player is alive
+	 */
+	public boolean battle(int roomIndex)
+	{
+		Monster monster = rooms[roomIndex].getMonster( );
+		
+		while(monster.getHealth( ) > 0 && player.getHealth( ) > 0)
+		{
+			int damage = player.attack( );
+			monster.takeDamage(damage);
+			
+			if (monster.getHealth( ) > 0)
+			{
+				damage = monster.attack();
+				player.takeDamage(damage);
+			}
+			
+		}
+		
+		if (player.getHealth( ) > 0)
+			return true;
+		else
+			return false;
+	}
+	
+	public String toString()
+	{
+		return null;
 	}
 }

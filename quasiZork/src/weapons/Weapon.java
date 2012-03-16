@@ -112,4 +112,9 @@ public abstract class Weapon
 	 * @return The damage modifier
 	 */
 	public abstract int getDamage();
+	
+	public String toString()
+	{
+		return "+" + getDamage() + " " + getName();
+	}
 }

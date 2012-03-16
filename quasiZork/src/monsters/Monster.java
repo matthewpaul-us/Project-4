@@ -25,7 +25,9 @@ import java.util.Random;
 public class Monster
 {
 	private static final int	DEFAULT_HEALTH	= 20;
-	private static final String	DEFAULT_NAME	= "Monster";
+	private static final String	DEFAULT_NAME	= "monster";
+	private static final int	DEFAULT_DAMAGE	= 4;
+	
 	private int health;
 	private final int HIT_CHANCE = 80;
 	
@@ -35,7 +37,7 @@ public class Monster
 	
 	
 	/**
-	 * Constructor <br>        
+	 * No-Args Constructor <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
@@ -45,25 +47,31 @@ public class Monster
 	 */
 	public Monster()
 	{
-		setHealth(DEFAULT_HEALTH);
-		setName(DEFAULT_NAME);
+		this(DEFAULT_NAME, DEFAULT_HEALTH, DEFAULT_DAMAGE);
 	}
-
+	
 	/**
-	 * Constructor <br>        
+	 * Copy Constructor <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
-	 * Date last modified: Mar 13, 2012 <br>
+	 * Date last modified: Mar 15, 2012 <br>
 	 *
 	 * <hr>
-	 * @param health
 	 * @param name
+	 * @param health
+	 * @param damage
 	 */
-	public Monster(int health, String name)
+	public Monster(String name, int health, int damage)
 	{
 		setHealth(health);
 		setName(name);
+		setDamage(damage);
+	}
+	
+	public Monster(Monster monster)
+	{
+		this(monster.getName( ), monster.getHealth( ), monster.getDamage( ));
 	}
 
 	/**
@@ -96,6 +104,22 @@ public class Monster
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	/**
+	 * @return damage
+	 */
+	public int getDamage()
+	{
+		return damage;
+	}
+
+	/**
+	 * @param damage the damage to set
+	 */
+	public void setDamage(int damage)
+	{
+		this.damage = damage;
 	}
 
 	/**
@@ -135,6 +159,11 @@ public class Monster
 	public void takeDamage(int damage)
 	{
 		setHealth(getHealth() - damage);
+	}
+	
+	public String toString()
+	{
+		return getName() + " with " + getHealth() + " hp";
 	}
 
 }
