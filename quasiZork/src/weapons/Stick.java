@@ -50,7 +50,7 @@ public class Stick extends Weapon
 	 * @param name
 	 * @param damage
 	 */
-	public Stick (String name, double damage)
+	public Stick (String name, int damage)
 	{
 		super (name, damage);
 	}
@@ -103,7 +103,7 @@ public class Stick extends Weapon
 	 * @param damage
 	 */
 	@Override
-	public void setDamage(double damage)
+	public void setDamage(int damage)
 	{
 		this.damage = damage;
 	}

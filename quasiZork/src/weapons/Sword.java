@@ -24,6 +24,7 @@ public class Sword extends Weapon
 {
 	private static final String	DEFAULT_NAME	= "sword";
 	private static final int	DEFAULT_DAMAGE	= 3;
+	
 
 	/**
 	 * No-Args Constructor <br>        
@@ -50,7 +51,7 @@ public class Sword extends Weapon
 	 * @param name
 	 * @param damage
 	 */
-	public Sword (String name, double damage)
+	public Sword (String name, int damage)
 	{
 		super (name, damage);
 	}
@@ -89,7 +90,7 @@ public class Sword extends Weapon
 	@Override
 	public int getDamage ( )
 	{
-		return DEFAULT_DAMAGE;
+		return super.damage;
 	}
 	
 	/**
@@ -103,7 +104,7 @@ public class Sword extends Weapon
 	 * @param damage
 	 */
 	@Override
-	public void setDamage(double damage)
+	public void setDamage(int damage)
 	{
 		this.damage = damage;
 	}

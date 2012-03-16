@@ -24,9 +24,9 @@ package weapons;
 public abstract class Weapon
 {
 	private static final String	DEFAULT_NAME	= "weapon";	// The default name
-	private static final double	DEFAULT_DAMAGE	= 0;	// The default damage
+	private static final int	DEFAULT_DAMAGE	= 0;	// The default damage
 	protected String name;		// The name of the weapon, to be displayed to the user.
-	protected double damage;	// The damage modifier of the weapon.
+	protected int damage;	// The damage modifier of the weapon.
 	
 	
 	
@@ -56,7 +56,7 @@ public abstract class Weapon
 	 * @param damage
 	 */
 
-	public Weapon (String name, double damage)
+	public Weapon (String name, int damage)
 	{
 		setName(name);
 		setDamage(damage);
@@ -97,7 +97,7 @@ public abstract class Weapon
 	/**
 	 * @param damage the damage to set
 	 */
-	public abstract void setDamage(double damage);
+	public abstract void setDamage(int damage);
 
 
 	/**

@@ -39,6 +39,11 @@ public class Room
 		setMonster(monster);
 		setWeapon(weapon);
 	}
+	
+	public Room(Room room)
+	{
+		this(room.getMonster( ), room.getWeapon( ));
+	}
 	/**
 	 * @return monster
 	 */
@@ -70,7 +75,7 @@ public class Room
 	
 	public String toString()
 	{
-		return "|_" + (monster != null? "M": "") + "_" + (weapon != null? "W": "") + "_|\n" +
+		return "|_" + (monster != null? "M": "_") + "_" + (weapon != null? "W": "_") + "_|\n" +
 			   "Monster: " + (monster != null? monster.toString( ): "null") + 
 			   "\tWeapon: " + (weapon != null? weapon.toString( ): "null");
 	}
