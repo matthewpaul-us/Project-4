@@ -157,12 +157,12 @@ public class Dungeon
 		else if (command.equals(Command.GO_WEST))
 			playerLocation--;
 		
-		
-		
-		if (playerLocation == rooms.length - 1)
+		if (playerLocation == rooms.length)
 			exitDungeon( );
 		else
 			rooms[playerLocation].setPlayer(holder);
+		
+		
 		
 		if (rooms[playerLocation].getMonster( ) != null)
 		{
