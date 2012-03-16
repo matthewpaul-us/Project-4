@@ -15,7 +15,6 @@ package test;
 import monsters.Monster;
 import weapons.Stick;
 import weapons.Sword;
-import weapons.Weapon;
 import core.Room;
 
 

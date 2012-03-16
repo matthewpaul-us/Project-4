@@ -12,9 +12,6 @@
 
 package test;
 
-import weapons.Stick;
-import weapons.Sword;
-import weapons.Weapon;
 import monsters.Monster;
 
 

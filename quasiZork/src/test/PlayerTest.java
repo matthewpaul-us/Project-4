@@ -12,8 +12,6 @@
 
 package test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import weapons.Stick;
 import weapons.Sword;
 import weapons.Weapon;
