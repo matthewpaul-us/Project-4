@@ -12,6 +12,9 @@
 
 package front;
 
+import monsters.Monster;
+import core.Player;
+
 
 /**
  * The driver for the dungeon class.<br>
