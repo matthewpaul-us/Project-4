@@ -2,7 +2,7 @@ package core;
 
 
 /**
- * Enter type purpose here<br>
+ * The commands that are returned from the text processor.<br>
  *
  * <hr>
  * Date created: Mar 13, 2012<br>
@@ -13,8 +13,10 @@ package core;
 public enum Command
 {
 	ERROR,
-	GO_WEST,
-	GO_EAST;
+	GO_NORTH,
+	GO_EAST,
+	GO_SOUTH,
+	GO_WEST;
 	
 	/**
 	 * Maps an integer to a Command. Command returned is based on ordinal value <br>        

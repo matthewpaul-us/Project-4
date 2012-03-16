@@ -37,6 +37,13 @@ public class TextProcessor
 											   "E",
 											   "Right"};
 	
+	private static final String[] northArray = {"North",
+		   									   "N",
+											   "Up"};
+	
+	private static final String[] southArray = {"South",
+		   									   "S",
+											   "Down"};
 	/**
 	 * Processes a string input to standardize the directions. <br>        
 	 *
@@ -63,10 +70,15 @@ public class TextProcessor
 		
 		if (isGoCommand)
 		{
-			if (isInWestArray(inputArray[1]))
-				return Command.GO_WEST;
+			if (isInNorthArray(inputArray[1]))
+				return Command.GO_NORTH;
 			else if (isInEastArray(inputArray[1]))
 				return Command.GO_EAST;
+			else if (isInSouthArray(inputArray[1]))
+				return Command.GO_SOUTH;
+			else if (isInWestArray(inputArray[1]))
+				return Command.GO_WEST;
+			
 			else
 				return Command.ERROR;
 		}
@@ -97,7 +109,7 @@ public class TextProcessor
 	}
 	
 	/**
-	 * Checks to see if the string is a synonym for west. <br>        
+	 * Checks to see if the string is a synonym for north. <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
@@ -105,11 +117,11 @@ public class TextProcessor
 	 *
 	 * <hr>
 	 * @param input
-	 * @return true if it is a west synonym
+	 * @return true if it is a north synonym
 	 */
-	public static boolean isInWestArray(String input)
+	public static boolean isInNorthArray(String input)
 	{
-		for (String text: westArray)
+		for (String text: northArray)
 		{
 			if (input.equalsIgnoreCase(text))
 				return true;
@@ -139,4 +151,50 @@ public class TextProcessor
 		
 		return false;
 	}
+	
+	/**
+	 * Checks to see if the string is a synonym for west. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 13, 2012 <br>
+	 *
+	 * <hr>
+	 * @param input
+	 * @return true if it is a west synonym
+	 */
+	public static boolean isInSouthArray(String input)
+	{
+		for (String text: southArray)
+		{
+			if (input.equalsIgnoreCase(text))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Checks to see if the string is a synonym for west. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 13, 2012 <br>
+	 * Date last modified: Mar 13, 2012 <br>
+	 *
+	 * <hr>
+	 * @param input
+	 * @return true if it is a west synonym
+	 */
+	public static boolean isInWestArray(String input)
+	{
+		for (String text: westArray)
+		{
+			if (input.equalsIgnoreCase(text))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	
 }
