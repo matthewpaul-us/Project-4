@@ -30,6 +30,16 @@ public class Room
 	Monster monster;		// The monster that is in the room, if any
 	Weapon weapon;			// The weapon that is in the room, if any
 	
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 19, 2012 <br>
+	 * Date last modified: Mar 19, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	public Room()
 	{
 		this(null, null);
