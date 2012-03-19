@@ -20,6 +20,8 @@ import monsters.Monster;
 public class Dungeon
 {
 	private int playerLocation;	// The players location in the dungeon. 0 = start.
+	private int playerXCoordinate;
+	private int playerYCoordinate;
 	private Room[] rooms;	// The collection of rooms for the player to travel through.
 	private Player player;
 	
@@ -41,7 +43,7 @@ public class Dungeon
 		Random rand = new Random();
 		rooms = new Room[rand.nextInt(6) + 5];
 		
-		populateDungeon( );
+		populateDungeon( ); // Fill the dungeon with monsters and a weapon
 		
 		player = new Player();
 		playerLocation = 0;
@@ -134,7 +136,7 @@ public class Dungeon
 	public void exitDungeon()
 	{
 		playerLocation = 0;
-		System.out.println("Dungeon Exited!");
+		System.out.println("Dungeon Exited! GAME OVER.");
 	}
 	
 	/**
@@ -149,25 +151,29 @@ public class Dungeon
 	 */
 	public void movePlayer(Command command)
 	{
-		Player holder = rooms[playerLocation].getPlayer( );
-		rooms[playerLocation].setPlayer(null);
+		Player holder = rooms[playerXCoordinate].getPlayer( );
+		rooms[playerXCoordinate].setPlayer(null);
 		
 		if (command.equals(Command.GO_EAST))
-			playerLocation++;
+			playerXCoordinate++;
 		else if (command.equals(Command.GO_WEST))
-			playerLocation--;
+			playerXCoordinate--;
+		else if(command.equals(Command.GO_NORTH))
+			playerYCoordinate++;
+		else if(command.equals (Command.GO_SOUTH))
+			playerYCoordinate--;
 		
 		if (playerLocation == rooms.length)
 			exitDungeon( );
 		else
-			rooms[playerLocation].setPlayer(holder);
+			rooms[playerXCoordinate].setPlayer(holder);
 		
 		
 		
-		if (rooms[playerLocation].getMonster( ) != null)
+		if (rooms[playerXCoordinate].getMonster( ) != null)
 		{
 			
-			System.out.println(battle(playerLocation));
+			System.out.println(battle(playerXCoordinate));
 		}
 	}
 	

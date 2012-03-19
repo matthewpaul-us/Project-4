@@ -29,9 +29,9 @@ public class Player
 	private double health;					// The health of the player. If this reaches 0, the player is dead
 	private Weapon weapon;
 	
-	private final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
-	private final int DEFAULT_DAMAGE = 5;
-	private static final String	DEFAULT_NAME	= "player 1";
+	private 	   final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
+	private 	   final int DEFAULT_DAMAGE = 5;
+	private static final String	DEFAULT_NAME	= "stephen was here";
 	private static final double	DEFAULT_HEALTH	= 100;
 	
 	/**
