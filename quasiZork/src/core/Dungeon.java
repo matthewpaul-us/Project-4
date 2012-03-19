@@ -41,7 +41,7 @@ public class Dungeon
 		Random rand = new Random();
 		rooms = new Room[rand.nextInt(6) + 5];
 		
-		populateDungeon( );
+		populateDungeon( ); // Fill the dungeon with monsters and a weapon
 		
 		player = new Player();
 		playerLocation = 0;
@@ -134,7 +134,7 @@ public class Dungeon
 	public void exitDungeon()
 	{
 		playerLocation = 0;
-		System.out.println("Dungeon Exited!");
+		System.out.println("Dungeon Exited! GAME OVER.");
 	}
 	
 	/**
