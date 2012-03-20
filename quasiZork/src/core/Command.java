@@ -13,6 +13,7 @@ package core;
 public enum Command
 {
 	ERROR,
+	EXIT,
 	GO_NORTH,
 	GO_EAST,
 	GO_SOUTH,
