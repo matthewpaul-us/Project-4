@@ -188,7 +188,7 @@ public class Dungeon
 	 * <hr>
 	 * @param command
 	 */
-	public void movePlayer(Command command)
+	public void movePlayer(Command command) throws NoPathException
 	{
 //		pull the player from the room into a holder
 		Player holder = rooms[playerXCoordinate][playerYCoordinate].getPlayer( );
@@ -198,13 +198,28 @@ public class Dungeon
 		
 //		move the player according to the command
 		if (command.equals(Command.GO_EAST))
-			playerXCoordinate++;
+		{	
+			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.EAST_DOOR))
+				playerXCoordinate++;
+			else
+				throw new NoPathException("No East Door");
+		}	
 		else if (command.equals(Command.GO_WEST))
-			playerXCoordinate--;
+			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.WEST_DOOR))
+				playerXCoordinate--;
+			else
+				throw new NoPathException("No West Door");
 		else if(command.equals(Command.GO_NORTH))
-			playerYCoordinate--;
+			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.NORTH_DOOR))
+				playerYCoordinate--;
+			else
+				throw new NoPathException("No North Door");
 		else if(command.equals (Command.GO_SOUTH))
-			playerYCoordinate++;
+			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.SOUTH_DOOR))
+				playerYCoordinate++;
+			else
+				throw new NoPathException("No South Door");
+		
 		
 //		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
 		if (playerXCoordinate == rooms.length)

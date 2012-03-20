@@ -14,6 +14,7 @@ package test;
 
 import core.Command;
 import core.Dungeon;
+import core.NoPathException;
 
 
 /**
@@ -37,9 +38,10 @@ public class DungeonTest
 	 *
 	 * <hr>
 	 * @param args
+	 * @throws NoPathException 
 	 */
 
-	public static void main(String [ ] args)
+	public static void main(String [ ] args) throws NoPathException
 	{
 		Dungeon dungeon = new Dungeon();
 		System.out.println(dungeon);
