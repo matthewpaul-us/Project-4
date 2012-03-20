@@ -208,19 +208,24 @@ public class Dungeon
 		
 //		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
 		if (playerXCoordinate == rooms.length)
-
 			exitDungeon( );
 		else
 			rooms[playerXCoordinate][playerYCoordinate].setPlayer(holder);
 		
+//		if the room has a weapon, pick it up if it is better
+		if(rooms[playerXCoordinate][playerYCoordinate].getWeapon() != null)
+		{
+			if(player.getWeapon().getDamage ( ) > rooms[playerXCoordinate][playerYCoordinate].getWeapon().getDamage() )
+				player.setWeapon (rooms[playerXCoordinate][playerYCoordinate].getWeapon());
+		}
 		
 //		if the room has a monster, have the player fight it		
 		if (rooms[playerXCoordinate][playerYCoordinate].getMonster( ) != null)
 
 		{
-			
 			System.out.println(battle(playerXCoordinate, playerYCoordinate));
 		}
+		
 	}
 	
 	/**
@@ -275,9 +280,13 @@ public class Dungeon
 		StringBuffer output = new StringBuffer("");
 		
 		output.append("Player: " + player.toString( ) + "\tLocation: " + playerXCoordinate + "\n");
-		for (Room room: rooms)
+		for (Room[] row: rooms)
 		{
-			output.append(room + "\n");
+			for (Room room: row)
+			{
+				output.append (room + "\n");
+			}
+			System.out.print ("~~~~" );
 		}
 		
 		return output.toString( );
