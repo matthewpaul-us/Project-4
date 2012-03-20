@@ -12,8 +12,10 @@
 
 package front;
 
-import monsters.Monster;
-import core.Player;
+import java.util.Scanner;
+import core.Command;
+import core.Dungeon;
+import core.TextProcessor;
 
 
 /**
@@ -27,7 +29,11 @@ import core.Player;
  */
 public class DungeonDriver
 {
+	private final static String[] TITLE = {"            ---Zorkesque---",
+				    					   "A Victorian-era replica of an even older game.",
+				    					   "You wake up to find yourself in a dank dungeon."};
 
+	private static Dungeon dungeon;
 	/**
 	 * Main method for the dungeon driver <br>        
 	 *
@@ -41,27 +47,70 @@ public class DungeonDriver
 
 	public static void main(String [ ] args)
 	{
-		// TODO Auto-generated method stub
-
+		dungeon = new Dungeon();
+		Command lastCommand = null;
+//		Display title to user
+		displayTitle();
+		
+//		Put the player into the dungeon
+		dungeon.enterDungeon( );
+//		WHILE player doesn't want to exit program
+		while (lastCommand != Command.EXIT)
+		{
+//			display the map and stats to the user
+			displayHud();
+//			get input from user and process it
+			lastCommand = TextProcessor.process(getUserInput());
+//			act on user input
+			performCommand(lastCommand);
+		}
+//		ask if user wants to play again
+		System.out.println("Thanks for playing Zerkesque!");
 	}
 	
-	/**
-	 * The battle method, made from a player and a monster trading blows.
-	 * The signature can be changed, I don't know exactly what we need. 
-	 * I think it needs to be put in here due to separation of classes and
-	 * the user. It can't spit out battle messages if it is in the other classes. <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 16, 2012 <br>
-	 * Date last modified: Mar 16, 2012 <br>
-	 *
-	 * <hr>
-	 * @param player
-	 * @param monster
-	 */
-	public static void battle(Player player, Monster monster)
+	private static void performCommand(Command lastCommand)
 	{
-		// TODO battle method
+		switch (lastCommand)
+		{
+			case GO_NORTH:
+				dungeon.movePlayer(lastCommand);
+				break;
+			case GO_EAST:
+				dungeon.movePlayer(lastCommand);
+				break;
+			case GO_SOUTH:
+				dungeon.movePlayer(lastCommand);
+				break;
+			case GO_WEST:
+				dungeon. movePlayer(lastCommand);
+				break;
+			case EXIT:
+				break;
+			case ERROR:
+				System.out.println("I'm sorry, I don't know what you want to do. Please try again.");
+			default:
+				break;
+		}
 	}
 
+	private static String getUserInput()
+	{
+		Scanner keyboard = new Scanner(System.in);
+		
+		System.out.println("What would you like to do?");
+		return keyboard.nextLine( );
+	}
+
+	private static void displayHud()
+	{
+		System.out.println("HUD Stub");
+	}
+
+	private static void displayTitle()
+	{
+		for (String text: TITLE)
+		{
+			System.out.println(text);
+		}
+	}
 }
