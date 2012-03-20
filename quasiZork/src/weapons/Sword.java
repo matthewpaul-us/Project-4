@@ -70,6 +70,17 @@ public class Sword extends Weapon
 		this(sword.getName( ), sword.getDamage( ));
 	}
 	
+	/**
+	 * Copy method that returns a sword object <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 * @see weapons.Weapon#copy()
+	 */
 	public Weapon copy()
 	{
 		return new Sword(this);

@@ -49,6 +49,17 @@ public class Dungeon
 		playerLocation = 0;
 	}
 	
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @param player
+	 */
 	public Dungeon(Player player)
 	{
 		this();
@@ -63,6 +74,9 @@ public class Dungeon
 		return playerLocation;
 	}
 	
+	/**
+	 * @return size of the dungeon
+	 */
 	public int getDungeonSize()
 	{
 		return rooms.length;
@@ -135,8 +149,8 @@ public class Dungeon
 	 */
 	public void exitDungeon()
 	{
-		playerLocation = 0;
-		System.out.println("Dungeon Exited! GAME OVER.");
+		playerLocation = 0;	// 0 for now to keep oput of array bound error from happening
+		System.out.println("Dungeon Exited! GAME OVER.");	// Need to move to driver class.
 	}
 	
 	/**
@@ -151,9 +165,11 @@ public class Dungeon
 	 */
 	public void movePlayer(Command command)
 	{
+//		pull the player from the room into a holder
 		Player holder = rooms[playerXCoordinate].getPlayer( );
 		rooms[playerXCoordinate].setPlayer(null);
 		
+//		move the player according to the command
 		if (command.equals(Command.GO_EAST))
 			playerXCoordinate++;
 		else if (command.equals(Command.GO_WEST))
@@ -163,13 +179,14 @@ public class Dungeon
 		else if(command.equals (Command.GO_SOUTH))
 			playerYCoordinate++;
 		
+//		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be
 		if (playerLocation == rooms.length)
 			exitDungeon( );
 		else
 			rooms[playerXCoordinate].setPlayer(holder);
 		
 		
-		
+//		if the room has a monster, have the player fight it
 		if (rooms[playerXCoordinate].getMonster( ) != null)
 		{
 			
@@ -190,8 +207,10 @@ public class Dungeon
 	 */
 	public boolean battle(int roomIndex)
 	{
+//		gets the monster from the room
 		Monster monster = rooms[roomIndex].getMonster( );
 		
+//		while both the monster and the player are alive
 		while(monster.getHealth( ) > 0 && player.getHealth( ) > 0)
 		{
 			int damage = player.attack( );
@@ -204,7 +223,7 @@ public class Dungeon
 			}
 			
 		}
-		
+//		return whether the player is alive or not
 		if (player.getHealth( ) > 0)
 			return true;
 		else

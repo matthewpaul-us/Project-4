@@ -69,6 +69,17 @@ public class Stick extends Weapon
 		this(stick.getName( ), stick.getDamage( ));
 	}
 	
+	/**
+	 * Returns a copy of the weapon. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 * @see weapons.Weapon#copy()
+	 */
 	public Weapon copy()
 	{
 		return new Stick(this);
