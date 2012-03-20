@@ -1,4 +1,5 @@
 package core;
+import java.util.ArrayList;
 import weapons.Weapon;
 import monsters.Monster;
 
@@ -30,6 +31,15 @@ public class Room
 	Monster monster;		// The monster that is in the room, if any
 	Weapon weapon;			// The weapon that is in the room, if any
 	
+	boolean northDoor,
+			eastDoor,
+			southDoor,
+			westDoor;
+	
+	final static int NORTH_DOOR = 0,
+					 EAST_DOOR = 1,
+					 SOUTH_DOOR = 2,
+					 WEST_DOOR = 3;
 	
 	/**
 	 * Constructor <br>        
@@ -42,19 +52,168 @@ public class Room
 	 */
 	public Room()
 	{
-		this(null, null);
+		this(null, null, null);
 	}
 	
-	public Room(Monster monster, Weapon weapon)
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @param monster
+	 * @param weapon
+	 * @param doorArray
+	 */
+	public Room(Monster monster, Weapon weapon, int[] doorArray)
 	{
 		setMonster(monster);
 		setWeapon(weapon);
+		setDoors(doorArray, true);
 	}
 	
+	
+	/**
+	 * Copy Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @param room
+	 */
 	public Room(Room room)
 	{
-		this(room.getMonster( ), room.getWeapon( ));
+		this(room.getMonster( ), room.getWeapon( ), room.getDoors( ));
 	}
+	
+	/**
+	 * Returns an array of the doors, suitable for passing to a door constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
+	public int[] getDoors()
+	{
+		ArrayList<Integer> doorList= new ArrayList<Integer>(); 
+		
+		if (northDoor)
+			doorList.add(NORTH_DOOR);
+		if (eastDoor)
+			doorList.add(EAST_DOOR);
+		if (southDoor)
+			doorList.add(SOUTH_DOOR);
+		if (westDoor)
+			doorList.add(WEST_DOOR);
+		int[] array = new int[doorList.size()];
+		
+		for (int c = 0; c < array.length; c++)
+		{
+			array[c] = doorList.get(c);
+		}
+		
+		return array;
+
+	}
+	
+	/**
+	 * Returns whether there is a door on the direction input. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @param direction
+	 * @return true if there is a door
+	 */
+	public boolean isDoor(int direction)
+	{
+		switch (direction)
+		{
+			case NORTH_DOOR:
+				return northDoor;
+			case EAST_DOOR:
+				return eastDoor;
+			case SOUTH_DOOR:
+				return southDoor;
+			case WEST_DOOR:
+				return westDoor;
+			default:
+				return false;
+		}
+	}
+	/**
+	 * Places doors on the appropriate walls. Use the constants defined in 
+	 * Room class for array values. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @param array
+	 * @param b
+	 */
+	public void setDoors(int[] array, boolean b)
+	{
+		
+		if (array != null)
+		{
+			for (int c = 0; c < array.length; c++ )
+			{
+				setDoor(array [c], b);
+			}
+		}
+		else
+		{
+			setDoor(NORTH_DOOR, false);
+			setDoor(EAST_DOOR, false);
+			setDoor(SOUTH_DOOR, false);
+			setDoor(WEST_DOOR, false);
+
+		}
+	}
+	
+	/**
+	 * Sets a single door to a specific boolean value. Uses the constants
+	 * defined in the Room class. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 20, 2012 <br>
+	 * Date last modified: Mar 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @param door
+	 * @param b
+	 */
+	private void setDoor(int door, boolean b)
+	{
+		switch(door)
+		{
+			case NORTH_DOOR:
+				northDoor = b;
+				break;
+			case EAST_DOOR:
+				eastDoor = b;
+				break;
+			case SOUTH_DOOR:
+				southDoor = b;
+				break;
+			case WEST_DOOR:
+				westDoor = b;
+				break;
+		}
+	}
+
 	/**
 	 * @return monster
 	 */
