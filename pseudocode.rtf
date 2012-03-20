@@ -1,0 +1,424 @@
+{\rtf1\ansi\deff0\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\fnil\fprq2\fcharset0 Microsoft YaHei;}{\f4\fnil\fprq2\fcharset0 Mangal;}{\f5\fnil\fprq0\fcharset0 Mangal;}}
+{\colortbl;\red0\green0\blue0;\red128\green128\blue128;}
+{\stylesheet{\s0\snext0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\aspalpha\ltrpar\cf0\kerning1\hich\af6\langfe2052\dbch\af4\afs24\lang1081\loch\f0\fs24\lang1033 Normal;}
+{\s15\sbasedon0\snext16\sb240\sa120\keepn\hich\af3\dbch\af4\afs28\loch\f2\fs28 Heading;}
+{\s16\sbasedon0\snext16\sb0\sa120 Text body;}
+{\s17\sbasedon16\snext17\sb0\sa120\dbch\af5 List;}
+{\s18\sbasedon0\snext18\sb120\sa120\noline\i\dbch\af5\afs24\ai\fs24 Caption;}
+{\s19\sbasedon0\snext19\noline\dbch\af5 Index;}
+{\s20\sbasedon0\snext20\noline Table Contents;}
+}{\info{\creatim\yr2012\mo3\dy19\hr20\min14}{\revtim\yr2012\mo3\dy19\hr21\min14}{\printim\yr0\mo0\dy0\hr0\min0}{\comment LibreOffice}{\vern3400}}\deftab709
+
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse195\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\pgdscnxt0 Default;}}
+\formshade\paperh15840\paperw12240\margl1134\margr1134\margt1134\margb1134\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrt\brdrhair\brdrw1\brdrcf1\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pgndec\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+public enum Command}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+ERROR}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+GO_NORTH}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+GO_EAST}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+GO_SOUTH}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+GO_WEST}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+convert(int integer): Command}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+FOR every value in array containing all Commands}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+IF integer == the ordinal of the Command}
+\par \pard\plain \s20\noline\intbl\li2127\ri0\lin2127\rin0\fi0{\rtlch \ltrch\loch
+return the Command}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+return null}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+public class Dungeon}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- playerXCoordinate: int}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- playerYCoordinate: int}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- rooms: Room[][]}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- player: Player }\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
++ populateDungeon(): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Create random number generator}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Stick a room at 0, 0}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+FOR 0 till end of rooms}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+FOR 0 till end of rooms[]}
+\par \pard\plain \s20\noline\intbl\li2127\ri0\lin2127\rin0\fi0{\rtlch \ltrch\loch
+Create a room at position}
+\par \pard\plain \s20\noline\intbl\li2127\ri0\lin2127\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li2127\ri0\lin2127\rin0\fi0{\rtlch \ltrch\loch
+IF a random boolean == true}
+\par \pard\plain \s20\noline\intbl\li2836\ri0\lin2836\rin0\fi0{\rtlch \ltrch\loch
+Create a new monster in the room}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Create a weapon, randomized between all weapon classes}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Place the weapon in a random cell in the dungeon.}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ enterDungeon(): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Set player location to 0, 0}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Place the player in the room at the player location}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ exitDungeon(): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Set player location to 0, 0}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Print exit string}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ movePlayer(Command command): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Pull the player into a holder from the originating cell}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF Command == GO_EAST}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+increase player's x coordinate}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE IF Command == GO_WEST}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+decrease player's x coordinate}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE IF Command == GO_NORTH}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+decrease player's y coordinate}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE IF Command == GO_SOUTH}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+increase player's y coordinate}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF the player is in the exit cell}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+exit the dungeon}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+copy the player from the holder to the room}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF the room has a monster}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+fight the monster}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ battle(int roomIndex): boolean}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+pull the room's monster into a reference}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+WHILE monster is alive and player is alive}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+\tab \tab get the players attack damage}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+apply the damage to the monster}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+IF monster is still alive}
+\par \pard\plain \s20\noline\intbl\li2127\ri0\lin2127\rin0\fi0{\rtlch \ltrch\loch
+get monsters attack damage}
+\par \pard\plain \s20\noline\intbl\li2127\ri0\lin2127\rin0\fi0{\rtlch \ltrch\loch
+apply the damage to the player}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF player is alive}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab return true}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab return false}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+public class Player}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- name: String}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- health: double}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- weapon: Weapon}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- HIT_CHANCE: double = 90}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- DEFAULT_DAMAGE: int = 5}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- DEFAULT_NAME: String = \'93stephen was here\'94}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- DEFAULT_HEALTH: double = 100}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
++ attack(): int}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+get an attack roll between 1 and 100 inclusive}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF attack roll <= HIT_CHANCE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab return DEFAULT_DAMAGE + (if weapon not null, damage: otherwise 0)}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab return 0}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ takeDamage(int Damage): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+set health to health - damage}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ setWeapon(Weapon weapon): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF weapon is not null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab perform a deep copy and put it in player's weapon}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab set player's weapon to null}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+public class Room}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- player: Player}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- monster: Monster}
+\par \pard\plain \s20\noline\intbl{\rtlch \ltrch\loch
+- weapon: Weapon}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ setMonster(Monster monster): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF monster is not null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab perform a deep copy and put it in room}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab set monster to null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ setWeapon(Weapon weapon): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF weapon is not null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab perform a deep copy and put it in room}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab set weapon to null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ setPlayer(Player player): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF player is not null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab perform a deep copy and put it in room}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab set player to null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ setWeapon(Weapon weapon): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF weapon is not null}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab perform a deep copy and put it in player's weapon}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+ELSE}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab set player's weapon to null}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+public class TextProcessor}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- goArray: String[] = go, travel, move}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- westArray: String[] = west, w, left}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- eastArray: String[] = east, e, right}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- northArray: String[] = north, n, up}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- southArray: String[] = south, s, down}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ process(String input): Command}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Split the input string up by spaces and store in an array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF (first word is a go command)}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+IF second word is a north word}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+\tab return GO_NORTH}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+ELSE IF second word is an east word}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+\tab return GO_EAST}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+ELSE IF second word is a south word}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+\tab return GO_WEST}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+\tab return ERROR}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ isInGoArray(String input): boolean}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+FOR EACH value in the go array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab IF input equals the value from the array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab \tab return true}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+return false}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ isInEastArray(String input): boolean}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+FOR EACH value in the east array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab IF input equals the value from the array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab \tab return true}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+return false}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ isInWestArray(String input): boolean}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+FOR EACH value in the west array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab IF input equals the value from the array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab \tab return true}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+return false}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ isInNorthArray(String input): boolean}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+FOR EACH value in the north array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab IF input equals the value from the array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab \tab return true}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+return false}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ isInSouthArray(String input): boolean}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+FOR EACH value in the south array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab IF input equals the value from the array}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab \tab return true}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+return false}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+public class DungeonDriver}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++main(String[] args)}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Display title to user}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+Put the player into the dungeon}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+WHILE player doesn't want to exit program}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab display the map and stats to the user}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+get input from user}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+process input}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+move player in direction}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+IF there is a weapon}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+\tab pick up the weapon if it is better than the player's current}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+IF there is a monster}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+\tab fight the monster}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+IF player moves out of the end cell}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+\tab show win text}
+\par \pard\plain \s20\noline\intbl\li1418\ri0\lin1418\rin0\fi0{\rtlch \ltrch\loch
+ask if user wants to play again}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+public class Monster}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- DEFAULT_HEALTH: int = 20}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- DEFAULT_NAME: String = monster}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- DEFAULT_DAMAGE: int = 4}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- name: int}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- damage: int}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ attack(): int}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+generate an attack roll between 1 and 100 inclusive}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+IF attackRoll < HIT_CHANCE + 1}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab return damage}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+else}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+\tab return 0}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
++ takeDamage(int damage): void}
+\par \pard\plain \s20\noline\intbl\li709\ri0\lin709\rin0\fi0{\rtlch \ltrch\loch
+set monster health to health - damage}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+public abstract class Weapon}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- DEFAULT_NAME: String = weapon}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+- DEFAULT_DAMAGE: int = 0}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+~ name: String}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\rtlch \ltrch\loch
+~ damage: int}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i\ai\rtlch \ltrch\loch
++ setDamage(int damage): void}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i\ai\rtlch \ltrch\loch
++ getDamage(): int}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i\ai\rtlch \ltrch\loch
++ copy(): Weapon}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i\ai\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+public Class Stick extends Weapon}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+- DEFAULT_NAME: String = stick}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+- DEFAULT_DAMAGE = 1}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
++copy(): Weapon}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+\tab return a new copy of the stick}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+public Class Sword extends Weapon}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+- DEFAULT_NAME: String = sword}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+- DEFAULT_DAMAGE = 3}\cell\row\pard\trowd\trql\ltrrow\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\clbrdrl\brdrhair\brdrw1\brdrcf1\clbrdrb\brdrhair\brdrw1\brdrcf1\clbrdrr\brdrhair\brdrw1\brdrcf1\cellx9972\pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
++copy(): Weapon}
+\par \pard\plain \s20\noline\intbl\li0\ri0\lin0\rin0\fi0{\i0\ai0\rtlch \ltrch\loch
+\tab return a new copy of the sword}\cell\row\pard\pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\aspalpha\ltrpar\cf0\kerning1\hich\af6\langfe2052\dbch\af4\afs24\lang1081\loch\f0\fs24\lang1033{\rtlch \ltrch\loch
+}
+\par }
