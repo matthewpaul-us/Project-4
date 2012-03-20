@@ -159,9 +159,9 @@ public class Dungeon
 		else if (command.equals(Command.GO_WEST))
 			playerXCoordinate--;
 		else if(command.equals(Command.GO_NORTH))
-			playerYCoordinate++;
-		else if(command.equals (Command.GO_SOUTH))
 			playerYCoordinate--;
+		else if(command.equals (Command.GO_SOUTH))
+			playerYCoordinate++;
 		
 		if (playerLocation == rooms.length)
 			exitDungeon( );
