@@ -74,8 +74,7 @@ public class Room
 		setWeapon(weapon);
 		setDoors(doorArray, true);
 	}
-	
-	
+		
 	/**
 	 * Copy Constructor <br>        
 	 *

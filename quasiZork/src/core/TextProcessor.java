@@ -44,6 +44,10 @@ public class TextProcessor
 	private static final String[] southArray = {"South",
 		   									   "S",
 											   "Down"};
+	
+	private static final String[] exitArray = {"Exit",
+												"Close",
+												"Quit"};
 	/**
 	 * Processes a string input to standardize the directions. <br>        
 	 *
@@ -82,10 +86,23 @@ public class TextProcessor
 			else
 				return Command.ERROR;
 		}
+		else if (isInExitArray(inputArray[0]))
+			return Command.EXIT;
 		
 		return Command.ERROR;
 	}
 	
+	public static boolean isInExitArray(String input)
+	{
+		for (String text: exitArray)
+		{
+			if (input.equalsIgnoreCase(text))
+				return true;
+		}
+		
+		return false;
+	}
+
 	/**
 	 * Checks to see if the string is a synonym for go. <br>        
 	 *
