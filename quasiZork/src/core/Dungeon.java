@@ -19,10 +19,9 @@ import monsters.Monster;
 
 public class Dungeon
 {
-	private int playerLocation;	// The players location in the dungeon. 0 = start.
-	private int playerXCoordinate;
+	private int playerXCoordinate;	// The players location in the dungeon. 0 = start.
 	private int playerYCoordinate;
-	private Room[] rooms;	// The collection of rooms for the player to travel through.
+	private Room[][] rooms;	// The collection of rooms for the player to travel through.
 	private Player player;
 	
 	
@@ -40,13 +39,13 @@ public class Dungeon
 	 */
 	public Dungeon()
 	{
-		Random rand = new Random();
-		rooms = new Room[rand.nextInt(6) + 5];
+		
+		rooms = new Room[10][5];
 		
 		populateDungeon( ); // Fill the dungeon with monsters and a weapon
 		
 		player = new Player();
-		playerLocation = 0;
+		playerXCoordinate = 0;
 	}
 	
 	
@@ -67,11 +66,16 @@ public class Dungeon
 	}
 	
 	/**
-	 * @return playerLocation
+	 * @return playerXCoordinate
 	 */
-	public int getPlayerLocation()
+	public int getPlayerXCoordinate()
 	{
-		return playerLocation;
+		return playerXCoordinate;
+	}
+	
+	public int getPlayerYCoordinate()
+	{
+		return playerYCoordinate;
 	}
 	
 	/**
@@ -96,17 +100,29 @@ public class Dungeon
 //		create the random number generator to be used for this method
 		Random rand = new Random();
 		
-		rooms[0] = new Room();
+		rooms[0][0] = new Room();
 //		for each room other than the starting room, randomly decide if there is a monster
-		for (int i = 1; i < rooms.length; i++ )
+		for (int x = 0; x < rooms.length; x++ )
 		{
-			rooms[i] = new Room();
 			
-//			there is an approximately 50% chance for a monster to be there
-			if (rand.nextBoolean( ))
+			for( int y = 0; y < rooms[x].length; y++)
 			{	
-				rooms[i].setMonster(new Monster());
+				if(x == 0 && y == 0) // if x and y == 0 then a monster will not be placed into that room
+				{
+					
+				}
+				
+				else
+				{
+					rooms[x][y] = new Room();
+//					there is an approximately 50% chance for a monster to be there
+					if (rand.nextBoolean( ))
+					{	
+						rooms[x][y].setMonster(new Monster());
+					}
+				}
 			}
+
 		}
 		
 //		Generate a random weapon to store in the dungeon
@@ -119,7 +135,15 @@ public class Dungeon
 			weapon = new Stick();
 		
 //		put a weapon randomly in a cell other than the start cell
-		rooms[rand.nextInt(rooms.length - 1) + 1].setWeapon(weapon);
+		
+		int randomX = rand.nextInt(10);
+		int randomY = rand.nextInt(5);
+		if(randomX == 0 && randomY == 0)
+		{
+			randomX = rand.nextInt(9) + 1;
+			randomY = rand.nextInt(5);
+		}
+		rooms[randomX][randomY].setWeapon(weapon);
 		
 	}
 	
@@ -134,8 +158,9 @@ public class Dungeon
 	 */
 	public void enterDungeon()
 	{
-		playerLocation = 0;
-		rooms[playerLocation].setPlayer(player);
+		playerXCoordinate = 0;
+		playerYCoordinate = 0;
+		rooms[playerXCoordinate][playerYCoordinate].setPlayer(player);
 	}
 	
 	/**
@@ -149,8 +174,8 @@ public class Dungeon
 	 */
 	public void exitDungeon()
 	{
-		playerLocation = 0;	// 0 for now to keep oput of array bound error from happening
-		System.out.println("Dungeon Exited! GAME OVER.");	// Need to move to driver class.
+		playerXCoordinate = 0;
+		System.out.println("Dungeon Exited! GAME OVER.");
 	}
 	
 	/**
@@ -166,8 +191,10 @@ public class Dungeon
 	public void movePlayer(Command command)
 	{
 //		pull the player from the room into a holder
-		Player holder = rooms[playerXCoordinate].getPlayer( );
-		rooms[playerXCoordinate].setPlayer(null);
+		Player holder = rooms[playerXCoordinate][playerYCoordinate].getPlayer( );
+		rooms[playerXCoordinate][playerYCoordinate].setPlayer(null);
+
+
 		
 //		move the player according to the command
 		if (command.equals(Command.GO_EAST))
@@ -179,18 +206,20 @@ public class Dungeon
 		else if(command.equals (Command.GO_SOUTH))
 			playerYCoordinate++;
 		
-//		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be
-		if (playerLocation == rooms.length)
+//		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
+		if (playerXCoordinate == rooms.length)
+
 			exitDungeon( );
 		else
-			rooms[playerXCoordinate].setPlayer(holder);
+			rooms[playerXCoordinate][playerYCoordinate].setPlayer(holder);
 		
 		
-//		if the room has a monster, have the player fight it
-		if (rooms[playerXCoordinate].getMonster( ) != null)
+//		if the room has a monster, have the player fight it		
+		if (rooms[playerXCoordinate][playerYCoordinate].getMonster( ) != null)
+
 		{
 			
-			System.out.println(battle(playerXCoordinate));
+			System.out.println(battle(playerXCoordinate, playerYCoordinate));
 		}
 	}
 	
@@ -205,10 +234,10 @@ public class Dungeon
 	 * @param roomIndex 
 	 * @return whether or not the player is alive
 	 */
-	public boolean battle(int roomIndex)
+	public boolean battle(int roomXIndex, int roomYIndex)
 	{
-//		gets the monster from the room
-		Monster monster = rooms[roomIndex].getMonster( );
+		Monster monster = rooms[roomXIndex][roomYIndex].getMonster( );
+
 		
 //		while both the monster and the player are alive
 		while(monster.getHealth( ) > 0 && player.getHealth( ) > 0)
@@ -245,7 +274,7 @@ public class Dungeon
 	{
 		StringBuffer output = new StringBuffer("");
 		
-		output.append("Player: " + player.toString( ) + "\tLocation: " + playerLocation + "\n");
+		output.append("Player: " + player.toString( ) + "\tLocation: " + playerXCoordinate + "\n");
 		for (Room room: rooms)
 		{
 			output.append(room + "\n");
