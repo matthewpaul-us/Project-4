@@ -14,7 +14,8 @@ package core;
 
 
 /**
- * Enter type purpose here<br>
+ * Represents the exception that is thrown when a player tries to go
+ * in an invalid direction.<br>
  *
  * <hr>
  * Date created: Mar 20, 2012<br>
@@ -24,6 +25,10 @@ package core;
  */
 public class NoPathException extends Exception
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -1254096067550519033L;
 
 	/**
 	 * Constructor <br>        
@@ -36,7 +41,7 @@ public class NoPathException extends Exception
 	 */
 	public NoPathException ( )
 	{
-		
+		this("No path in that direction.");
 	}
 
 	/**
@@ -53,54 +58,4 @@ public class NoPathException extends Exception
 	{
 		super (arg0);
 	}
-
-	/**
-	 * Constructor <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 20, 2012 <br>
-	 * Date last modified: Mar 20, 2012 <br>
-	 *
-	 * <hr>
-	 * @param arg0
-	 */
-	public NoPathException (Throwable arg0)
-	{
-		super (arg0);
-	}
-
-	/**
-	 * Constructor <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 20, 2012 <br>
-	 * Date last modified: Mar 20, 2012 <br>
-	 *
-	 * <hr>
-	 * @param arg0
-	 * @param arg1
-	 */
-	public NoPathException (String arg0, Throwable arg1)
-	{
-		super (arg0, arg1);
-	}
-
-	/**
-	 * Constructor <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 20, 2012 <br>
-	 * Date last modified: Mar 20, 2012 <br>
-	 *
-	 * <hr>
-	 * @param arg0
-	 * @param arg1
-	 * @param arg2
-	 * @param arg3
-	 */
-	public NoPathException (String arg0, Throwable arg1, boolean arg2, boolean arg3)
-	{
-		super (arg0, arg1, arg2, arg3);
-	}
-
 }
