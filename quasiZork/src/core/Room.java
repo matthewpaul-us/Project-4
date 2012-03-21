@@ -257,7 +257,45 @@ public class Room
 	{
 		this.player = (player != null? new Player(): null);
 	}
+	
+	/**
+	 * Returns a string representing the room suitable for showing to the player <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 21, 2012 <br>
+	 * Date last modified: Mar 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
+	public String getRoomString()
+	{
+		char midDoorSymbol = '_';
+		
+//		figure out the symbol for the north and south doors
+		if (isDoor(NORTH_DOOR) && isDoor(SOUTH_DOOR))
+			midDoorSymbol = '8';
+		else if (isDoor(NORTH_DOOR))
+			midDoorSymbol = '\u00b0';
+		else if (isDoor(SOUTH_DOOR))
+			midDoorSymbol = 'o';
+		
+//		this will return something like this: |_P_o_W_M_>
+		return (isDoor(WEST_DOOR)? '<': '|') + "_" + (player != null? "P": "_") + '_' + midDoorSymbol + "_" + (weapon != null? "W": "_") +
+				   		"_" + (monster != null? "M": "_") + "_" + (isDoor(EAST_DOOR)? '>': '|');
+	}
 
+	/**
+	 * Returns a string showing the state of the room. Suitable for debugging. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 21, 2012 <br>
+	 * Date last modified: Mar 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString()
 	{
 		return "@---" + (isDoor(NORTH_DOOR)? "+": "-") + "---@\n" +
