@@ -36,10 +36,10 @@ public class Room
 			southDoor,
 			westDoor;
 	
-	final static int NORTH_DOOR = 0,
-					 EAST_DOOR = 1,
-					 SOUTH_DOOR = 2,
-					 WEST_DOOR = 3;
+	final public static int NORTH_DOOR = 0,
+					 		EAST_DOOR = 1,
+				 			SOUTH_DOOR = 2,
+							WEST_DOOR = 3;
 	
 	/**
 	 * Constructor <br>        
@@ -260,7 +260,12 @@ public class Room
 
 	public String toString()
 	{
-		return "|_" + (player != null? "P": "_") + (monster != null? "M": "_") + "_" + (weapon != null? "W": "_") + "_|\n" +
+		return "@---" + (isDoor(NORTH_DOOR)? "+": "-") + "---@\n" +
+			   "|       |\n" +
+			   (isDoor(WEST_DOOR)? "+": "|") + " " + (player != null? "P": " ") + " " + (monster != null? "M": " ") +
+			   		" " + (weapon != null? "W": " ") + " " + (isDoor(EAST_DOOR)? "+": "|") + "\n" +
+			   "|       |\n" +
+			   "@---" + (isDoor(SOUTH_DOOR)? "+": "-") + "---@" + "\n" +
 			   "Monster: " + (monster != null? monster.toString( ): "null") + 
 			   "\tWeapon: " + (weapon != null? weapon.toString( ): "null");
 	}

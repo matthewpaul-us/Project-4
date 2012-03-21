@@ -57,6 +57,11 @@ public class RoomTest
 		room.setMonster(new Monster("goblin", 20, 4));
 		System.out.println(room);
 		
+//		add a door to the north and west walls
+		int[] doors = {Room.NORTH_DOOR, Room.WEST_DOOR};
+		room.setDoors(doors, true);
+		System.out.println(room);
+		
 //		copy the room and display the original and the copy
 		System.out.println("Copying the room");
 		Room copy = new Room(room);
