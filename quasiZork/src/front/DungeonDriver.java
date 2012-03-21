@@ -15,6 +15,7 @@ package front;
 import java.util.Scanner;
 import core.Command;
 import core.Dungeon;
+import core.NoPathException;
 import core.TextProcessor;
 
 
@@ -73,16 +74,44 @@ public class DungeonDriver
 		switch (lastCommand)
 		{
 			case GO_NORTH:
-				dungeon.movePlayer(lastCommand);
+				try
+				{
+					dungeon.movePlayer(lastCommand);
+				}
+				catch (NoPathException e)
+				{
+					System.out.println("There is no door in the north wall!");
+				}
 				break;
 			case GO_EAST:
-				dungeon.movePlayer(lastCommand);
+				try
+				{
+					dungeon.movePlayer(lastCommand);
+				}
+				catch (NoPathException e)
+				{
+					System.out.println("There is no door in the east wall!");
+				}
 				break;
 			case GO_SOUTH:
-				dungeon.movePlayer(lastCommand);
+				try
+				{
+					dungeon.movePlayer(lastCommand);
+				}
+				catch (NoPathException e)
+				{
+					System.out.println("There is no door in the south wall!");
+				}
 				break;
 			case GO_WEST:
-				dungeon. movePlayer(lastCommand);
+				try
+				{
+					dungeon. movePlayer(lastCommand);
+				}
+				catch (NoPathException e)
+				{
+					System.out.println("There is no door in the west wall!");
+				}
 				break;
 			case EXIT:
 				break;
