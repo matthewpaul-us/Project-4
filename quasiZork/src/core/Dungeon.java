@@ -279,7 +279,7 @@ public class Dungeon
 	 */
 	public String movePlayer(Command command) throws NoPathException
 	{
-		String output = null;
+		StringBuffer output = new StringBuffer("");
 		
 //		pull the player from the room into a holder
 		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
@@ -291,23 +291,35 @@ public class Dungeon
 		if (command.equals(Command.GO_EAST))
 		{	
 			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.EAST_DOOR))
+			{
 				playerXCoordinate++;
+				output.append("You travel east.");
+			}
 			else
 				throw new NoPathException("No East Door");
 		}	
 		else if (command.equals(Command.GO_WEST))
 			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.WEST_DOOR))
+			{
 				playerXCoordinate--;
+				output.append("You travel west.");
+			}
 			else
 				throw new NoPathException("No West Door");
 		else if(command.equals(Command.GO_NORTH))
 			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.NORTH_DOOR))
+			{
 				playerYCoordinate--;
+				output.append("You travel north.");
+			}
 			else
 				throw new NoPathException("No North Door");
 		else if(command.equals (Command.GO_SOUTH))
 			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.SOUTH_DOOR))
+			{
 				playerYCoordinate++;
+				output.append("You travel south.");
+			}
 			else
 				throw new NoPathException("No South Door");
 		
@@ -327,14 +339,14 @@ public class Dungeon
 		if (rooms[playerYCoordinate][playerXCoordinate].getMonster( ) != null)
 
 		{
-			output = battle();
+			output.append("\n" + battle());
 		}
 		
 //		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
 		if (playerXCoordinate == rooms.length)
 			exitDungeon( );
 		
-		return output;
+		return output.toString( );
 	}
 	
 	/**

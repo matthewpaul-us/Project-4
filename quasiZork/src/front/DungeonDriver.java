@@ -91,7 +91,6 @@ public class DungeonDriver
 				try
 				{
 					System.out.println(dungeon.movePlayer(lastCommand));
-					System.out.println("You travel north.");
 				}
 				catch (NoPathException e)
 				{
@@ -102,7 +101,6 @@ public class DungeonDriver
 				try
 				{
 					System.out.println(dungeon.movePlayer(lastCommand));
-					System.out.println("You travel east.");
 				}
 				catch (NoPathException e)
 				{
@@ -113,7 +111,6 @@ public class DungeonDriver
 				try
 				{
 					System.out.println(dungeon.movePlayer(lastCommand));
-					System.out.println("You travel south.");
 				}
 				catch (NoPathException e)
 				{
@@ -124,7 +121,6 @@ public class DungeonDriver
 				try
 				{
 					System.out.println(dungeon. movePlayer(lastCommand));
-					System.out.println("You travel west.");
 				}
 				catch (NoPathException e)
 				{
