@@ -59,10 +59,24 @@ public class Dungeon
 	 */
 	public Dungeon(boolean b)
 	{
-		rooms = new Room[5][10];
+		rooms = new Room[50][50];
 		
-		populateFreeDungeon( ); // Fill the dungeon with monsters and a weapon
-		
+		if (b)
+		{
+			populateFreeDungeon( ); // Fill the dungeon with monsters and a weapon
+		}
+		else
+		{
+			rooms[0][0] = new Room();
+			randomizeDoors(0, 0, 0);
+			for (int y = 0; y < rooms.length; y++)
+			{
+				if (rooms[y][rooms[y].length - 1] != null)
+				{
+					rooms[y][rooms[y].length - 1].setExitRoom(true);
+				}
+			}
+		}
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
 	}
@@ -236,6 +250,151 @@ public class Dungeon
 		
 	}
 	
+	public void randomizeDoors(int xLoc, int yLoc, double rightStrength)
+	{
+		double upProb = 1,
+			   rightProb = 1,
+			   leftProb = 1,
+			   downProb = 1;
+		
+		Random rand = new Random();
+		
+		
+		if (xLoc < rooms[yLoc].length - 1)
+		{
+			// Determine probabilities
+			//		if it is an edge cell
+			if (yLoc < 1)
+			{
+				upProb = 0;
+			}
+			if (xLoc < 1)
+			{
+				leftProb = 0;
+			}
+			if (yLoc > rooms.length - 2)
+			{
+				downProb = 0;
+			}
+			if (xLoc > rooms [yLoc].length - 2)
+			{
+				rightProb = 0;
+			}
+			//		if there is a room in the way
+			if (yLoc > 0 && rooms [yLoc - 1] [xLoc] != null)
+			{
+				upProb = 0;
+			}
+			if (yLoc < rooms.length - 2 && rooms [yLoc + 1] [xLoc] != null)
+			{
+				downProb = 0;
+			}
+			if (xLoc > 0 && rooms [yLoc] [xLoc - 1] != null)
+			{
+				leftProb = 0;
+			}
+			if (xLoc < rooms [yLoc].length - 2 && rooms [yLoc] [xLoc + 1] != null)
+			{
+				rightProb = 0;
+			}
+			//		calculate how many directions are still valid and the probability if they were equally likely
+			double numOfChoices = (upProb + downProb + leftProb + rightProb);
+			double standardProb = 1.0 / numOfChoices;
+			if (rightProb > 0.01)
+			{
+				rightProb = standardProb * (1 + rightStrength);
+			}
+			//		give more weight to the direction closest to the end
+			double leftoverProb = (standardProb * (1 - rightStrength)) / (numOfChoices - 1);
+			if (upProb > 0.01)
+			{
+				upProb = leftoverProb;
+			}
+			if (downProb > 0.01)
+			{
+				downProb = leftoverProb;
+			}
+			if (leftProb > 0.01)
+			{
+				leftProb = leftoverProb;
+			}
+			int direction; // 0 = right, 1 = left, 2 = up, 3, = down
+			//randomly pick a direction based on probabilities
+			double randomDouble = rand.nextDouble( );
+			if (randomDouble < leftProb)
+			{
+				direction = 1;
+			}
+			else if (randomDouble < upProb + leftProb)
+			{
+				direction = 2;
+			}
+			else if (randomDouble < downProb + upProb + leftProb)
+			{
+				direction = 3;
+			}
+			else
+			{
+				direction = 0;
+			}
+			// add room
+			switch (direction)
+			{
+				case 0:
+					rooms [yLoc] [xLoc + 1] = new Room( );
+					randomizeDoors(xLoc + 1, yLoc, rightStrength);
+					break;
+				case 1:
+					rooms [yLoc] [xLoc - 1] = new Room( );
+					randomizeDoors(xLoc - 1, yLoc, rightStrength);
+					break;
+				case 2:
+					rooms [yLoc - 1] [xLoc] = new Room( );
+					randomizeDoors(xLoc, yLoc - 1, rightStrength);
+					break;
+				case 3:
+					rooms [yLoc + 1] [xLoc] = new Room( );
+					randomizeDoors(xLoc, yLoc + 1, rightStrength);
+				default:
+					break;
+			}
+			// connect with doors
+			if (yLoc > 0 && rooms [yLoc - 1] [xLoc] != null)
+			{
+				int [ ] doorArray = { Room.NORTH_DOOR };
+				rooms [yLoc] [xLoc].setDoors(doorArray, true);
+
+				doorArray [0] = Room.SOUTH_DOOR;
+				rooms [yLoc - 1] [xLoc].setDoors(doorArray, true);
+			}
+			if (yLoc < rooms.length - 1 && rooms [yLoc + 1] [xLoc] != null)
+			{
+				int [ ] doorArray = { Room.SOUTH_DOOR };
+				rooms [yLoc] [xLoc].setDoors(doorArray, true);
+
+				doorArray [0] = Room.NORTH_DOOR;
+				rooms [yLoc + 1] [xLoc].setDoors(doorArray, true);
+			}
+			if (xLoc > 0 && rooms [yLoc] [xLoc - 1] != null)
+			{
+				int [ ] doorArray = { Room.WEST_DOOR };
+				rooms [yLoc] [xLoc].setDoors(doorArray, true);
+
+				doorArray [0] = Room.EAST_DOOR;
+				rooms [yLoc] [xLoc - 1].setDoors(doorArray, true);
+			}
+			if (xLoc < rooms [yLoc].length - 1 && rooms [yLoc] [xLoc + 1] != null)
+			{
+				int [ ] doorArray = { Room.EAST_DOOR };
+				rooms [yLoc] [xLoc].setDoors(doorArray, true);
+
+				doorArray [0] = Room.WEST_DOOR;
+				rooms [yLoc] [xLoc + 1].setDoors(doorArray, true);
+			}
+		}
+		
+	}
+	
 	/**
 	 * Causes the player to enter the dungeon <br>        
 	 *
@@ -297,42 +456,58 @@ public class Dungeon
 			//		move the player according to the command
 			if (command.equals(Command.GO_EAST))
 			{
-				if (rooms [playerYCoordinate] [playerXCoordinate]
-								.isDoor(Room.EAST_DOOR))
+				if (rooms [playerYCoordinate][playerXCoordinate].isDoor(Room.EAST_DOOR))
 				{
-					playerXCoordinate++ ;
-					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels east.\n");
+					output.append(player.getName() + "  travels east.\n");
+					playerXCoordinate++;
 				}
 				else
+				{
+					rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
 					throw new NoPathException("No East Door");
+				}
+					
 			}
 			else if (command.equals(Command.GO_WEST))
 				if (rooms [playerYCoordinate] [playerXCoordinate]
 								.isDoor(Room.WEST_DOOR))
 				{
-					playerXCoordinate-- ;
-					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels west.\n");
+					output.append(player.getName() + "  travels west.\n");
+					playerXCoordinate--;
 				}
 				else
+				{
+					rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
 					throw new NoPathException("No West Door");
+				}
+					
+
 			else if (command.equals(Command.GO_NORTH))
 				if (rooms [playerYCoordinate] [playerXCoordinate]
 								.isDoor(Room.NORTH_DOOR))
 				{
-					playerYCoordinate-- ;
-					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels north.\n");
+					output.append(player.getName() + "  travels north.\n");
+					playerYCoordinate--;
 				}
 				else
-					throw new NoPathException("No North Door");
-			else if (command.equals(Command.GO_SOUTH))
-				if (rooms [playerYCoordinate] [playerXCoordinate]
-								.isDoor(Room.SOUTH_DOOR))
 				{
-					playerYCoordinate++ ;
-					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels south.\n");
+					rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
+					throw new NoPathException("No North Door");
+				}
+					
+
+			else if (command.equals(Command.GO_SOUTH))
+				if (rooms [playerYCoordinate][playerXCoordinate].isDoor(Room.SOUTH_DOOR))
+				{
+					output.append(player.getName() + "  travels south.\n");
+					playerYCoordinate++;
 				}
 				else
+				{
+					rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
 					throw new NoPathException("No South Door");
+				}
+					
 			//		if the room has a weapon, pick it up if it is better
 			if (rooms [playerYCoordinate] [playerXCoordinate].getWeapon( ) != null)
 			{
@@ -430,8 +605,15 @@ public class Dungeon
 		{
 			for (Room room: col)
 			{
-//				concatenate the room's display string
-				output.append(room.getRoomString( ) + " ");
+				if (room != null)
+				{
+//					concatenate the room's display string
+					output.append(room.getRoomString( ) + " ");
+				}
+				else
+				{
+					output.append("            ");
+				}
 			}
 //			at the end of every row, output a carriage return
 			output.append("\n");

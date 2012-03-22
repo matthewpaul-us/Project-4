@@ -51,7 +51,7 @@ public class DungeonDriver
 
 	public static void main(String [ ] args)
 	{
-		dungeon = new Dungeon(true);
+		dungeon = new Dungeon(false);
 		Command lastCommand = null;
 //		Display title to user
 		displayTitle();

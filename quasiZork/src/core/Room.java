@@ -291,6 +291,7 @@ public class Room
 	public String getRoomString()
 	{
 		char midDoorSymbol = '_';
+		char rightDoorSymbol = '|';
 		
 //		figure out the symbol for the north and south doors
 		if (isDoor(NORTH_DOOR) && isDoor(SOUTH_DOOR))
@@ -300,9 +301,17 @@ public class Room
 		else if (isDoor(SOUTH_DOOR))
 			midDoorSymbol = 'o';
 		
+		if (isExitRoom( ))
+		{
+			rightDoorSymbol = '#';
+		}
+		else if (isDoor(EAST_DOOR))
+		{
+			rightDoorSymbol = '>';
+		}
 //		this will return something like this: |_P_o_W_M_>
 		return (isDoor(WEST_DOOR)? '<': '|') + "_" + (player != null? "P": "_") + '_' + midDoorSymbol + "_" + (weapon != null? "W": "_") +
-				   		"_" + (monster != null? "M": "_") + "_" + (isDoor(EAST_DOOR)? '>': '|');
+				   		"_" + (monster != null? "M": "_") + "_" + rightDoorSymbol;
 	}
 
 	/**
