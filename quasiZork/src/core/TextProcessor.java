@@ -27,27 +27,33 @@ public class TextProcessor
 {
 	private static final String[] goArray = {"Go",
 											 "Travel",
-											 "Move"};
+											 "Move",
+											 "G"};
 	
 	private static final String[] westArray = {"West",
 											   "W",
-											   "Left"};
+											   "Left",
+											   "L"};
 	
 	private static final String[] eastArray = {"East",
 											   "E",
-											   "Right"};
+											   "Right",
+											   "R"};
 	
 	private static final String[] northArray = {"North",
 		   									   "N",
-											   "Up"};
+											   "Up",
+											   "U"};
 	
 	private static final String[] southArray = {"South",
 		   									   "S",
-											   "Down"};
+											   "Down",
+											   "D"};
 	
 	private static final String[] exitArray = {"Exit",
 												"Close",
-												"Quit"};
+												"Quit",
+												"Q"};
 	/**
 	 * Processes a string input to standardize the directions. <br>        
 	 *
