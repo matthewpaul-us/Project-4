@@ -34,7 +34,8 @@ public class Room
 	boolean northDoor,
 			eastDoor,
 			southDoor,
-			westDoor;
+			westDoor,
+			exitRoom;
 	
 	final public static int NORTH_DOOR = 0,
 					 		EAST_DOOR = 1,
@@ -52,7 +53,7 @@ public class Room
 	 */
 	public Room()
 	{
-		this(null, null, null);
+		this(null, null, null, false);
 	}
 	
 	
@@ -68,11 +69,12 @@ public class Room
 	 * @param weapon
 	 * @param doorArray
 	 */
-	public Room(Monster monster, Weapon weapon, int[] doorArray)
+	public Room(Monster monster, Weapon weapon, int[] doorArray, boolean exitRoom)
 	{
 		setMonster(monster);
 		setWeapon(weapon);
 		setDoors(doorArray, true);
+		setExitRoom(exitRoom);
 	}
 		
 	/**
@@ -87,7 +89,7 @@ public class Room
 	 */
 	public Room(Room room)
 	{
-		this(room.getMonster( ), room.getWeapon( ), room.getDoors( ));
+		this(room.getMonster( ), room.getWeapon( ), room.getDoors( ), room.isExitRoom( ));
 	}
 	
 	/**
@@ -258,6 +260,24 @@ public class Room
 		this.player = (player != null? new Player(player): null);
 	}
 	
+	/**
+	 * @return exitRoom
+	 */
+	public boolean isExitRoom()
+	{
+		return exitRoom;
+	}
+
+
+	/**
+	 * @param exitRoom the exitRoom to set
+	 */
+	public void setExitRoom(boolean exitRoom)
+	{
+		this.exitRoom = exitRoom;
+	}
+
+
 	/**
 	 * Returns a string representing the room suitable for showing to the player <br>        
 	 *
