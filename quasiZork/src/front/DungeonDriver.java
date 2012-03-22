@@ -16,6 +16,7 @@ import java.util.Scanner;
 import core.Command;
 import core.Dungeon;
 import core.NoPathException;
+import core.Player;
 import core.TextProcessor;
 
 
@@ -34,6 +35,8 @@ public class DungeonDriver
 				    					   "A Victorian-era replica of an even older game.",
 				    					   "You wake up to find yourself in a dank dungeon."};
 
+	private static final double	STARTING_HEALTH	= 100;
+
 	private static Dungeon dungeon;
 	/**
 	 * Main method for the dungeon driver <br>        
@@ -48,13 +51,14 @@ public class DungeonDriver
 
 	public static void main(String [ ] args)
 	{
-		dungeon = new Dungeon();
+		dungeon = new Dungeon(true);
 		Command lastCommand = null;
 //		Display title to user
 		displayTitle();
+		String name = getPlayerName();
 		
 //		Put the player into the dungeon
-		dungeon.enterDungeon( );
+		dungeon.enterDungeon(new Player(name, STARTING_HEALTH) );
 //		WHILE player doesn't want to exit program
 		while (lastCommand != Command.EXIT)
 		{
@@ -64,11 +68,21 @@ public class DungeonDriver
 			lastCommand = TextProcessor.process(getUserInput());
 //			act on user input
 			performCommand(lastCommand);
+//			wait for the player to read result
+			waitForUser();
 		}
 //		ask if user wants to play again
 		System.out.println("Thanks for playing Zerkesque!");
 	}
 	
+	private static String getPlayerName()
+	{
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("What would you like your character's name to be? ");
+		
+		return keyboard.nextLine( );
+	}
+
 	private static void performCommand(Command lastCommand)
 	{
 		switch (lastCommand)
@@ -77,6 +91,7 @@ public class DungeonDriver
 				try
 				{
 					dungeon.movePlayer(lastCommand);
+					System.out.println("You travel north.");
 				}
 				catch (NoPathException e)
 				{
@@ -87,6 +102,7 @@ public class DungeonDriver
 				try
 				{
 					dungeon.movePlayer(lastCommand);
+					System.out.println("You travel east.");
 				}
 				catch (NoPathException e)
 				{
@@ -97,6 +113,7 @@ public class DungeonDriver
 				try
 				{
 					dungeon.movePlayer(lastCommand);
+					System.out.println("You travel south.");
 				}
 				catch (NoPathException e)
 				{
@@ -107,6 +124,7 @@ public class DungeonDriver
 				try
 				{
 					dungeon. movePlayer(lastCommand);
+					System.out.println("You travel west.");
 				}
 				catch (NoPathException e)
 				{
@@ -132,7 +150,8 @@ public class DungeonDriver
 
 	private static void displayHud()
 	{
-		System.out.println("HUD Stub");
+		System.out.println(dungeon.getDungeonString( ));
+		System.out.println(dungeon.getPlayerStatusString( ));
 	}
 
 	private static void displayTitle()
@@ -141,5 +160,12 @@ public class DungeonDriver
 		{
 			System.out.println(text);
 		}
+	}
+	
+	private static void waitForUser()
+	{
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("(Press Enter)");
+		keyboard.nextLine( );
 	}
 }
