@@ -23,7 +23,6 @@ public class Dungeon
 	private int playerXCoordinate;	// The players location in the dungeon. 0 = start.
 	private int playerYCoordinate;
 	private Room[][] rooms;	// The collection of rooms for the player to travel through.
-	private Player player;
 	
 	
 	
@@ -45,7 +44,6 @@ public class Dungeon
 		
 		populateDungeon( ); // Fill the dungeon with monsters and a weapon
 		
-		player = new Player();
 		playerXCoordinate = 0;
 	}
 	
@@ -66,7 +64,6 @@ public class Dungeon
 		
 		populateFreeDungeon( ); // Fill the dungeon with monsters and a weapon
 		
-		player = new Player();
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
 	}
@@ -249,7 +246,7 @@ public class Dungeon
 	 *
 	 * <hr>
 	 */
-	public void enterDungeon()
+	public void enterDungeon(Player player)
 	{
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
@@ -284,56 +281,57 @@ public class Dungeon
 	public void movePlayer(Command command) throws NoPathException
 	{
 //		pull the player from the room into a holder
-		Player holder = rooms[playerXCoordinate][playerYCoordinate].getPlayer( );
-		rooms[playerXCoordinate][playerYCoordinate].setPlayer(null);
+		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
+		rooms[playerYCoordinate][playerXCoordinate].setPlayer(null);
 
 
 		
 //		move the player according to the command
 		if (command.equals(Command.GO_EAST))
 		{	
-			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.EAST_DOOR))
+			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.EAST_DOOR))
 				playerXCoordinate++;
 			else
 				throw new NoPathException("No East Door");
 		}	
 		else if (command.equals(Command.GO_WEST))
-			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.WEST_DOOR))
+			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.WEST_DOOR))
 				playerXCoordinate--;
 			else
 				throw new NoPathException("No West Door");
 		else if(command.equals(Command.GO_NORTH))
-			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.NORTH_DOOR))
+			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.NORTH_DOOR))
 				playerYCoordinate--;
 			else
 				throw new NoPathException("No North Door");
 		else if(command.equals (Command.GO_SOUTH))
-			if(rooms[playerXCoordinate][playerYCoordinate].isDoor (Room.SOUTH_DOOR))
+			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.SOUTH_DOOR))
 				playerYCoordinate++;
 			else
 				throw new NoPathException("No South Door");
 		
 		
+
+		
+//		if the room has a weapon, pick it up if it is better
+		if(rooms[playerYCoordinate][playerXCoordinate].getWeapon() != null)
+		{
+			if(player.getWeapon().getDamage ( ) > rooms[playerYCoordinate][playerXCoordinate].getWeapon().getDamage() )
+				player.setWeapon (rooms[playerYCoordinate][playerXCoordinate].getWeapon());
+		}
+		
+		rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
+		
+//		if the room has a monster, have the player fight it		
+		if (rooms[playerYCoordinate][playerXCoordinate].getMonster( ) != null)
+
+		{
+			System.out.println(battle());
+		}
+		
 //		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
 		if (playerXCoordinate == rooms.length)
 			exitDungeon( );
-		else
-			rooms[playerYCoordinate][playerXCoordinate].setPlayer(holder);
-		
-//		if the room has a weapon, pick it up if it is better
-		if(rooms[playerXCoordinate][playerYCoordinate].getWeapon() != null)
-		{
-			if(player.getWeapon().getDamage ( ) > rooms[playerXCoordinate][playerYCoordinate].getWeapon().getDamage() )
-				player.setWeapon (rooms[playerXCoordinate][playerYCoordinate].getWeapon());
-		}
-		
-//		if the room has a monster, have the player fight it		
-		if (rooms[playerXCoordinate][playerYCoordinate].getMonster( ) != null)
-
-		{
-			System.out.println(battle(playerXCoordinate, playerYCoordinate));
-		}
-		
 	}
 	
 	/**
@@ -347,29 +345,41 @@ public class Dungeon
 	 * @param roomIndex 
 	 * @return whether or not the player is alive
 	 */
-	public boolean battle(int roomXIndex, int roomYIndex)
+	public String battle()
 	{
-		Monster monster = rooms[roomXIndex][roomYIndex].getMonster( );
+		Monster monster = rooms[playerYCoordinate][playerXCoordinate].getMonster( );
+		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
+		StringBuffer output = new StringBuffer("");
 
 		
 //		while both the monster and the player are alive
 		while(monster.getHealth( ) > 0 && player.getHealth( ) > 0)
 		{
+			output.append(player.getName( ) + " attacks!\n");
 			int damage = player.attack( );
+			output.append((damage > 0? "He hits for " + damage + "!": "He misses.") + "\n");
 			monster.takeDamage(damage);
+			output.append((damage > 0? monster.getName( ) + " has " + monster.getHealth( ) + " health left.": "") + "\n\n");
 			
 			if (monster.getHealth( ) > 0)
 			{
+				output.append(monster.getName( ) + " attacks!\n");
 				damage = monster.attack();
+				output.append((damage > 0? "It hits for " + damage + "!": "It misses.") + "\n");
 				player.takeDamage(damage);
+				output.append((damage > 0? player.getName( ) + " has " + player.getHealth( ) + " health left.": "") + "\n\n");
 			}
 			
 		}
 //		return whether the player is alive or not
-		if (player.getHealth( ) > 0)
-			return true;
+		if (player.getHealth( ) < 0)
+			output.append("The player died...");
 		else
-			return false;
+			output.append("The player won!");
+		
+		rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
+		
+		return output.toString( );
 	}
 	
 	/**
@@ -400,6 +410,22 @@ public class Dungeon
 		
 		return output.toString( );
 	}
+	
+	/**
+	 * Returns the status of the player in a string, suitable for displaying to the user <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 21, 2012 <br>
+	 * Date last modified: Mar 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @return the status of the player
+	 */
+	public String getPlayerStatusString()
+	{
+		Player player = new Player(rooms[playerYCoordinate][playerXCoordinate].getPlayer( ));
+		return player.getName( ) + "\tHealth: " + player.getHealth( ) + "\tWeapon: " + (player.getWeapon( ) != null? player.getWeapon( ).getName( ): "Nothing");
+	}
 	/**
 	 * Returns a string representation suitable for testing. <br>        
 	 *
@@ -414,6 +440,8 @@ public class Dungeon
 	public String toString()
 	{
 		StringBuffer output = new StringBuffer("");
+		
+		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
 		
 		output.append("Player: " + player.toString( ) + "\tLocation: " + playerXCoordinate + "\n");
 		for (Room[] row: rooms)

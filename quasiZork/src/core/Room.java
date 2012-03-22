@@ -255,7 +255,7 @@ public class Room
 	 */
 	public void setPlayer(Player player)
 	{
-		this.player = (player != null? new Player(): null);
+		this.player = (player != null? new Player(player): null);
 	}
 	
 	/**
