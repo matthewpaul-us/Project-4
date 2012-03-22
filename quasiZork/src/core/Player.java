@@ -28,6 +28,7 @@ public class Player
 	private String name;					// The name the player wishes to be called
 	private double health;					// The health of the player. If this reaches 0, the player is dead
 	private Weapon weapon;
+	private boolean alive;
 	
 	private 	   final double HIT_CHANCE = 90;	// The chance for the player to hit. 10 = a 10% chance to hit an enemy.
 	private 	   final int DEFAULT_DAMAGE = 5;
@@ -45,7 +46,7 @@ public class Player
 	 */
 	public Player()
 	{
-		this(DEFAULT_NAME, DEFAULT_HEALTH, null);
+		this(DEFAULT_NAME, DEFAULT_HEALTH, null, true);
 	}
 	
 	/**
@@ -61,7 +62,7 @@ public class Player
 	 */
 	public Player (String name, double health)
 	{
-		this(name, health, null);
+		this(name, health, null, true);
 	}
 	
 	
@@ -77,12 +78,29 @@ public class Player
 	 * @param health
 	 * @param weapon
 	 */
-	public Player(String name, double health, Weapon weapon)
+	public Player(String name, double health, Weapon weapon, boolean alive)
 	{
 		setName(name);
 		setHealth(health);
 		setWeapon(weapon);
+		setAlive(alive);
 	}
+	
+	/**
+	 * Returns whether the player is alive or not <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 22, 2012 <br>
+	 * Date last modified: Mar 22, 2012 <br>
+	 *
+	 * <hr>
+	 * @param alive
+	 */
+	public void setAlive(boolean alive)
+	{
+		this.alive = alive;		
+	}
+
 	/**
 	 * Copy Constructor <br>        
 	 *
@@ -96,7 +114,7 @@ public class Player
 	 */
 	public Player (Player player)
 	{
-		this(player.getName( ), player.getHealth( ), player.getWeapon( ));
+		this(player.getName( ), player.getHealth( ), player.getWeapon( ), player.isAlive( ));
 	}
 	
 
@@ -211,6 +229,11 @@ public class Player
 		return "Player " + getName() + " has " + getHealth() + " health and is using " + (weapon != null? "a " + weapon.getName(): "nothing") + ".\n" +
 			   "     His base damage is " + DEFAULT_DAMAGE + ". With " + (weapon != null? "a " + weapon.getName(): "nothing") + ", he does " + 
 						(DEFAULT_DAMAGE + (weapon != null? weapon.getDamage( ): 0)) + " damage." ;
+	}
+
+	public boolean isAlive()
+	{
+		return alive;
 	}
 	
 }
