@@ -15,6 +15,7 @@ package test;
 import core.Command;
 import core.Dungeon;
 import core.NoPathException;
+import core.Player;
 
 
 /**
@@ -47,7 +48,7 @@ public class DungeonTest
 		System.out.println(dungeon.getDungeonString( ));
 		
 		System.out.println("Entering Dungeon");
-		dungeon.enterDungeon( );
+		dungeon.enterDungeon(new Player() );
 		System.out.println(dungeon.getDungeonString( ));
 		
 		System.out.println("Moving player to east room");
