@@ -301,7 +301,7 @@ public class Dungeon
 								.isDoor(Room.EAST_DOOR))
 				{
 					playerXCoordinate++ ;
-					output.append("You travel east.");
+					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels east.\n");
 				}
 				else
 					throw new NoPathException("No East Door");
@@ -311,7 +311,7 @@ public class Dungeon
 								.isDoor(Room.WEST_DOOR))
 				{
 					playerXCoordinate-- ;
-					output.append("You travel west.");
+					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels west.\n");
 				}
 				else
 					throw new NoPathException("No West Door");
@@ -320,7 +320,7 @@ public class Dungeon
 								.isDoor(Room.NORTH_DOOR))
 				{
 					playerYCoordinate-- ;
-					output.append("You travel north.");
+					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels north.\n");
 				}
 				else
 					throw new NoPathException("No North Door");
@@ -329,17 +329,20 @@ public class Dungeon
 								.isDoor(Room.SOUTH_DOOR))
 				{
 					playerYCoordinate++ ;
-					output.append("You travel south.");
+					output.append(rooms[playerYCoordinate][playerXCoordinate].getPlayer().getName() + "  travels south.\n");
 				}
 				else
 					throw new NoPathException("No South Door");
 			//		if the room has a weapon, pick it up if it is better
 			if (rooms [playerYCoordinate] [playerXCoordinate].getWeapon( ) != null)
 			{
-				if (player.getWeapon( ).getDamage( ) > rooms [playerYCoordinate] [playerXCoordinate]
-								.getWeapon( ).getDamage( ))
-					player.setWeapon(rooms [playerYCoordinate] [playerXCoordinate]
-									.getWeapon( ));
+				if ((player.getWeapon( ) != null? player.getWeapon( ).getDamage( ): 0) < 
+								rooms[playerYCoordinate][playerXCoordinate].getWeapon( ).getDamage( ))
+				{
+					player.setWeapon(rooms [playerYCoordinate][playerXCoordinate].getWeapon( ));
+					output.append(player.getName( ) + " picks up a " + player.getWeapon( ).getName( ));
+					rooms[playerYCoordinate][playerXCoordinate].setWeapon(null);
+				}
 			}
 			rooms [playerYCoordinate] [playerXCoordinate].setPlayer(player);
 			//		if the room has a monster, have the player fight it		
@@ -373,7 +376,7 @@ public class Dungeon
 
 		
 //		while both the monster and the player are alive
-		while(monster.getHealth( ) > 0 && player.getHealth( ) > 0)
+		while(monster.getHealth( ) > 0 && player.isAlive( ))
 		{
 			output.append(player.getName( ) + " attacks!\n");
 			int damage = player.attack( );
@@ -388,14 +391,20 @@ public class Dungeon
 				output.append((damage > 0? "It hits for " + damage + "!": "It misses.") + "\n");
 				player.takeDamage(damage);
 				output.append((damage > 0? player.getName( ) + " has " + player.getHealth( ) + " health left.": "") + "\n\n");
+				if (player.getHealth( ) < 1)
+					player.setAlive(false);
 			}
 			
 		}
 //		return whether the player is alive or not
 		if (player.getHealth( ) < 1)
+		{
 			output.append("The player died...");
+		}
 		else
+		{
 			output.append("The player won!");
+		}
 		
 		rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
 		
