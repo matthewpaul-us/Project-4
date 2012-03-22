@@ -261,10 +261,11 @@ public class Dungeon
 	 *
 	 * <hr>
 	 */
-	public void exitDungeon()
+	public String exitDungeon()
 	{
 		playerXCoordinate = 0;
-		System.out.println("Dungeon Exited! GAME OVER.");
+		playerYCoordinate = 0;
+		return "Dungeon Exited! Congratulations. You won!.";
 	}
 	
 	/**
@@ -280,75 +281,79 @@ public class Dungeon
 	public String movePlayer(Command command) throws NoPathException
 	{
 		StringBuffer output = new StringBuffer("");
-		
-//		pull the player from the room into a holder
+
+		//		pull the player from the room into a holder
 		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
 		rooms[playerYCoordinate][playerXCoordinate].setPlayer(null);
 
-
-		
-//		move the player according to the command
-		if (command.equals(Command.GO_EAST))
-		{	
-			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.EAST_DOOR))
-			{
-				playerXCoordinate++;
-				output.append("You travel east.");
-			}
-			else
-				throw new NoPathException("No East Door");
-		}	
-		else if (command.equals(Command.GO_WEST))
-			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.WEST_DOOR))
-			{
-				playerXCoordinate--;
-				output.append("You travel west.");
-			}
-			else
-				throw new NoPathException("No West Door");
-		else if(command.equals(Command.GO_NORTH))
-			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.NORTH_DOOR))
-			{
-				playerYCoordinate--;
-				output.append("You travel north.");
-			}
-			else
-				throw new NoPathException("No North Door");
-		else if(command.equals (Command.GO_SOUTH))
-			if(rooms[playerYCoordinate][playerXCoordinate].isDoor (Room.SOUTH_DOOR))
-			{
-				playerYCoordinate++;
-				output.append("You travel south.");
-			}
-			else
-				throw new NoPathException("No South Door");
-		
-		
-
-		
-//		if the room has a weapon, pick it up if it is better
-		if(rooms[playerYCoordinate][playerXCoordinate].getWeapon() != null)
+		//		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
+		if (rooms[playerYCoordinate][playerXCoordinate].isExitRoom( ) && command == Command.GO_EAST)
 		{
-			if(player.getWeapon().getDamage ( ) > rooms[playerYCoordinate][playerXCoordinate].getWeapon().getDamage() )
-				player.setWeapon (rooms[playerYCoordinate][playerXCoordinate].getWeapon());
+			output.append(exitDungeon( ));
+			
 		}
-		
-		rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
-		
-//		if the room has a monster, have the player fight it		
-		if (rooms[playerYCoordinate][playerXCoordinate].getMonster( ) != null)
-
+		else
 		{
-			output.append("\n" + battle());
+			//		move the player according to the command
+			if (command.equals(Command.GO_EAST))
+			{
+				if (rooms [playerYCoordinate] [playerXCoordinate]
+								.isDoor(Room.EAST_DOOR))
+				{
+					playerXCoordinate++ ;
+					output.append("You travel east.");
+				}
+				else
+					throw new NoPathException("No East Door");
+			}
+			else if (command.equals(Command.GO_WEST))
+				if (rooms [playerYCoordinate] [playerXCoordinate]
+								.isDoor(Room.WEST_DOOR))
+				{
+					playerXCoordinate-- ;
+					output.append("You travel west.");
+				}
+				else
+					throw new NoPathException("No West Door");
+			else if (command.equals(Command.GO_NORTH))
+				if (rooms [playerYCoordinate] [playerXCoordinate]
+								.isDoor(Room.NORTH_DOOR))
+				{
+					playerYCoordinate-- ;
+					output.append("You travel north.");
+				}
+				else
+					throw new NoPathException("No North Door");
+			else if (command.equals(Command.GO_SOUTH))
+				if (rooms [playerYCoordinate] [playerXCoordinate]
+								.isDoor(Room.SOUTH_DOOR))
+				{
+					playerYCoordinate++ ;
+					output.append("You travel south.");
+				}
+				else
+					throw new NoPathException("No South Door");
+			//		if the room has a weapon, pick it up if it is better
+			if (rooms [playerYCoordinate] [playerXCoordinate].getWeapon( ) != null)
+			{
+				if (player.getWeapon( ).getDamage( ) > rooms [playerYCoordinate] [playerXCoordinate]
+								.getWeapon( ).getDamage( ))
+					player.setWeapon(rooms [playerYCoordinate] [playerXCoordinate]
+									.getWeapon( ));
+			}
+			rooms [playerYCoordinate] [playerXCoordinate].setPlayer(player);
+			//		if the room has a monster, have the player fight it		
+			if (rooms [playerYCoordinate] [playerXCoordinate].getMonster( ) != null)
+
+			{
+				output.append("\n" + battle( ));
+			}
 		}
-		
-//		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
-		if (playerXCoordinate == rooms.length)
-			exitDungeon( );
-		
+
+
 		return output.toString( );
 	}
-	
+
 	/**
 	 * Simulates a battle between the player and the monster in this room. <br>        
 	 *
@@ -364,7 +369,7 @@ public class Dungeon
 	{
 		Monster monster = rooms[playerYCoordinate][playerXCoordinate].getMonster( );
 		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
-		StringBuffer output = new StringBuffer("");
+		StringBuffer output = new StringBuffer("You see a " + monster.getName( ) + ".\n");
 
 		
 //		while both the monster and the player are alive
@@ -387,7 +392,7 @@ public class Dungeon
 			
 		}
 //		return whether the player is alive or not
-		if (player.getHealth( ) < 0)
+		if (player.getHealth( ) < 1)
 			output.append("The player died...");
 		else
 			output.append("The player won!");
@@ -469,5 +474,10 @@ public class Dungeon
 		}
 		
 		return output.toString( );
+	}
+	
+	public boolean isPlayerAlive()
+	{
+		return rooms[playerYCoordinate][playerXCoordinate].getPlayer( ).isAlive( );
 	}
 }
