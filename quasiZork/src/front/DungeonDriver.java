@@ -60,7 +60,7 @@ public class DungeonDriver
 //		Put the player into the dungeon
 		dungeon.enterDungeon(new Player(name, STARTING_HEALTH) );
 //		WHILE player doesn't want to exit program
-		while (lastCommand != Command.EXIT)
+		while (lastCommand != Command.EXIT && dungeon.isPlayerAlive())
 		{
 //			display the map and stats to the user
 			displayHud();
@@ -75,6 +75,7 @@ public class DungeonDriver
 		System.out.println("Thanks for playing Zerkesque!");
 	}
 	
+
 	private static String getPlayerName()
 	{
 		Scanner keyboard = new Scanner(System.in);
