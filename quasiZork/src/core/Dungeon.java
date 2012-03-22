@@ -1,12 +1,11 @@
 package core;
 
 
-import java.util.ArrayList;
 import java.util.Random;
+import monsters.Monster;
 import weapons.Stick;
 import weapons.Sword;
 import weapons.Weapon;
-import monsters.Monster;
 
 /**
  * Represents a collection of rooms that make up a dungeon.<br>
@@ -278,8 +277,10 @@ public class Dungeon
 	 * <hr>
 	 * @param command
 	 */
-	public void movePlayer(Command command) throws NoPathException
+	public String movePlayer(Command command) throws NoPathException
 	{
+		String output = null;
+		
 //		pull the player from the room into a holder
 		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
 		rooms[playerYCoordinate][playerXCoordinate].setPlayer(null);
@@ -326,12 +327,14 @@ public class Dungeon
 		if (rooms[playerYCoordinate][playerXCoordinate].getMonster( ) != null)
 
 		{
-			System.out.println(battle());
+			output = battle();
 		}
 		
 //		if the player has reached the dungeons end, exit it. Otherwise, put him where he wants to be		
 		if (playerXCoordinate == rooms.length)
 			exitDungeon( );
+		
+		return output;
 	}
 	
 	/**
