@@ -43,19 +43,18 @@ public class DungeonTest
 
 	public static void main(String [ ] args) throws NoPathException
 	{
-		Dungeon dungeon = new Dungeon();
-		System.out.println(dungeon);
+		Dungeon dungeon = new Dungeon(true);
+		System.out.println(dungeon.getDungeonString( ));
 		
 		System.out.println("Entering Dungeon");
 		dungeon.enterDungeon( );
-		System.out.println(dungeon);
+		System.out.println(dungeon.getDungeonString( ));
 		
-		System.out.println("Moving player to second room");
+		System.out.println("Moving player to east room");
 		dungeon.movePlayer(Command.GO_EAST);
-		System.out.println(dungeon);
-		
-		System.out.println("Moving player to exit");
-		
+		System.out.println(dungeon.getDungeonString( ));
+
+
 		System.out.println(dungeon);
 
 	}

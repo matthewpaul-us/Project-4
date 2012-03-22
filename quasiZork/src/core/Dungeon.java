@@ -1,6 +1,7 @@
 package core;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 import weapons.Stick;
 import weapons.Sword;
@@ -46,6 +47,28 @@ public class Dungeon
 		
 		player = new Player();
 		playerXCoordinate = 0;
+	}
+	
+	
+	/**
+	 * Test Constructor. This can be removed before final submission <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 21, 2012 <br>
+	 * Date last modified: Mar 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @param b
+	 */
+	public Dungeon(boolean b)
+	{
+		rooms = new Room[5][10];
+		
+		populateFreeDungeon( ); // Fill the dungeon with monsters and a weapon
+		
+		player = new Player();
+		playerXCoordinate = 0;
+		playerYCoordinate = 0;
 	}
 	
 	
@@ -135,15 +158,85 @@ public class Dungeon
 			weapon = new Stick();
 		
 //		put a weapon randomly in a cell other than the start cell
-		
-		int randomX = rand.nextInt(10);
-		int randomY = rand.nextInt(5);
-		if(randomX == 0 && randomY == 0)
+		int randomY = rand.nextInt(rooms.length);
+		int randomX = rand.nextInt(rooms[randomY].length);
+		while (randomX == 0 && randomY == 0)
 		{
-			randomX = rand.nextInt(9) + 1;
-			randomY = rand.nextInt(5);
+			randomY = rand.nextInt(rooms.length);
+			randomX = rand.nextInt(rooms[randomY].length);
 		}
-		rooms[randomX][randomY].setWeapon(weapon);
+		rooms[randomY][randomX].setWeapon(weapon);
+		
+	}
+	
+	
+	/**
+	 * Adds a door everywhere, to allow testing of the dungeon. This can be removed
+	 * before final submission. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 21, 2012 <br>
+	 * Date last modified: Mar 21, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	public void populateFreeDungeon()
+	{
+
+//		create the random number generator to be used for this method
+		Random rand = new Random();
+		
+		rooms[0][0] = new Room();
+		
+		int[] allDoors = {Room.NORTH_DOOR, Room.SOUTH_DOOR, Room.EAST_DOOR, Room.WEST_DOOR};
+		rooms[0][0].setDoors(allDoors, true);
+		
+//		for each room other than the starting room, randomly decide if there is a monster
+		for (int y = 0; y < rooms.length; y++ )
+		{
+			
+			for( int x = 0; x < rooms[y].length; x++)
+			{	
+				if(x == 0 && y == 0) // if x and y == 0 then a monster will not be placed into that room
+				{
+					
+				}
+				
+				else
+				{
+					rooms[y][x] = new Room();
+					
+					rooms[y][x].setDoors(allDoors, true);
+					
+//					there is an approximately 50% chance for a monster to be there
+					if (rand.nextBoolean( ))
+					{	
+						rooms[y][x].setMonster(new Monster());
+					}
+				}
+			}
+
+		}
+		
+//		Generate a random weapon to store in the dungeon
+		Weapon weapon;
+		if (rand.nextBoolean( ))
+		{
+			weapon = new Sword();
+		}
+		else
+			weapon = new Stick();
+		
+//		put a weapon randomly in a cell other than the start cell
+		
+		int randomY = rand.nextInt(rooms.length);
+		int randomX = rand.nextInt(rooms[0].length);
+		while (randomX == 0 && randomY == 0)
+		{
+			randomY = rand.nextInt(rooms.length);
+			randomX = rand.nextInt(rooms[0].length);
+		}
+		rooms[randomY][randomX].setWeapon(weapon);
 		
 	}
 	
@@ -225,7 +318,7 @@ public class Dungeon
 		if (playerXCoordinate == rooms.length)
 			exitDungeon( );
 		else
-			rooms[playerXCoordinate][playerYCoordinate].setPlayer(holder);
+			rooms[playerYCoordinate][playerXCoordinate].setPlayer(holder);
 		
 //		if the room has a weapon, pick it up if it is better
 		if(rooms[playerXCoordinate][playerYCoordinate].getWeapon() != null)
@@ -280,6 +373,34 @@ public class Dungeon
 	}
 	
 	/**
+	 * Returns a string representing the dungeon, suitable for display to the player <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 21, 2012 <br>
+	 * Date last modified: Mar 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
+	public String getDungeonString()
+	{
+		StringBuffer output = new StringBuffer("");
+		
+//		for every room in the 2D array rooms
+		for (Room[] col: rooms)
+		{
+			for (Room room: col)
+			{
+//				concatenate the room's display string
+				output.append(room.getRoomString( ) + " ");
+			}
+//			at the end of every row, output a carriage return
+			output.append("\n");
+		}
+		
+		return output.toString( );
+	}
+	/**
 	 * Returns a string representation suitable for testing. <br>        
 	 *
 	 * <hr>
@@ -301,7 +422,7 @@ public class Dungeon
 			{
 				output.append (room + "\n");
 			}
-			System.out.print ("~~~~" );
+			output.append ("\n" );
 		}
 		
 		return output.toString( );
