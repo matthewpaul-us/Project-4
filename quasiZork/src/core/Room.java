@@ -241,7 +241,7 @@ public class Room
 	 */
 	public void setWeapon (Weapon weapon)
 	{
-		this.weapon = (weapon != null? weapon.copy( ): null);
+		this.weapon = (weapon == null? null: weapon.copy( ));
 	}
 	
 	/**
