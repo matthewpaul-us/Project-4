@@ -59,7 +59,7 @@ public class Dungeon
 	 */
 	public Dungeon(boolean b)
 	{
-		rooms = new Room[50][50];
+		rooms = new Room[2][2];
 		
 		if (b)
 		{
@@ -69,6 +69,7 @@ public class Dungeon
 		{
 			rooms[0][0] = new Room();
 			randomizeDoors(0, 0, 0);
+			populateDungeon( );
 			for (int y = 0; y < rooms.length; y++)
 			{
 				if (rooms[y][rooms[y].length - 1] != null)
@@ -133,27 +134,22 @@ public class Dungeon
 //		create the random number generator to be used for this method
 		Random rand = new Random();
 		
-		rooms[0][0] = new Room();
 //		for each room other than the starting room, randomly decide if there is a monster
-		for (int x = 0; x < rooms.length; x++ )
+		for (int y = 0; y < rooms.length; y++ )
 		{
 			
-			for( int y = 0; y < rooms[x].length; y++)
+			for( int x = 0; x < rooms[y].length; x++)
 			{	
-				if(x == 0 && y == 0) // if x and y == 0 then a monster will not be placed into that room
+				if(x != 0 && y != 0 && rooms[y][x] != null) // if x and y == 0 then a monster will not be placed into that room
 				{
-					
-				}
-				
-				else
-				{
-					rooms[x][y] = new Room();
+
 //					there is an approximately 50% chance for a monster to be there
 					if (rand.nextBoolean( ))
-					{	
-						rooms[x][y].setMonster(new Monster());
+					{
+						rooms [y] [x].setMonster(new Monster( ));
 					}
 				}
+
 			}
 
 		}
@@ -170,7 +166,7 @@ public class Dungeon
 //		put a weapon randomly in a cell other than the start cell
 		int randomY = rand.nextInt(rooms.length);
 		int randomX = rand.nextInt(rooms[randomY].length);
-		while (randomX == 0 && randomY == 0)
+		while ((randomX == 0 && randomY == 0) | rooms[randomY][randomX] == null)
 		{
 			randomY = rand.nextInt(rooms.length);
 			randomX = rand.nextInt(rooms[randomY].length);
@@ -422,9 +418,9 @@ public class Dungeon
 	 */
 	public String exitDungeon()
 	{
-		playerXCoordinate = 0;
-		playerYCoordinate = 0;
-		return "Dungeon Exited! Congratulations. You won!.";
+		playerXCoordinate = -1;
+		playerYCoordinate = -1;
+		return "Dungeon Exited! Congratulations. You won!";
 	}
 	
 	/**
@@ -634,8 +630,13 @@ public class Dungeon
 	 */
 	public String getPlayerStatusString()
 	{
-		Player player = new Player(rooms[playerYCoordinate][playerXCoordinate].getPlayer( ));
-		return player.getName( ) + "\tHealth: " + player.getHealth( ) + "\tWeapon: " + (player.getWeapon( ) != null? player.getWeapon( ).getName( ): "Nothing");
+		if (isPlayerAlive( ))
+		{
+			Player player = new Player(rooms[playerYCoordinate][playerXCoordinate].getPlayer( ));
+			return player.getName( ) + "\tHealth: " + player.getHealth( ) + "\tWeapon: " + (player.getWeapon( ) != null? player.getWeapon( ).getName( ): "Nothing");
+		}
+		else
+			return null;
 	}
 	/**
 	 * Returns a string representation suitable for testing. <br>        
@@ -669,6 +670,9 @@ public class Dungeon
 	
 	public boolean isPlayerAlive()
 	{
-		return rooms[playerYCoordinate][playerXCoordinate].getPlayer( ).isAlive( );
+		if (playerXCoordinate == -1 && playerYCoordinate == -1)
+			return false;
+		else
+			return rooms[playerYCoordinate][playerXCoordinate].getPlayer( ).isAlive( );
 	}
 }
