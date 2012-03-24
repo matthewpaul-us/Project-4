@@ -58,7 +58,7 @@ public class DungeonTest
 //
 //		System.out.println(dungeon);
 		 
-		Dungeon dungeon = new Dungeon(false);
+		Dungeon dungeon = new Dungeon();
 		
 		System.out.println(dungeon.getDungeonString( ));
 

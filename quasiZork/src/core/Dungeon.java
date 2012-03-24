@@ -39,49 +39,22 @@ public class Dungeon
 	public Dungeon()
 	{
 		
-		rooms = new Room[10][5];
+		rooms = new Room[5][10];
 		
-		populateDungeon( ); // Fill the dungeon with monsters and a weapon
-		
-		playerXCoordinate = 0;
-	}
-	
-	
-	/**
-	 * Test Constructor. This can be removed before final submission <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 21, 2012 <br>
-	 * Date last modified: Mar 21, 2012 <br>
-	 *
-	 * <hr>
-	 * @param b
-	 */
-	public Dungeon(boolean b)
-	{
-		rooms = new Room[2][2];
-		
-		if (b)
+		rooms[0][0] = new Room();
+		buildRandomDungeon(0, 0, 0);
+		populateDungeon( );
+		for (int y = 0; y < rooms.length; y++)
 		{
-			populateFreeDungeon( ); // Fill the dungeon with monsters and a weapon
-		}
-		else
-		{
-			rooms[0][0] = new Room();
-			randomizeDoors(0, 0, 0);
-			populateDungeon( );
-			for (int y = 0; y < rooms.length; y++)
+			if (rooms[y][rooms[y].length - 1] != null)
 			{
-				if (rooms[y][rooms[y].length - 1] != null)
-				{
-					rooms[y][rooms[y].length - 1].setExitRoom(true);
-				}
+				rooms[y][rooms[y].length - 1].setExitRoom(true);
 			}
 		}
+		
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
-	}
-	
+	}	
 	
 	/**
 	 * Constructor <br>        
@@ -246,7 +219,7 @@ public class Dungeon
 		
 	}
 	
-	public void randomizeDoors(int xLoc, int yLoc, double rightStrength)
+	public void buildRandomDungeon(int xLoc, int yLoc, double rightStrength)
 	{
 		double upProb = 1,
 			   rightProb = 1,
@@ -338,19 +311,19 @@ public class Dungeon
 			{
 				case 0:
 					rooms [yLoc] [xLoc + 1] = new Room( );
-					randomizeDoors(xLoc + 1, yLoc, rightStrength);
+					buildRandomDungeon(xLoc + 1, yLoc, rightStrength);
 					break;
 				case 1:
 					rooms [yLoc] [xLoc - 1] = new Room( );
-					randomizeDoors(xLoc - 1, yLoc, rightStrength);
+					buildRandomDungeon(xLoc - 1, yLoc, rightStrength);
 					break;
 				case 2:
 					rooms [yLoc - 1] [xLoc] = new Room( );
-					randomizeDoors(xLoc, yLoc - 1, rightStrength);
+					buildRandomDungeon(xLoc, yLoc - 1, rightStrength);
 					break;
 				case 3:
 					rooms [yLoc + 1] [xLoc] = new Room( );
-					randomizeDoors(xLoc, yLoc + 1, rightStrength);
+					buildRandomDungeon(xLoc, yLoc + 1, rightStrength);
 				default:
 					break;
 			}
