@@ -57,22 +57,6 @@ public class Dungeon
 	}	
 	
 	/**
-	 * Constructor <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 20, 2012 <br>
-	 * Date last modified: Mar 20, 2012 <br>
-	 *
-	 * <hr>
-	 * @param player
-	 */
-	public Dungeon(Player player)
-	{
-		this();
-		player = new Player(player);
-	}
-	
-	/**
 	 * @return playerXCoordinate
 	 */
 	public int getPlayerXCoordinate()
@@ -165,6 +149,7 @@ public class Dungeon
 //		create the random number generator to be used for this method
 		Random rand = new Random();
 		
+//		generate a room at the origin
 		rooms[0][0] = new Room();
 		
 		int[] allDoors = {Room.NORTH_DOOR, Room.SOUTH_DOOR, Room.EAST_DOOR, Room.WEST_DOOR};
@@ -219,8 +204,26 @@ public class Dungeon
 		
 	}
 	
+	/**
+	 * Generates a dungeon based on a direction algorithm. This algorithm takes a double that determines
+	 * how aggressively it should travel towards the end of the map. A rightStrength of 1.0 will cause
+	 * the algorithm to go always towards the end. A strength of 0 will cause the algorithm to give no
+	 * weight to the east direction. A negative number will cause the algorithm to avoid going right.
+	 * A higher number will cause the dungeon to be small, and a lower number will cause a dungeon to be
+	 * big, on average. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 24, 2012 <br>
+	 * Date last modified: Mar 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param xLoc The x coordinate of the cell to be looked at
+	 * @param yLoc The y coordinate of the cell to be looked at
+	 * @param rightStrength The strength of the algorithm's need to travel right.
+	 */
 	public void buildRandomDungeon(int xLoc, int yLoc, double rightStrength)
 	{
+//		assume all directions are all equally valid
 		double upProb = 1,
 			   rightProb = 1,
 			   leftProb = 1,
@@ -228,11 +231,11 @@ public class Dungeon
 		
 		Random rand = new Random();
 		
-		
+//		If the room in focus is not the last room on the right (base case)
 		if (xLoc < rooms[yLoc].length - 1)
 		{
-			// Determine probabilities
-			//		if it is an edge cell
+// 			Determine probabilities
+//			if it is an edge cell, set the appropriate direction to a 0 % chance to be selected
 			if (yLoc < 1)
 			{
 				upProb = 0;
@@ -249,7 +252,8 @@ public class Dungeon
 			{
 				rightProb = 0;
 			}
-			//		if there is a room in the way
+			
+//			if there is a room in the way
 			if (yLoc > 0 && rooms [yLoc - 1] [xLoc] != null)
 			{
 				upProb = 0;
@@ -266,14 +270,21 @@ public class Dungeon
 			{
 				rightProb = 0;
 			}
-			//		calculate how many directions are still valid and the probability if they were equally likely
+			
+//			calculate how many directions are still valid and the probability if they were equally likely
+			
+//			Adding up the probabilities that are left will give you the number of valid options
 			double numOfChoices = (upProb + downProb + leftProb + rightProb);
+//			Find the probability that each choice can have
 			double standardProb = 1.0 / numOfChoices;
+			
+//			If the right is a valid option, weight it according to the rightStrength
 			if (rightProb > 0.01)
 			{
 				rightProb = standardProb * (1 + rightStrength);
 			}
-			//		give more weight to the direction closest to the end
+			
+//			Give whatever is left to the other options
 			double leftoverProb = (standardProb * (1 - rightStrength)) / (numOfChoices - 1);
 			if (upProb > 0.01)
 			{
@@ -287,7 +298,9 @@ public class Dungeon
 			{
 				leftProb = leftoverProb;
 			}
-			int direction; // 0 = right, 1 = left, 2 = up, 3, = down
+			
+			int direction; // 0 = right, 1 = left, 2 = up, 3 = down
+			
 			//randomly pick a direction based on probabilities
 			double randomDouble = rand.nextDouble( );
 			if (randomDouble < leftProb)
@@ -306,7 +319,7 @@ public class Dungeon
 			{
 				direction = 0;
 			}
-			// add room
+			// add room in the direction indicated and recursively call buildRandomDungeon()
 			switch (direction)
 			{
 				case 0:
@@ -327,7 +340,10 @@ public class Dungeon
 				default:
 					break;
 			}
-			// connect with doors
+			
+//			this occurs after the recursion finishes
+			// connect with doors; one in the direction indicated, one in the opposite room going the other direction.
+//			This connects allows the doors to be two way
 			if (yLoc > 0 && rooms [yLoc - 1] [xLoc] != null)
 			{
 				int [ ] doorArray = { Room.NORTH_DOOR };
@@ -427,7 +443,7 @@ public class Dungeon
 			{
 				if (rooms [playerYCoordinate][playerXCoordinate].isDoor(Room.EAST_DOOR))
 				{
-					output.append(player.getName() + "  travels east.\n");
+					output.append(player.getName() + " travels east.\n");
 					playerXCoordinate++;
 				}
 				else
@@ -441,7 +457,7 @@ public class Dungeon
 				if (rooms [playerYCoordinate] [playerXCoordinate]
 								.isDoor(Room.WEST_DOOR))
 				{
-					output.append(player.getName() + "  travels west.\n");
+					output.append(player.getName() + " travels west.\n");
 					playerXCoordinate--;
 				}
 				else
@@ -455,7 +471,7 @@ public class Dungeon
 				if (rooms [playerYCoordinate] [playerXCoordinate]
 								.isDoor(Room.NORTH_DOOR))
 				{
-					output.append(player.getName() + "  travels north.\n");
+					output.append(player.getName() + " travels north.\n");
 					playerYCoordinate--;
 				}
 				else
@@ -468,7 +484,7 @@ public class Dungeon
 			else if (command.equals(Command.GO_SOUTH))
 				if (rooms [playerYCoordinate][playerXCoordinate].isDoor(Room.SOUTH_DOOR))
 				{
-					output.append(player.getName() + "  travels south.\n");
+					output.append(player.getName() + " travels south.\n");
 					playerYCoordinate++;
 				}
 				else
