@@ -38,7 +38,7 @@ public enum Command
 				return choice;
 		}
 		
-//		If this part of code is reached, then the integer doesnt have a value
+//		If this part of code is reached, then the integer doesn't have a value
 //		and null is returned
 		return null;
 	}

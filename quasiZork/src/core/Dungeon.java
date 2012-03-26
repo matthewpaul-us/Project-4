@@ -1,3 +1,14 @@
+/**
+ * ---------------------------------------------------------------------------
+ * File name: Dungeon.java<br/>
+ * Project name: 1260-088-Project4-PaulMatthew<br/>
+ * ---------------------------------------------------------------------------
+ * Creator's name and email: Matthew Paul, paulmr@goldmail.etsu.edu<br/>
+ * Course:  CSCI 1260-088<br/>
+ * Creation Date: Mar 13, 2012<br/>
+ * Date of Last Modification: Mar 26, 2012
+ * ---------------------------------------------------------------------------
+ */
 package core;
 
 
@@ -19,8 +30,8 @@ import weapons.Weapon;
 
 public class Dungeon
 {
-	private int playerXCoordinate;	// The players location in the dungeon. 0 = start.
-	private int playerYCoordinate;
+	private int playerXCoordinate;	// The players x location in the dungeon.
+	private int playerYCoordinate;	// The players y location in the dungeon.
 	private Room[][] rooms;	// The collection of rooms for the player to travel through.
 	
 	
@@ -28,7 +39,7 @@ public class Dungeon
 	
 	
 	/**
-	 * Constructor <br>        
+	 * No-Args Constructor <br>        
 	 *
 	 * <hr>
 	 * Date created: Mar 13, 2012 <br>
@@ -38,12 +49,19 @@ public class Dungeon
 	 */
 	public Dungeon()
 	{
-		
+//		Create an array of rooms with the default parameters
 		rooms = new Room[5][10];
 		
+//		create a room at the origin
 		rooms[0][0] = new Room();
+		
+//		build a random dungeon with no bias towards the right.
 		buildRandomDungeon(0, 0, 0);
+		
+//		populate the dungeon with monsters and a weapon
 		populateDungeon( );
+		
+//		find the first room on the last row. This is the exit room
 		for (int y = 0; y < rooms.length; y++)
 		{
 			if (rooms[y][rooms[y].length - 1] != null)
@@ -52,9 +70,12 @@ public class Dungeon
 			}
 		}
 		
+//		set the player coordinates to 0, 0
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
 	}
+	
+	
 	
 	
 	/**
@@ -65,17 +86,23 @@ public class Dungeon
 	 * Date last modified: Mar 26, 2012 <br>
 	 *
 	 * <hr>
-	 * @param ySize
-	 * @param xSize
+	 * @param ySize the width of the dungeon space
+	 * @param xSize the length of the dungeon space
+	 * @param rightStrength the amount of bias towards the right
 	 */
 	public Dungeon(int ySize, int xSize, double rightStrength)
 	{
-		
+//		create an array of rooms ySize by xSize
 		rooms = new Room[ySize][xSize];
 		
+//		add a room at the origin
 		rooms[0][0] = new Room();
+//		call the recursive method buildRandomDungeon
 		buildRandomDungeon(0, 0, rightStrength);
+//		populate the dungeon with monsters and a weapon
 		populateDungeon( );
+		
+//		set the exit room of the dungeon to the rightmost cell
 		for (int y = 0; y < rooms.length; y++)
 		{
 			if (rooms[y][rooms[y].length - 1] != null)
@@ -84,6 +111,7 @@ public class Dungeon
 			}
 		}
 		
+//		place the coordinates at the origin
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
 	}
@@ -96,17 +124,12 @@ public class Dungeon
 		return playerXCoordinate;
 	}
 	
+	/**
+	 * @return playerYCoordinate
+	 */
 	public int getPlayerYCoordinate()
 	{
 		return playerYCoordinate;
-	}
-	
-	/**
-	 * @return size of the dungeon
-	 */
-	public int getDungeonSize()
-	{
-		return rooms.length;
 	}
 
 	/**
@@ -150,92 +173,25 @@ public class Dungeon
 			weapon = new Sword();
 		}
 		else
+		{
 			weapon = new Stick();
+		}
 		
 //		put a weapon randomly in a cell other than the start cell
+//		get a random x and y value that is a valid coordinate for the dungeon
 		int randomY = rand.nextInt(rooms.length);
 		int randomX = rand.nextInt(rooms[randomY].length);
-		while ((randomX == 0 && randomY == 0) | rooms[randomY][randomX] == null)
+//		While the room picked is at the origin or not a room, pick another random coordinate
+		while ((randomX == 0 && randomY == 0) || rooms[randomY][randomX] == null)
 		{
 			randomY = rand.nextInt(rooms.length);
 			randomX = rand.nextInt(rooms[randomY].length);
 		}
+//		set the generated weapon inside the randomly determined room
 		rooms[randomY][randomX].setWeapon(weapon);
 		
 	}
-	
-	
-	/**
-	 * Adds a door everywhere, to allow testing of the dungeon. This can be removed
-	 * before final submission. <br>        
-	 *
-	 * <hr>
-	 * Date created: Mar 21, 2012 <br>
-	 * Date last modified: Mar 21, 2012 <br>
-	 *
-	 * <hr>
-	 */
-	public void populateFreeDungeon()
-	{
-
-//		create the random number generator to be used for this method
-		Random rand = new Random();
 		
-//		generate a room at the origin
-		rooms[0][0] = new Room();
-		
-		int[] allDoors = {Room.NORTH_DOOR, Room.SOUTH_DOOR, Room.EAST_DOOR, Room.WEST_DOOR};
-		rooms[0][0].setDoors(allDoors, true);
-		
-//		for each room other than the starting room, randomly decide if there is a monster
-		for (int y = 0; y < rooms.length; y++ )
-		{
-			
-			for( int x = 0; x < rooms[y].length; x++)
-			{	
-				if(x == 0 && y == 0) // if x and y == 0 then a monster will not be placed into that room
-				{
-					
-				}
-				
-				else
-				{
-					rooms[y][x] = new Room();
-					
-					rooms[y][x].setDoors(allDoors, true);
-					
-//					there is an approximately 50% chance for a monster to be there
-					if (rand.nextBoolean( ))
-					{	
-						rooms[y][x].setMonster(new Monster());
-					}
-				}
-			}
-
-		}
-		
-//		Generate a random weapon to store in the dungeon
-		Weapon weapon;
-		if (rand.nextBoolean( ))
-		{
-			weapon = new Sword();
-		}
-		else
-			weapon = new Stick();
-		
-//		put a weapon randomly in a cell other than the start cell
-		
-		int randomY = rand.nextInt(rooms.length);
-		int randomX = rand.nextInt(rooms[0].length);
-		while (randomX == 0 && randomY == 0)
-		{
-			randomY = rand.nextInt(rooms.length);
-			randomX = rand.nextInt(rooms[0].length);
-		}
-		rooms[randomY][randomX].setWeapon(weapon);
-		
-	}
-	
 	/**
 	 * Generates a dungeon based on a direction algorithm. This algorithm takes a double that determines
 	 * how aggressively it should travel towards the end of the map. A rightStrength of 1.0 will cause
@@ -307,6 +263,7 @@ public class Dungeon
 			
 //			Adding up the probabilities that are left will give you the number of valid options
 			double numOfChoices = (upProb + downProb + leftProb + rightProb);
+			
 //			Find the probability that each choice can have
 			double standardProb = 1.0 / numOfChoices;
 			
@@ -317,7 +274,7 @@ public class Dungeon
 			}
 			
 //			Give whatever is left to the other options
-			double leftoverProb = (standardProb * (1 - rightStrength)) / (numOfChoices - 1);
+			double leftoverProb = (1 - rightProb) / (numOfChoices - 1);
 			if (upProb > 0.01)
 			{
 				upProb = leftoverProb;
@@ -374,8 +331,11 @@ public class Dungeon
 			}
 			
 //			this occurs after the recursion finishes
-			// connect with doors; one in the direction indicated, one in the opposite room going the other direction.
+			
+// 			connect with doors; one in the direction indicated, one in the opposite room going the other direction.
 //			This connects allows the doors to be two way
+			
+//			put a door in the north wall if there's a room above
 			if (yLoc > 0 && rooms [yLoc - 1] [xLoc] != null)
 			{
 				int [ ] doorArray = { Room.NORTH_DOOR };
@@ -384,6 +344,8 @@ public class Dungeon
 				doorArray [0] = Room.SOUTH_DOOR;
 				rooms [yLoc - 1] [xLoc].setDoors(doorArray, true);
 			}
+			
+//			put a door in the south wall if there's a room below
 			if (yLoc < rooms.length - 1 && rooms [yLoc + 1] [xLoc] != null)
 			{
 				int [ ] doorArray = { Room.SOUTH_DOOR };
@@ -392,6 +354,8 @@ public class Dungeon
 				doorArray [0] = Room.NORTH_DOOR;
 				rooms [yLoc + 1] [xLoc].setDoors(doorArray, true);
 			}
+			
+//			put a door in the west wall if there's a room to the left
 			if (xLoc > 0 && rooms [yLoc] [xLoc - 1] != null)
 			{
 				int [ ] doorArray = { Room.WEST_DOOR };
@@ -400,6 +364,8 @@ public class Dungeon
 				doorArray [0] = Room.EAST_DOOR;
 				rooms [yLoc] [xLoc - 1].setDoors(doorArray, true);
 			}
+			
+//			put a door in the east wall if there's a room to the right
 			if (xLoc < rooms [yLoc].length - 1 && rooms [yLoc] [xLoc + 1] != null)
 			{
 				int [ ] doorArray = { Room.EAST_DOOR };
@@ -423,6 +389,7 @@ public class Dungeon
 	 */
 	public void enterDungeon(Player player)
 	{
+//		set the player coordinates to 0 and stick player in that room
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
 		rooms[playerXCoordinate][playerYCoordinate].setPlayer(player);
@@ -439,8 +406,11 @@ public class Dungeon
 	 */
 	public String exitDungeon()
 	{
+//		set the player coordinates to the sentinal coordinate (-1,-1)
 		playerXCoordinate = -1;
 		playerYCoordinate = -1;
+		
+//		return a string with the win message
 		return "Dungeon Exited! Congratulations. You won!";
 	}
 	
@@ -466,11 +436,10 @@ public class Dungeon
 		if (rooms[playerYCoordinate][playerXCoordinate].isExitRoom( ) && command == Command.GO_EAST)
 		{
 			output.append(exitDungeon( ));
-			
 		}
 		else
 		{
-			//		move the player according to the command
+//			move the player according to the command. If there is no door, then throw a noPathException
 			if (command.equals(Command.GO_EAST))
 			{
 				if (rooms [playerYCoordinate][playerXCoordinate].isDoor(Room.EAST_DOOR))
@@ -524,19 +493,28 @@ public class Dungeon
 					rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
 					throw new NoPathException("No South Door");
 				}
-					
-			//		if the room has a weapon, pick it up if it is better
+			
+	
+			
+//			if the room has a weapon, pick it up if it is better
 			if (rooms [playerYCoordinate] [playerXCoordinate].getWeapon( ) != null)
 			{
 				if ((player.getWeapon( ) != null? player.getWeapon( ).getDamage( ): 0) < 
 								rooms[playerYCoordinate][playerXCoordinate].getWeapon( ).getDamage( ))
 				{
+//					give the player the weapon
 					player.setWeapon(rooms [playerYCoordinate][playerXCoordinate].getWeapon( ));
+//					send the message that the player got the weapon to the output queue
 					output.append(player.getName( ) + " picks up a " + player.getWeapon( ).getName( ));
+					
+//					set the room's weapon where the player picked it up to null
 					rooms[playerYCoordinate][playerXCoordinate].setWeapon(null);
 				}
 			}
+			
+//			put the player in the new room
 			rooms [playerYCoordinate] [playerXCoordinate].setPlayer(player);
+
 			//		if the room has a monster, have the player fight it		
 			if (rooms [playerYCoordinate] [playerXCoordinate].getMonster( ) != null)
 
@@ -546,6 +524,7 @@ public class Dungeon
 		}
 
 
+//		return the output queue
 		return output.toString( );
 	}
 
@@ -573,24 +552,37 @@ public class Dungeon
 //		while both the monster and the player are alive
 		while(monster.getHealth( ) > 0 && player.isAlive( ))
 		{
+//			send message to queue
 			output.append(player.getName( ) + " attacks!\n");
+//			get damage player does
 			int damage = player.attack( );
+//			output damage if hit, or miss if not
 			output.append((damage > 0? "He hits for " + damage + "!": "He misses.") + "\n");
+//			apply damage to monster
 			monster.takeDamage(damage);
+//			output the health of the monster
 			output.append((damage > 0? monster.getName( ) + " has " + monster.getHealth( ) + " health left.": "") + "\n\n");
 			
+//			if the monster is not dead, let it attack
 			if (monster.getHealth( ) > 0)
 			{
+//				output the monster attack message
 				output.append(monster.getName( ) + " attacks!\n");
+//				get the monster's damage
 				damage = monster.attack();
+//				output the damage if any
 				output.append((damage > 0? "It hits for " + damage + "!": "It misses.") + "\n");
+//				apply the damage to the player
 				player.takeDamage(damage);
+//				output the player's remaining health
 				output.append((damage > 0? player.getName( ) + " has " + player.getHealth( ) + " health left.": "") + "\n\n");
+//				if player has died, setAlive to false
 				if (player.getHealth( ) < 1)
 					player.setAlive(false);
 			}
 
 		}
+//		if the monster wasn't already at the beginning of the battle
 		if (!alreadyDead)
 		{
 			//		return whether the player is alive or not
@@ -603,8 +595,10 @@ public class Dungeon
 				output.append("The player won!");
 			}
 		}
+//		update the player health 
 		rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
 		
+//		return the output queue
 		return output.toString( );
 	}
 	
@@ -620,6 +614,7 @@ public class Dungeon
 	 */
 	public String getDungeonString()
 	{
+//		create output queue
 		StringBuffer output = new StringBuffer("");
 		
 //		for every room in the 2D array rooms
@@ -634,6 +629,7 @@ public class Dungeon
 				}
 				else
 				{
+//					add a space where the room would have been
 					output.append("            ");
 				}
 			}
@@ -641,6 +637,7 @@ public class Dungeon
 			output.append("\n");
 		}
 		
+//		return the output queue
 		return output.toString( );
 	}
 	
@@ -656,9 +653,11 @@ public class Dungeon
 	 */
 	public String getPlayerStatusString()
 	{
+//		if the player is alive, build the status string. Otherwise, return nothing
 		if (isPlayerAlive( ))
 		{
 			Player player = new Player(rooms[playerYCoordinate][playerXCoordinate].getPlayer( ));
+//			return the player's health and his weapon
 			return player.getName( ) + "\tHealth: " + player.getHealth( ) + "\tWeapon: " + (player.getWeapon( ) != null? player.getWeapon( ).getName( ): "Nothing");
 		}
 		else
@@ -677,11 +676,13 @@ public class Dungeon
 	 */
 	public String toString()
 	{
+//		create an output queue
 		StringBuffer output = new StringBuffer("");
 		
 		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
-		
+//		output the player to string and the location
 		output.append("Player: " + player.toString( ) + "\tLocation: " + playerXCoordinate + "\n");
+//		for each room, append the room toString()
 		for (Room[] row: rooms)
 		{
 			for (Room room: row)
@@ -691,13 +692,26 @@ public class Dungeon
 			output.append ("\n" );
 		}
 		
+//		return the output queue
 		return output.toString( );
 	}
 	
+	/**
+	 * Determines whether the player is alive or not. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
 	public boolean isPlayerAlive()
 	{
+//		if the player has won the game, set the player to dead
 		if (playerXCoordinate == -1 && playerYCoordinate == -1)
 			return false;
+//		otherwise, return whether he is dead or not
 		else
 			return rooms[playerYCoordinate][playerXCoordinate].getPlayer( ).isAlive( );
 	}

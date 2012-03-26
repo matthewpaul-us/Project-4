@@ -31,16 +31,18 @@ import core.TextProcessor;
  */
 public class DungeonDriver
 {
+//	The title to show the players on start-up
 	private final static String[] TITLE = {"            ---Zorkesque---",
 				    					   "A Victorian-era replica of an even older game.",
 				    					   "You wake up to find yourself in a dank dungeon."};
 	
+//	the help to show the player on start-up
 	private final static String[] HELP = {"     HELP",
 										  "Zorkesque is a text based random dungeon crawler that pits players against",
 										  "monsters in a FIGHT TO THE DEATH! The map shows the dungeon, as well as where",
 										  "you can go.",
 										  "",
-										  "     |_P_o_____> <___8_____> <___Â°_W_M_>",
+										  "     |_P_o_____> <___8_____> <___°_W_M_>",
 										  "     ^ ^ ^     ^ ^   ^           ^ ^ ^",
 										  "     | | |     | |   Doors N/S   | | Monster",
 										  "     | | Door S| Door W          | Weapon",
@@ -50,8 +52,14 @@ public class DungeonDriver
 										  "To do something, type the action you want. For example, to go south, type",
 										  "\"Go South\", \"Travel e\", or if you want to exit, \"exit.\""};
 	
-
+//	the starting health of the player
 	private static final double	STARTING_HEALTH	= 100;
+
+//	the default height of the dungeon space
+	private static final int	DEFAULT_HEIGHT	= 5;
+
+//	the default width of the dungeon space
+	private static final int	DEFAULT_WIDTH	= 10;
 
 	private static Dungeon dungeon;
 	/**
@@ -67,7 +75,8 @@ public class DungeonDriver
 
 	public static void main(String [ ] args)
 	{
-		dungeon = new Dungeon();
+//		generate a new dungeon with the default width and height
+		dungeon = new Dungeon(DEFAULT_HEIGHT, DEFAULT_WIDTH, 0);
 		Command lastCommand = null;
 //		Display title to user
 		displayTitle();
@@ -92,6 +101,17 @@ public class DungeonDriver
 	}
 	
 
+	/**
+	 * Collects the player's name from the user. If user just presses enter,
+	 * return the default name "player". <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 * @return the name of the player
+	 */
 	private static String getPlayerName()
 	{
 		Scanner keyboard = new Scanner(System.in);
@@ -101,8 +121,19 @@ public class DungeonDriver
 		return (name.trim( ).length( ) == 0? "Player" : name);
 	}
 
+	/**
+	 * calls a method based on the command received. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 * @param lastCommand the command from the processed user input
+	 */
 	private static void performCommand(Command lastCommand)
 	{
+//		in all of these commands, if there is no door, it will catch the noPathException and print an error message
 		switch (lastCommand)
 		{
 			case GO_NORTH:
@@ -145,15 +176,28 @@ public class DungeonDriver
 					System.out.println("There is no door in the west wall!");
 				}
 				break;
+//			if the user wants to exit, do nothing. The while loop will take care of that
 			case EXIT:
 				break;
+//			if the command is an error, print an error message
 			case ERROR:
 				System.out.println("I'm sorry, I don't know what you want to do. Please try again.");
+//			Should never reach this point. If it does, there has been a serious error.
 			default:
 				break;
 		}
 	}
 
+	/**
+	 * Returns a unmodified string with the user's input. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 * @return the user's input
+	 */
 	private static String getUserInput()
 	{
 		Scanner keyboard = new Scanner(System.in);
@@ -162,12 +206,30 @@ public class DungeonDriver
 		return keyboard.nextLine( );
 	}
 
+	/**
+	 * Displays the map and the player status to the player. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	private static void displayHud()
 	{
 		System.out.println(dungeon.getDungeonString( ));
 		System.out.println(dungeon.getPlayerStatusString( ));
 	}
 
+	/**
+	 * Displays the title and then the help messages <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	private static void displayTitle()
 	{
 		for (String text: TITLE)
@@ -181,6 +243,15 @@ public class DungeonDriver
 		}
 	}
 	
+	/**
+	 * Waits for the user to hit enter. <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	private static void waitForUser()
 	{
 		Scanner keyboard = new Scanner(System.in);

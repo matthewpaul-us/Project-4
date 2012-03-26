@@ -29,6 +29,7 @@ import core.Player;
  */
 public class DungeonTest
 {
+	static public int[][] heatMap;
 
 	/**
 	 * Driver for the DungeonTest class. <br>        
@@ -57,9 +58,11 @@ public class DungeonTest
 //
 //
 //		System.out.println(dungeon);
-		 
-		Dungeon dungeon = new Dungeon(50,100, -.9);
 		
+		Dungeon dungeon = null;
+		
+		dungeon = new Dungeon(5, 10, 0);
+
 		System.out.println(dungeon.getDungeonString( ));
 
 	}
