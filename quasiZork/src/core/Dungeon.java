@@ -54,7 +54,39 @@ public class Dungeon
 		
 		playerXCoordinate = 0;
 		playerYCoordinate = 0;
-	}	
+	}
+	
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Mar 26, 2012 <br>
+	 * Date last modified: Mar 26, 2012 <br>
+	 *
+	 * <hr>
+	 * @param ySize
+	 * @param xSize
+	 */
+	public Dungeon(int ySize, int xSize, double rightStrength)
+	{
+		
+		rooms = new Room[ySize][xSize];
+		
+		rooms[0][0] = new Room();
+		buildRandomDungeon(0, 0, rightStrength);
+		populateDungeon( );
+		for (int y = 0; y < rooms.length; y++)
+		{
+			if (rooms[y][rooms[y].length - 1] != null)
+			{
+				rooms[y][rooms[y].length - 1].setExitRoom(true);
+			}
+		}
+		
+		playerXCoordinate = 0;
+		playerYCoordinate = 0;
+	}
 	
 	/**
 	 * @return playerXCoordinate
