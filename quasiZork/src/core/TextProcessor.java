@@ -67,33 +67,38 @@ public class TextProcessor
 	 */
 	public static Command process(String input)
 	{
-		StringTokenizer strTokenizer = new StringTokenizer(input);
-		
-		String[] inputArray = new String[strTokenizer.countTokens( )];
-		
-		for (int c = 0; c < inputArray.length && strTokenizer.hasMoreTokens( ); c++)
+		if (input.length( )!= 0 && input.split(" ").length != 0)
 		{
-			inputArray[c] = strTokenizer.nextToken( );
+			StringTokenizer strTokenizer = new StringTokenizer(input);
+
+			String[] inputArray = new String[strTokenizer.countTokens( )];
+
+			for (int c = 0; c < inputArray.length && strTokenizer.hasMoreTokens( ); c++)
+			{
+				inputArray[c] = strTokenizer.nextToken( );
+			}
+
+			boolean isGoCommand = isInGoArray(inputArray[0]);
+
+			if (isGoCommand)
+			{
+				if (isInNorthArray(inputArray[1]))
+					return Command.GO_NORTH;
+				else if (isInEastArray(inputArray[1]))
+					return Command.GO_EAST;
+				else if (isInSouthArray(inputArray[1]))
+					return Command.GO_SOUTH;
+				else if (isInWestArray(inputArray[1]))
+					return Command.GO_WEST;
+
+				else
+					return Command.ERROR;
+			}
+			else if (isInExitArray(inputArray[0]))
+			{	
+				return Command.EXIT;
+			}	
 		}
-		
-		boolean isGoCommand = isInGoArray(inputArray[0]);
-		
-		if (isGoCommand)
-		{
-			if (isInNorthArray(inputArray[1]))
-				return Command.GO_NORTH;
-			else if (isInEastArray(inputArray[1]))
-				return Command.GO_EAST;
-			else if (isInSouthArray(inputArray[1]))
-				return Command.GO_SOUTH;
-			else if (isInWestArray(inputArray[1]))
-				return Command.GO_WEST;
-			
-			else
-				return Command.ERROR;
-		}
-		else if (isInExitArray(inputArray[0]))
-			return Command.EXIT;
 		
 		return Command.ERROR;
 	}

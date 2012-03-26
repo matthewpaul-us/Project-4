@@ -532,7 +532,10 @@ public class Dungeon
 	{
 		Monster monster = rooms[playerYCoordinate][playerXCoordinate].getMonster( );
 		Player player = rooms[playerYCoordinate][playerXCoordinate].getPlayer( );
-		StringBuffer output = new StringBuffer("You see a " + monster.getName( ) + ".\n");
+		StringBuffer output = new StringBuffer("You see a " + monster.getName( ) +
+			(monster.getHealth( ) < 1? ", but it is already dead": "") + ".\n");
+		
+		boolean alreadyDead = monster.getHealth( ) < 1;
 
 		
 //		while both the monster and the player are alive
@@ -554,18 +557,20 @@ public class Dungeon
 				if (player.getHealth( ) < 1)
 					player.setAlive(false);
 			}
-			
+
 		}
-//		return whether the player is alive or not
-		if (player.getHealth( ) < 1)
+		if (!alreadyDead)
 		{
-			output.append("The player died...");
+			//		return whether the player is alive or not
+			if (player.getHealth( ) < 1)
+			{
+				output.append("The player died...");
+			}
+			else
+			{
+				output.append("The player won!");
+			}
 		}
-		else
-		{
-			output.append("The player won!");
-		}
-		
 		rooms[playerYCoordinate][playerXCoordinate].setPlayer(player);
 		
 		return output.toString( );
