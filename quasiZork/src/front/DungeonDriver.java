@@ -34,6 +34,22 @@ public class DungeonDriver
 	private final static String[] TITLE = {"            ---Zorkesque---",
 				    					   "A Victorian-era replica of an even older game.",
 				    					   "You wake up to find yourself in a dank dungeon."};
+	
+	private final static String[] HELP = {"     HELP",
+										  "Zorkesque is a text based random dungeon crawler that pits players against",
+										  "monsters in a FIGHT TO THE DEATH! The map shows the dungeon, as well as where",
+										  "you can go.",
+										  "",
+										  "     |_P_o_____> <___8_____> <___°_W_M_>",
+										  "     ^ ^ ^     ^ ^   ^           ^ ^ ^",
+										  "     | | |     | |   Doors N/S   | | Monster",
+										  "     | | Door S| Door W          | Weapon",
+										  "     | Player  Door E            Door N",
+										  "     Wall",
+										  "",
+										  "To do something, type the action you want. For example, to go south, type",
+										  "\"Go South\", \"Travel e\", or if you want to exit, \"exit.\""};
+	
 
 	private static final double	STARTING_HEALTH	= 100;
 
@@ -81,7 +97,8 @@ public class DungeonDriver
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("What would you like your character's name to be? ");
 		
-		return keyboard.nextLine( );
+		String name = keyboard.nextLine();
+		return (name.trim( ).length( ) == 0? "Player" : name);
 	}
 
 	private static void performCommand(Command lastCommand)
@@ -154,6 +171,11 @@ public class DungeonDriver
 	private static void displayTitle()
 	{
 		for (String text: TITLE)
+		{
+			System.out.println(text);
+		}
+		
+		for (String text: HELP)
 		{
 			System.out.println(text);
 		}
