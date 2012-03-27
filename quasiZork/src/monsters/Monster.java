@@ -24,15 +24,15 @@ import java.util.Random;
  */
 public class Monster
 {
-	private static final int	DEFAULT_HEALTH	= 20;
-	private static final String	DEFAULT_NAME	= "monster";
-	private static final int	DEFAULT_DAMAGE	= 4;
+	private static final int	DEFAULT_HEALTH	= 20;  // default health of a monster
+	private static final String	DEFAULT_NAME	= "monster";  // default name of a monster
+	private static final int	DEFAULT_DAMAGE	= 4;  // default damage of a monster
 	
-	private int health;
-	private final int HIT_CHANCE = 80;
+	private int health;  // holds health of a monster
+	private final int HIT_CHANCE = 80; // hit chance of monsters
 	
-	private String name;
-	private int damage;
+	private String name;  // holds name of a monster
+	private int damage;  // holds damage of a monster
 	
 	
 	
@@ -47,7 +47,7 @@ public class Monster
 	 */
 	public Monster()
 	{
-		this(DEFAULT_NAME, DEFAULT_HEALTH, DEFAULT_DAMAGE);
+		this(DEFAULT_NAME, DEFAULT_HEALTH, DEFAULT_DAMAGE); // creates a monster witih default name, health, and damage
 	}
 	
 	/**
@@ -64,9 +64,9 @@ public class Monster
 	 */
 	public Monster(String name, int health, int damage)
 	{
-		setHealth(health);
-		setName(name);
-		setDamage(damage);
+		setHealth(health); // sets health of monster
+		setName(name); // sets the name of monster
+		setDamage(damage); // sets the damage of monster
 	}
 	
 	public Monster(Monster monster)
@@ -79,7 +79,7 @@ public class Monster
 	 */
 	public int getHealth()
 	{
-		return health;
+		return health; // returns the health of a monster
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class Monster
 	 */
 	public void setHealth(int health)
 	{
-		this.health = health;
+		this.health = health; // sets the health of a monster
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Monster
 	 */
 	public String getName()
 	{
-		return name;
+		return name; // returns the name of a monster
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class Monster
 	 */
 	public void setName(String name)
 	{
-		this.name = name;
+		this.name = name; // sets the name of a monster
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class Monster
 	 */
 	public int getDamage()
 	{
-		return damage;
+		return damage;  // returns the damage done by a monster
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class Monster
 	 */
 	public void setDamage(int damage)
 	{
-		this.damage = damage;
+		this.damage = damage; // sets the damage done by a monster
 	}
 
 	/**
@@ -134,16 +134,16 @@ public class Monster
 	 */
 	public int attack()
 	{
-		Random rand = new Random();
+		Random rand = new Random();  // object of the Random class named rand
 		
-		int attackRoll = rand.nextInt(100) + 1;
+		int attackRoll = rand.nextInt(100) + 1;  // attackRoll is a random number between 1 and 100
 		
-		if (attackRoll < HIT_CHANCE + 1)
+		if (attackRoll < HIT_CHANCE + 1) // if attackroll is less than 80 
 		{
-			return damage;
+			return damage;  // return damage
 		}
 		else
-			return 0;
+			return 0; // if it is a miss, return zero
 	}
 	
 	/**
@@ -158,12 +158,12 @@ public class Monster
 	 */
 	public void takeDamage(int damage)
 	{
-		setHealth(getHealth() - damage);
+		setHealth(getHealth() - damage);  // subtracts the damage from the health of the monster
 	}
 	
 	public String toString()
 	{
-		return getName() + " with " + getHealth() + " hp";
+		return getName() + " with " + getHealth() + " hp";  // "monster with 100 hp"
 	}
 
 }
