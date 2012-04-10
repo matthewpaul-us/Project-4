@@ -22,8 +22,8 @@ package weapons;
  */
 public class Sword extends Weapon
 {
-	private static final String	DEFAULT_NAME	= "sword";
-	private static final int	DEFAULT_DAMAGE	= 3;
+	private static final String	DEFAULT_NAME	= "sword"; // default name of a sword
+	private static final int	DEFAULT_DAMAGE	= 3; // default damage of a sword
 	
 
 	/**
@@ -37,7 +37,7 @@ public class Sword extends Weapon
 	 */
 	public Sword ()
 	{
-		super (DEFAULT_NAME, DEFAULT_DAMAGE);
+		super (DEFAULT_NAME, DEFAULT_DAMAGE); // create a sword with default characteristics
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class Sword extends Weapon
 	 */
 	public Sword (String name, int damage)
 	{
-		super (name, damage);
+		super (name, damage); // create a sword with custom characteristics
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class Sword extends Weapon
 	 */
 	public Sword (Sword sword)
 	{
-		this(sword.getName( ), sword.getDamage( ));
+		this(sword.getName( ), sword.getDamage( )); 
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class Sword extends Weapon
 	 */
 	public Weapon copy()
 	{
-		return new Sword(this);
+		return new Sword(this); // creates a deep copy of a sword
 	}
 
 	
@@ -101,7 +101,7 @@ public class Sword extends Weapon
 	@Override
 	public int getDamage ( )
 	{
-		return super.damage;
+		return super.damage; // returns the damage of a sword
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class Sword extends Weapon
 	@Override
 	public void setDamage(int damage)
 	{
-		this.damage = damage;
+		this.damage = damage; // sets the damage of a sword
 	}
 
 	

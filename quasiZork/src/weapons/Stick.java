@@ -22,8 +22,8 @@ package weapons;
  */
 public class Stick extends Weapon
 {
-	private static final String	DEFAULT_NAME	= "stick";
-	private static final int	DEFAULT_DAMAGE	= 1;
+	private static final String	DEFAULT_NAME	= "stick"; // default name 
+	private static final int	DEFAULT_DAMAGE	= 1; // default damage
 
 	/**
 	 * No-Args Constructor <br>        
@@ -36,7 +36,7 @@ public class Stick extends Weapon
 	 */
 	public Stick ()
 	{
-		super (DEFAULT_NAME, DEFAULT_DAMAGE);
+		super (DEFAULT_NAME, DEFAULT_DAMAGE); // creates a stick of the default paramerters
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class Stick extends Weapon
 	 */
 	public Stick (String name, int damage)
 	{
-		super (name, damage);
+		super (name, damage); // allows for creation of a new stick with name and damage parameters
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class Stick extends Weapon
 	 */
 	public Weapon copy()
 	{
-		return new Stick(this);
+		return new Stick(this); // method override from the weapon class, copys a stick
 	}
 
 	
@@ -100,8 +100,8 @@ public class Stick extends Weapon
 	@Override
 	public int getDamage ( )
 	{
-		return DEFAULT_DAMAGE;
-	}
+		return DEFAULT_DAMAGE; // returns the damage of a stick
+ 	}
 	
 	/**
 	 * sets the damage modifier of the stick. <br>        
@@ -116,6 +116,6 @@ public class Stick extends Weapon
 	@Override
 	public void setDamage(int damage)
 	{
-		this.damage = damage;
+		this.damage = damage; // sets the damage of a stick
 	}
 }

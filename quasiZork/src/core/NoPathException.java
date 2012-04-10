@@ -41,7 +41,7 @@ public class NoPathException extends Exception
 	 */
 	public NoPathException ( )
 	{
-		this("No path in that direction.");
+		this("No path in that direction."); // error message
 	}
 
 	/**
