@@ -27,17 +27,18 @@ import monsters.Monster;
  */
 public class Room
 {
-	Player player;
+	Player player;			// the player in a room, if any
 	Monster monster;		// The monster that is in the room, if any
 	Weapon weapon;			// The weapon that is in the room, if any
 	
-	boolean northDoor,
-			eastDoor,
-			southDoor,
-			westDoor,
-			exitRoom;
+	boolean northDoor,  // north door in the room, if any
+			eastDoor,   // east door in the room, if any
+			southDoor,  // south door in the room, if any
+			westDoor,   // west door in the room, if any
+			exitRoom;   // exit room at the end of the dungeon
 	
-	final public static int NORTH_DOOR = 0,
+	// assigns a numerical value to each of the 4 directs of doors
+	final public static int NORTH_DOOR = 0,  
 					 		EAST_DOOR = 1,
 				 			SOUTH_DOOR = 2,
 							WEST_DOOR = 3;
@@ -51,7 +52,7 @@ public class Room
 	 *
 	 * <hr>
 	 */
-	public Room()
+	public Room()  // no arg constructor
 	{
 		this(null, null, null, false);
 	}
@@ -69,12 +70,12 @@ public class Room
 	 * @param weapon
 	 * @param doorArray
 	 */
-	public Room(Monster monster, Weapon weapon, int[] doorArray, boolean exitRoom)
+	public Room(Monster monster, Weapon weapon, int[] doorArray, boolean exitRoom) // multi parameter constructor
 	{
-		setMonster(monster);
-		setWeapon(weapon);
-		setDoors(doorArray, true);
-		setExitRoom(exitRoom);
+		setMonster(monster); // sets the monster to a monster
+		setWeapon(weapon);   // sets weapon to weapon
+		setDoors(doorArray, true); // set doors to a door array
+		setExitRoom(exitRoom);  // set exit room
 	}
 		
 	/**
@@ -87,7 +88,7 @@ public class Room
 	 * <hr>
 	 * @param room
 	 */
-	public Room(Room room)
+	public Room(Room room) // overloaded room constructor 
 	{
 		this(room.getMonster( ), room.getWeapon( ), room.getDoors( ), room.isExitRoom( ));
 	}
@@ -106,14 +107,14 @@ public class Room
 	{
 		ArrayList<Integer> doorList= new ArrayList<Integer>(); 
 		
-		if (northDoor)
-			doorList.add(NORTH_DOOR);
-		if (eastDoor)
-			doorList.add(EAST_DOOR);
-		if (southDoor)
-			doorList.add(SOUTH_DOOR);
-		if (westDoor)
-			doorList.add(WEST_DOOR);
+ 		if (northDoor) // if true
+			doorList.add(NORTH_DOOR); // put a door in that direction
+		if (eastDoor) // if true
+			doorList.add(EAST_DOOR); // put a door in that direction
+		if (southDoor) // if true
+			doorList.add(SOUTH_DOOR);// put a door in that direction
+		if (westDoor) // if true
+			doorList.add(WEST_DOOR);// put a door in that direction
 		int[] array = new int[doorList.size()];
 		
 		for (int c = 0; c < array.length; c++)
@@ -138,6 +139,7 @@ public class Room
 	 */
 	public boolean isDoor(int direction)
 	{
+		// will return true if there is a door in that direction
 		switch (direction)
 		{
 			case NORTH_DOOR:
@@ -169,13 +171,15 @@ public class Room
 		
 		if (array != null)
 		{
+			// places the doors in the correct walls
 			for (int c = 0; c < array.length; c++ )
 			{
 				setDoor(array [c], b);
 			}
 		}
-		else
+		else		
 		{
+			// no doors 
 			setDoor(NORTH_DOOR, false);
 			setDoor(EAST_DOOR, false);
 			setDoor(SOUTH_DOOR, false);
@@ -198,6 +202,8 @@ public class Room
 	 */
 	private void setDoor(int door, boolean b)
 	{
+		// sets a door to either true or false
+		// true for open, false for closed
 		switch(door)
 		{
 			case NORTH_DOOR:
@@ -220,28 +226,28 @@ public class Room
 	 */
 	public Monster getMonster ( )
 	{
-		return monster;
+		return monster; // returns a monster
 	}
 	/**
 	 * @return weapon
 	 */
 	public Weapon getWeapon ( )
 	{
-		return weapon;
+		return weapon; // returns a weapon
 	}
 	/**
 	 * @param monster the monster to set
 	 */
 	public void setMonster (Monster monster)
 	{
-		this.monster = (monster != null? new Monster(monster): null);
+		this.monster = (monster != null? new Monster(monster): null); // sets the monster input to the monster
 	}
 	/**
 	 * @param weapon the weapon to set
 	 */
 	public void setWeapon (Weapon weapon)
 	{
-		this.weapon = (weapon == null? null: weapon.copy( ));
+		this.weapon = (weapon == null? null: weapon.copy( )); // sets the weapon input to a the weapon
 	}
 	
 	/**
@@ -249,7 +255,7 @@ public class Room
 	 */
 	public Player getPlayer()
 	{
-		return (player != null? new Player(player): null);
+		return (player != null? new Player(player): null); // returns a player
 	}
 
 	/**
@@ -257,13 +263,13 @@ public class Room
 	 */
 	public void setPlayer(Player player)
 	{
-		this.player = (player != null? new Player(player): null);
+		this.player = (player != null? new Player(player): null); // copyies a player to the Player
 	}
 	
 	/**
 	 * @return exitRoom
 	 */
-	public boolean isExitRoom()
+	public boolean isExitRoom() // if isExitroom is true, then you have finished the dungeon
 	{
 		return exitRoom;
 	}
@@ -274,7 +280,7 @@ public class Room
 	 */
 	public void setExitRoom(boolean exitRoom)
 	{
-		this.exitRoom = exitRoom;
+		this.exitRoom = exitRoom; // sets the exitRoom
 	}
 
 
@@ -288,7 +294,7 @@ public class Room
 	 * <hr>
 	 * @return
 	 */
-	public String getRoomString()
+	public String getRoomString() // toString method that builds the dungeon
 	{
 		char midDoorSymbol = '_';
 		char rightDoorSymbol = '|';

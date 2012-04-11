@@ -41,7 +41,7 @@ public abstract class Weapon
 	 */
 	public Weapon()
 	{
-		this(DEFAULT_NAME, DEFAULT_DAMAGE);
+		this(DEFAULT_NAME, DEFAULT_DAMAGE);  // no arg constructor creates a weapon of default name and damage
 	}
 
 	/**
@@ -56,10 +56,10 @@ public abstract class Weapon
 	 * @param damage
 	 */
 
-	public Weapon (String name, int damage)
+	public Weapon (String name, int damage) // allows creation of weapon with name and damage as parameters
 	{
-		setName(name);
-		setDamage(damage);
+		setName(name); // sets the name of the weapon
+		setDamage(damage); // sets the damage of the weapon
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public abstract class Weapon
 	 * <hr>
 	 * @return copy a copy of the weapon
 	 */
-	public abstract Weapon copy();
+	public abstract Weapon copy(); // abstract method copy().
 	
 
 	/**
@@ -81,7 +81,7 @@ public abstract class Weapon
 	 */
 	public String getName()
 	{
-		return name;
+		return name; // returns the name of the weapon
 	}
 
 
@@ -90,14 +90,14 @@ public abstract class Weapon
 	 */
 	public void setName(String name)
 	{
-		this.name = name;
+		this.name = name; // sets the name
 	}
 
 
 	/**
 	 * @param damage the damage to set
 	 */
-	public abstract void setDamage(int damage);
+	public abstract void setDamage(int damage); // abstact method to set the damage
 
 
 	/**
@@ -111,9 +111,9 @@ public abstract class Weapon
 	 * <hr>
 	 * @return The damage modifier
 	 */
-	public abstract int getDamage();
+	public abstract int getDamage(); // abstract method to return the damage of a weapon
 	
-	public String toString()
+	public String toString() // returns a string of the damage and name of the weapon
 	{
 		return "+" + getDamage() + " " + getName();
 	}
