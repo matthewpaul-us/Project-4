@@ -211,8 +211,14 @@ public class Ball
 	public void moveBall(long deltaTime)
 	{
 		// calculate velocity
-		double dX = getVelX( ) * deltaTime / 1000,
-			   dY = getVelY( ) * deltaTime / 1000;
+		double dX = getVelX( ) * deltaTime / 1000 * 292,	// multiplying by 292 to convert meters to pixels. 
+			   dY = getVelY( ) * deltaTime / 1000 * 292;	// Based on size of 1.37 m for width of table.
+		
+		if (Math.abs(getVelX()) < 1e-4)
+			dX = 0;
+		
+		if (Math.abs(getVelY()) < 1e-4)
+			dY = 0;
 		
 		
 		// apply friction
@@ -229,11 +235,32 @@ public class Ball
 			   gravity = 9.8;
 		
 //		calculate the force of the friction on the ball
-		double retardingForce = coefficient  * gravity * deltaTime * 
-						((getVelX( ) + getVelY( )) / Math.abs(getVelX( ) + getVelY( )));
+		double retardingForceX,
+			   retardingForceY;
+		if (Math.abs(getVelX( )) > 1e-4)
+		{
+			retardingForceX = coefficient *
+							gravity *
+							deltaTime *
+							( getVelX( ) / Math.abs(getVelX( )) / 1000);
+		}
+		else
+			retardingForceX = 0.0;
 		
-		setVelX(getVelX() - retardingForce);
-		setVelY(getVelY() - retardingForce);
+		if (Math.abs(getVelY( )) > 1e-4)
+		{
+			retardingForceY = coefficient *
+							gravity *
+							deltaTime *
+							( getVelY( ) / Math.abs(getVelY( ))) / 1000;
+		}
+		else
+			retardingForceY = 0.0;
+		
+		
+		
+		setVelX(getVelX() - retardingForceX);
+		setVelY(getVelY() - retardingForceY);
 	}
 	
 	private void collide(Ball ball)
