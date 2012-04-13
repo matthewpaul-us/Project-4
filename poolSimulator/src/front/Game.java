@@ -113,7 +113,8 @@ public class Game implements Runnable{
     	  {
     		  ball.setLocX(Math.abs(ball.getLocX( ) - WIDTH));
     	  }
-    	  else if (ball.getLocY( ) < 0 || ball.getLocY( ) > WIDTH)
+    	  
+    	  if (ball.getLocY( ) < 0 || ball.getLocY( ) > HEIGHT)
     	  {
     		  ball.setLocY(Math.abs(ball.getLocY() - HEIGHT));
     	  }

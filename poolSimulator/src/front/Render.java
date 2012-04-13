@@ -54,7 +54,7 @@ public class Render implements Runnable{
       frame.setResizable(false);
       frame.setVisible(true);
       
-      canvas.createBufferStrategy(100);
+      canvas.createBufferStrategy(3);
       bufferStrategy = canvas.getBufferStrategy();
       
       canvas.requestFocus();
@@ -80,34 +80,16 @@ private class MouseControl extends MouseAdapter{
       long deltaLoop;
       
       while(running){
-//         beginLoopTime = System.nanoTime();
          
          render();
-         
-//         
-//         lastUpdateTime = currentUpdateTime;
-//         currentUpdateTime = System.nanoTime();
-//         
-//         endLoopTime = System.nanoTime();
-//         deltaLoop = endLoopTime - beginLoopTime;
-           
-//           if(deltaLoop > desiredDeltaLoop){
-//               //Do nothing. We are already late.
-//           }else{
-//               try{
-//                   Thread.sleep((desiredDeltaLoop - deltaLoop)/(1000*1000));
-//               }catch(InterruptedException e){
-//                   //Do nothing
-//               }
-//           }
+
          try
 		{
 			Thread.sleep(20);
 		}
 		catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
       }
    }
@@ -144,6 +126,7 @@ private class MouseControl extends MouseAdapter{
       new Thread(rend).start( );
       
       Game.balls[1].setVelX(-2);
+      Game.balls[1].setVelY(10);
    }
 
 }

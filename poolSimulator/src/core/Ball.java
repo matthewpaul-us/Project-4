@@ -14,6 +14,10 @@ package core;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -44,6 +48,8 @@ public class Ball
 	
 	final double BALL_MASS = 0.163,			// The weight of the ball, in Kilograms
 				 BALL_RADIUS = 0.05715;		// The radius of the ball, in meters
+	
+	private BufferedImage ballImage = null;
 	
 	/**
 	 * @return locX
@@ -173,11 +179,30 @@ public class Ball
 		return BALL_RADIUS;
 	}
 
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 12, 2012 <br>
+	 * Date last modified: Apr 12, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	public Ball()
 	{
 		initializeDefaultValues();
 	}
 
+	/**
+	 * Initializes the ball with default values <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 12, 2012 <br>
+	 * Date last modified: Apr 12, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	private void initializeDefaultValues()
 	{
 		setLocX(DEFAULT_X);
@@ -191,8 +216,34 @@ public class Ball
 		setBallNumber(BallNumber.EIGHT);
 		
 		setPocketed(false);
+		
+		loadImage();
 	}
 	
+	
+	private void loadImage()
+	{
+		try
+		{
+			ballImage = ImageIO.read(new File("resources/ballSmall.gif"));
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error! Ball image file load failed! " + e.getMessage( ));
+		}
+	}
+
+	/**
+	 * Copy Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 12, 2012 <br>
+	 * Date last modified: Apr 12, 2012 <br>
+	 *
+	 * <hr>
+	 * @param copy
+	 */
 	public Ball(Ball copy)
 	{
 		setLocX(copy.getLocX( ));
@@ -208,6 +259,16 @@ public class Ball
 		setPocketed(copy.isPocketed( ));
 	}
 	
+	/**
+	 * Moves the ball according to how much time has passed <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 12, 2012 <br>
+	 * Date last modified: Apr 12, 2012 <br>
+	 *
+	 * <hr>
+	 * @param deltaTime
+	 */
 	public void moveBall(long deltaTime)
 	{
 		// calculate velocity
@@ -229,6 +290,16 @@ public class Ball
 		setLocY(getLocY( ) + dY);
 	}
 
+	/**
+	 * Applies the correct amount of friction based on time elapsed <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 12, 2012 <br>
+	 * Date last modified: Apr 12, 2012 <br>
+	 *
+	 * <hr>
+	 * @param deltaTime
+	 */
 	private void applyFriction(long deltaTime)
 	{
 		double coefficient = 0.2,
@@ -263,15 +334,40 @@ public class Ball
 		setVelY(getVelY() - retardingForceY);
 	}
 	
+	/**
+	 * Collides with a second ball. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 12, 2012 <br>
+	 * Date last modified: Apr 12, 2012 <br>
+	 *
+	 * <hr>
+	 * @param ball
+	 */
 	private void collide(Ball ball)
 	{
 		
 	}
 	
+	/**
+	 * Draws the ball <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 12, 2012 <br>
+	 * Date last modified: Apr 12, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
 	public void drawBall(Graphics g)
 	{
 		g.setColor(getBallColor( ));
-		g.drawOval((int)getLocX( ), (int)getLocY( ), 10, 10);
+		g.drawImage(ballImage, (int)(getLocX() - 8.5), (int)(getLocY() - 8.5), null);
+		
+		g.setColor(Color.BLACK);
+		
+		if (Math.abs(getVelX( )) < 1 && Math.abs(getVelY()) < 1)
+			g.drawString(ballNumber.toString( ), (int)getLocX( ) + 10, (int)getLocY( ) + 10);
 	}
 
 }
