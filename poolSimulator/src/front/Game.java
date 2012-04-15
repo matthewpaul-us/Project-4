@@ -22,6 +22,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import core.Ball;
+import core.BallNumber;
 
 
 public class Game implements Runnable{
@@ -33,7 +34,7 @@ public class Game implements Runnable{
    Canvas canvas;
    BufferStrategy bufferStrategy;
    
-	static Ball[] balls;
+	static volatile Ball[] balls;
    
    public Game()
    {
@@ -45,12 +46,13 @@ public class Game implements Runnable{
 {
 	   balls = new Ball[2];
 		
-		balls[0] = new Ball();
+		balls[0] = new Ball(200, 100);
 		balls[1] = new Ball();
 		
 		balls[1].setLocX(200);
 		balls[1].setLocY(200);
 		balls[1].setBallColor(Color.RED);
+		balls[1].setBallNumber(BallNumber.FIFTEEN);
 }
    
     long desiredFPS = 210;
@@ -109,14 +111,40 @@ public class Game implements Runnable{
       {
     	  ball.moveBall(deltaTime);
     	  
-    	  if (ball.getLocX( ) < 0 || ball.getLocX( ) > WIDTH)
+    	  for (Ball b: balls)
     	  {
-    		  ball.setLocX(Math.abs(ball.getLocX( ) - WIDTH));
+    		  if (ball.getLocX( ) == b.getLocX( ) && ball.getLocY( ) == b.getLocY( ))
+    			  continue;
+    		  else
+    		  {
+    			  double distance = Math.sqrt(Math.pow((b.getLocY() - ball.getLocY( )), 2) + Math.pow((b.getLocX( ) - ball.getLocX( )), 2)) / 292;
+    			  
+    			  System.out.println("Distance: " + Math.round(distance));
+    			  
+    			  if (distance < 2 * Ball.BALL_RADIUS)
+    			  {
+    				  System.out.println("Firing Collision!");
+    				  ball.collide(b);
+    			  }
+    		  }
     	  }
     	  
-    	  if (ball.getLocY( ) < 0 || ball.getLocY( ) > HEIGHT)
+    	  if (ball.getLocX( ) < 0)
     	  {
-    		  ball.setLocY(Math.abs(ball.getLocY() - HEIGHT));
+    		  ball.collideWithRail(Ball.LEFT_RAIL);
+    	  }
+    	  else if (ball.getLocX( ) > WIDTH)
+    	  {
+    		  ball.collideWithRail(Ball.RIGHT_RAIL);
+    	  }
+    	  
+    	  if (ball.getLocY( ) < 0)
+    	  {
+    		  ball.collideWithRail(Ball.TOP_RAIL);
+    	  }
+    	  else if (ball.getLocY( ) > HEIGHT)
+    	  {
+    		  ball.collideWithRail(Ball.BOTTOM_RAIL);
     	  }
       }
    }

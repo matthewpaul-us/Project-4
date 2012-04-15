@@ -27,8 +27,8 @@ import core.Ball;
 
 public class Render implements Runnable{
    
-   final int WIDTH = 400;
-   final int HEIGHT = WIDTH * 2;
+   public final static int WIDTH = 400;
+   public final static int HEIGHT = WIDTH * 2;
    
    JFrame frame;
    Canvas canvas;
@@ -125,8 +125,9 @@ private class MouseControl extends MouseAdapter{
       Render rend = new Render();
       new Thread(rend).start( );
       
-      Game.balls[1].setVelX(-2);
-      Game.balls[1].setVelY(10);
+//      Game.balls[1].setVelX(-2);
+      Game.balls[1].setVelY(0);
+      Game.balls[1].setVelX(-1);
    }
 
 }
