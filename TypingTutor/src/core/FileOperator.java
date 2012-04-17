@@ -14,6 +14,7 @@ package core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -99,25 +100,11 @@ public class FileOperator
 	 * @return String array containing all of the elements from the file.
 	 * @throws IOException if the file is not available or the integer passed into method was incorrect.
 	 */
-	public String[] readFile(int fileChoice) throws IOException
+	public String[] read(int fileChoice) throws IOException
 	{
 		Scanner inputFile = null;
 		
-		switch (fileChoice)
-		{
-			case WORD_FILE:
-				inputFile = new Scanner(wordFile);
-				break;
-			case SCORE_FILE:
-				inputFile = new Scanner(scoreFile);
-				break;
-			case RESULTS_FILE:
-				inputFile = new Scanner(resultsFile);
-				break;
-			default:
-				inputFile = null;
-				break;
-		}
+		inputFile = new Scanner(chooseFile(fileChoice));
 		
 		ArrayList <String> lines = new ArrayList<String>();
 		
@@ -126,7 +113,91 @@ public class FileOperator
 			lines.add(inputFile.nextLine( ));
 		}
 		
+		inputFile.close( );
+		
 		return lines.toArray(new String[lines.size( )]);
+	}
+
+
+	/**
+	 * Returns an File object based on the constant passed in. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 17, 2012 <br>
+	 * Date last modified: Apr 17, 2012 <br>
+	 *
+	 * <hr>
+	 * @param fileChoice
+	 * @return
+	 * @throws FileNotFoundException
+	 */
+	
+	private File chooseFile(int fileChoice) throws FileNotFoundException
+	{
+		File inputFile;
+		switch (fileChoice)
+		{
+			case WORD_FILE:
+				inputFile = new File(wordFile.toURI( ));
+				break;
+			case SCORE_FILE:
+				inputFile = new File(scoreFile.toURI( ));
+				break;
+			case RESULTS_FILE:
+				inputFile = new File(resultsFile.toURI( ));
+				break;
+			default:
+				inputFile = null;
+				break;
+		}
+		return inputFile;
+	}
+	
+	/**
+	 * Writes an array of lines to a file specified by the constant parameter. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 17, 2012 <br>
+	 * Date last modified: Apr 17, 2012 <br>
+	 *
+	 * <hr>
+	 * @param fileChoice - an integer representing the file requested. Use a declared constant if possible
+	 * @param overwrite - a boolean indicating whether to append the data or not. True means append.
+	 * @param lines - a String array containing the lines to be written to the file.
+	 * @throws IOException - if the file does not exist, or the write operation failed.
+	 */
+	public void write(int fileChoice, boolean overwrite, String[] lines) throws IOException
+	{
+		FileWriter outputFile = new FileWriter(chooseFile(fileChoice), overwrite);
+		
+		for (String line: lines)
+		{
+			outputFile.write(line);
+		}
+		
+		outputFile.close( );
+	}
+	
+	/**
+	 * Writes an array of lines to a file specified by the constant parameter. This is a 
+	 * wrapper to make writing a single line to the file easier.<br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 17, 2012 <br>
+	 * Date last modified: Apr 17, 2012 <br>
+	 *
+	 * <hr>
+	 * @param fileChoice - an integer representing the file requested. Use a declared constant if possible
+	 * @param overwrite - a boolean indicating whether to append the data or not. True means append.
+	 * @param line - a String containing the line to be written to the file.
+	 * @throws IOException - if the file does not exist, or the write operation failed.
+	 */
+	public void write(int fileChoice, boolean overwrite, String line) throws IOException
+	{
+		String[] array = new String[1];
+		array[0] = line;
+		
+		write(fileChoice, overwrite, array);
 	}
 
 }
