@@ -61,17 +61,11 @@ public class TutorGui implements Runnable
 	      canvas.setBounds(0, 0, WIDTH, HEIGHT);
 	      canvas.setIgnoreRepaint(true);
 	      
-	      JMenuBar menuBar = new JMenuBar( );
-	      JMenu menu = new JMenu("A Menu");
-	      
-	      menuBar.add(menu);
-	      
 	      panel.add(canvas);
 	      
 	      canvas.addKeyListener(new TutorKeyListener());
 	      
 	      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	      frame.setJMenuBar(menuBar);
 	      frame.pack();
 	      frame.setResizable(false);
 	      frame.setVisible(true);
