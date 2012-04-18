@@ -12,11 +12,14 @@
 
 package core;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
+import front.TutorGui;
 
 
 /**
@@ -86,6 +89,19 @@ public class Word
 	public Word(String word)
 	{
 		this(word.toCharArray( ));
+	}
+	
+	public Word(String word, boolean randomPlace)
+	{
+		this(word.toCharArray( ));
+		
+		if (randomPlace)
+		{
+			Random r = new Random();
+			
+			locX = r.nextInt(TutorGui.WIDTH);
+			locY = r.nextInt(TutorGui.HEIGHT);
+		}
 	}
 	
 	/**
@@ -191,6 +207,18 @@ public class Word
 			return characters[charactersCleared];
 	}
 	
+	public String getClearedChars()
+	{
+		StringBuffer output = new StringBuffer("");
+		
+		for (int c = 0; c < characters.length && c < charactersCleared; c++)
+		{
+			output.append(characters[c]);
+		}
+		
+		return output.toString( );
+	}
+	
 	/**
 	 * Advances the characters that have been typed so far. <br>        
 	 *
@@ -239,7 +267,30 @@ public class Word
 	 */
 	public void drawWord(Graphics g)
 	{
-		
+		g.setColor(Color.BLUE);
+		g.drawString(String.valueOf(characters), locX, locY);
+	}
+	
+	public int getLocX()
+	{
+		return locX;
+	}
+	
+	public int getLocY()
+	{
+		return locY;
+	}
+	
+	public void move(int locX, int locY)
+	{
+		this.locX = locX;
+		this.locY = locY;
+	}
+	
+	public void offset(int offX, int offY)
+	{
+		this.locX += offX;
+		this.locY += offY;
 	}
 	
 	/**
@@ -271,7 +322,7 @@ public class Word
 	 */
 	public String toString()
 	{
-		return "Word: \"" + String.valueOf(characters) + "\"\tLength: " + characters.length + 
+		return "Word: \"" + String.valueOf(characters) + " (" + locX + ", " + locY + ")" + "\tLength: " + characters.length + 
 						"\tCharacters Cleared: " + charactersCleared + "\tNext Character: " + 
 						getNextChar( ) + "\tWord Cleared: " + cleared;
 	}

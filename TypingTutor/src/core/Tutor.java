@@ -12,9 +12,11 @@
 
 package core;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import front.TutorGui;
 
 
 /**
@@ -88,6 +90,25 @@ public class Tutor
 		this.buffer = new StringBuffer(buffer);
 	}
 	
+	public Tutor(String[] array)
+	{
+		this(new ArrayList<Word>(), 
+			new ArrayList<Word>(), 
+			new ArrayList<Word>(),
+			DEFAULT_LIVES_LEFT,
+			DEFAULT_ERRORS,
+			new StringBuffer(""));
+		
+		ArrayList<Word> list = new ArrayList<Word>();
+		
+		for (String word: array)
+		{
+			list.add(new Word(word, true));
+		}
+		
+		this.wordsOnScreen = list;
+	}
+	
 	/**
 	 * No-Arg Constructor <br>        
 	 *
@@ -117,31 +138,43 @@ public class Tutor
 		{
 			if (character == acceptableWords.get(c).getNextChar( ))
 			{
-				score += CORRECT_WORD_SCORE;
 				buffer.append(character);
 				characterFound = true;
 				
 				acceptableWords.get(c).advanceCharacter( );
 				
+				for (int i = 0; i < acceptableWords.size( ); i++)
+				{
+					System.out.println(String.valueOf(acceptableWords.get(i).getCharacters( )) + ": " + acceptableWords.get(i).getClearedChars( ));
+					
+					if (!acceptableWords.get(i).getClearedChars( ).equals(buffer.toString( )))
+					{
+						acceptableWords.remove(i);
+						i--;
+						c = 0;
+					}
+				}
+				
 				if(acceptableWords.get(c).isCleared( ))
 				{
+					score += CORRECT_WORD_SCORE;
+					
 					wordsOnScreen.remove(acceptableWords.get(c));
 					clearedWords.add(acceptableWords.get(c));
 					acceptableWords.remove(c);
 					
 					acceptableWords = new ArrayList<Word>(wordsOnScreen);
+					
+					buffer.delete(0, buffer.length( ));
 				}
-			}
-			else
-			{
-				acceptableWords.get(c).reset( );
-				acceptableWords.remove(c);
 			}
 		}
 		
 		if(!characterFound)
 		{
 			errors++;
+			
+			System.out.println("Wrong Key! " + character);
 		}
 	}
 	
@@ -158,9 +191,29 @@ public class Tutor
 	 */
 	public void drawGame(Graphics g)
 	{
+		g.setColor(Color.BLACK);
+		g.drawString(String.valueOf(frameCount), TutorGui.WIDTH / 2, TutorGui.HEIGHT / 2);
 		
+		StringBuffer output = new StringBuffer("");
+		
+		for (Word word: wordsOnScreen)
+		{
+			word.drawWord(g);
+		}
+		
+		for (Word word: acceptableWords)
+		{
+			output.append(String.valueOf(word.getCharacters( )) + " ");
+		}
+		
+		
+		g.drawString("Score: " +String.valueOf(score) + " Errors: " + String.valueOf(errors) +
+			" Lives Left: " + String.valueOf(livesLeft), 10, TutorGui.HEIGHT - 20);
+		g.drawString(output.toString( ), 10, TutorGui.HEIGHT - 10);
+		g.drawString(buffer.toString( ), 10, TutorGui.HEIGHT);
 	}
 	
+	int frameCount;
 	/**
 	 * Updates the game. Meant to be overridden. <br>        
 	 *
@@ -173,6 +226,19 @@ public class Tutor
 	 */
 	public void update(int deltaTime)
 	{
+		frameCount++;
+		
+//		for (int c = 0; c < wordsOnScreen.size( ); c++)
+//		{
+//			if (frameCount % 4 == 0)
+//				wordsOnScreen.get(c).offset(0, 1);
+//			
+//			if (wordsOnScreen.get(c).getLocY( ) > TutorGui.HEIGHT)
+//			{
+//				wordsOnScreen.remove(c);
+//				livesLeft--;
+//			}
+//		}
 		
 	}
 	
@@ -201,7 +267,7 @@ public class Tutor
 	 */
 	public void initialize()
 	{
-		
+		acceptableWords = new ArrayList <Word>(wordsOnScreen);		
 	}
 	
 	

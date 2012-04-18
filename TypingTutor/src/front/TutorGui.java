@@ -13,8 +13,15 @@
 package front;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import core.Tutor;
 
 
@@ -27,39 +34,87 @@ import core.Tutor;
  * <hr>
  * @author Matthew Paul
  */
-public class TutorCanvas extends Canvas
+public class TutorGui implements Runnable
 {
-
-	/**
-	 * 
-	 */
 	private static final long	serialVersionUID	= 1L;
+	
+	private static final String[] TEST_ARRAY = {"Hello", "Goodbye", "Chiau", "Hallo"};
 	
 	public final static int WIDTH = 400,
 							HEIGHT = 400;
 	
-	BufferStrategy buffer;
+		JFrame frame;
+		Canvas canvas;
+		BufferStrategy buffer;
+	    Tutor game;
+	   
+	   public TutorGui(){
+	      frame = new JFrame("Render Frame");
+	      
+	      game = new Tutor(TEST_ARRAY);
+	      
+	      JPanel panel = (JPanel) frame.getContentPane();
+	      panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+	      panel.setLayout(null);
+	      
+	      canvas = new Canvas();
+	      canvas.setBounds(0, 0, WIDTH, HEIGHT);
+	      canvas.setIgnoreRepaint(true);
+	      
+	      JMenuBar menuBar = new JMenuBar( );
+	      JMenu menu = new JMenu("A Menu");
+	      
+	      menuBar.add(menu);
+	      
+	      panel.add(canvas);
+	      
+	      canvas.addKeyListener(new TutorKeyListener());
+	      
+	      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      frame.setJMenuBar(menuBar);
+	      frame.pack();
+	      frame.setResizable(false);
+	      frame.setVisible(true);
+	      
+	      canvas.createBufferStrategy(2);
+	      buffer = canvas.getBufferStrategy();
+	      
+	      canvas.requestFocus();
+	      
+	      game.initialize( );
+	   }
 	
-	Tutor game;
-	
-	public TutorCanvas()
+
+	private class TutorKeyListener implements KeyListener
 	{
-		super();
-		
-		game = new Tutor();
-		
-		setBounds(0, 0, WIDTH, HEIGHT);
-		setIgnoreRepaint(true);
-		
+
+		@Override
+		public void keyPressed(KeyEvent e)
+		{
+//			do nothing
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+//			do nothing
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e)
+		{
+			game.processCharacter(e);
+		}
 		
 	}
+	
 	
 	long desiredFPS = 60;
     long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
     
    boolean running = true;
    
-   public void loop()
+   public void run()
    {
 	   long beginLoopTime;
 	      long endLoopTime;
@@ -93,24 +148,23 @@ public class TutorCanvas extends Canvas
    
    public void render()
    {
-	   //game.drawGame(buffer.getDrawGraphics( ));
 	   Graphics g = buffer.getDrawGraphics( );
+	   g.clearRect(0, 0, WIDTH, HEIGHT);
+	   game.drawGame(g);
+	   
+	   g.dispose( );
 	   buffer.show( );
    }
    
    public void update(int deltaTime)
    {
-	   //game.update(deltaTime);
+	   game.update(deltaTime);
    }
    
-   public void addNotify()
+   public static void main(String [] args)
    {
-	   super.addNotify();
-	   this.createBufferStrategy(2);
-	   buffer = this.getBufferStrategy();
-	   loop();
-	}
-	
-	
-
+	      
+	      TutorGui gui = new TutorGui();
+	      new Thread(gui).start( );
+   }
 }
