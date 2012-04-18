@@ -134,26 +134,16 @@ public class Tutor
 		
 		boolean characterFound = false;
 		
+		buffer.append(character);
+		
 		for (int c = 0; c < acceptableWords.size( ); c++)
 		{
 			if (character == acceptableWords.get(c).getNextChar( ))
 			{
-				buffer.append(character);
+				
 				characterFound = true;
 				
 				acceptableWords.get(c).advanceCharacter( );
-				
-				for (int i = 0; i < acceptableWords.size( ); i++)
-				{
-					System.out.println(String.valueOf(acceptableWords.get(i).getCharacters( )) + ": " + acceptableWords.get(i).getClearedChars( ));
-					
-					if (!acceptableWords.get(i).getClearedChars( ).equals(buffer.toString( )))
-					{
-						acceptableWords.remove(i);
-						i--;
-						c = 0;
-					}
-				}
 				
 				if(acceptableWords.get(c).isCleared( ))
 				{
@@ -165,6 +155,11 @@ public class Tutor
 					
 					acceptableWords = new ArrayList<Word>(wordsOnScreen);
 					
+					for (Word word: acceptableWords)
+					{
+						word.reset( );
+					}
+					
 					buffer.delete(0, buffer.length( ));
 				}
 			}
@@ -175,6 +170,19 @@ public class Tutor
 			errors++;
 			
 			System.out.println("Wrong Key! " + character);
+			
+			buffer.deleteCharAt(buffer.length( ) - 1);
+		}
+		
+		for (int i = 0; i < acceptableWords.size( ); i++)
+		{
+			System.out.println(String.valueOf(acceptableWords.get(i).getCharacters( )) + ": " + acceptableWords.get(i).getClearedChars( ) + " NextChar = " + acceptableWords.get(i).getNextChar( ));
+			
+			if (!acceptableWords.get(i).getClearedChars( ).equals(buffer.toString( )))
+			{
+				acceptableWords.remove(i);
+				i--;
+			}
 		}
 	}
 	
@@ -228,17 +236,17 @@ public class Tutor
 	{
 		frameCount++;
 		
-//		for (int c = 0; c < wordsOnScreen.size( ); c++)
-//		{
-//			if (frameCount % 4 == 0)
-//				wordsOnScreen.get(c).offset(0, 1);
-//			
-//			if (wordsOnScreen.get(c).getLocY( ) > TutorGui.HEIGHT)
-//			{
-//				wordsOnScreen.remove(c);
-//				livesLeft--;
-//			}
-//		}
+		for (int c = 0; c < wordsOnScreen.size( ); c++)
+		{
+			if (frameCount % 4 == 0)
+				wordsOnScreen.get(c).offset(0, 1);
+			
+			if (wordsOnScreen.get(c).getLocY( ) > TutorGui.HEIGHT)
+			{
+				wordsOnScreen.remove(c);
+				livesLeft--;
+			}
+		}
 		
 	}
 	
