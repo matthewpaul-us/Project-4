@@ -35,7 +35,7 @@ public class TutorCanvas extends Canvas
 	private static final long	serialVersionUID	= 1L;
 	
 //	The game object for the canvas to run
-	private Tutor game;
+	protected Tutor game;
 	
 //	The bufferStrategy used to write to the canvas
 	protected BufferStrategy buffer;
@@ -55,8 +55,9 @@ public class TutorCanvas extends Canvas
 	{
 		super();
 		
-		String[] array = {"One", "Two", "Three"};
-		game = new LaserTutor(array);
+		game = new Tutor();
+		
+		game.initialize( );
 	}
 	
 	/**

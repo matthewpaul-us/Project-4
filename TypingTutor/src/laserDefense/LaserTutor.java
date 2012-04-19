@@ -37,6 +37,8 @@ public class LaserTutor extends Tutor
 {
 	
 	BufferedImage backgroundImage;
+	
+	File backgroundFile = new File("resources/laserBackground.gif");
 
 	/**
 	 * Constructor <br>        
@@ -62,12 +64,12 @@ public class LaserTutor extends Tutor
 				buffer);
 		try
 		{
-			loadBackgroundImage(new File("/TypingTutor/resources/laserBackground.png"));
+			loadBackgroundImage(backgroundFile);
 		}
 		catch (IOException e)
 		{
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage( );
 		}
 	}
 
@@ -84,7 +86,15 @@ public class LaserTutor extends Tutor
 	public LaserTutor(String [ ] array)
 	{
 		super(array);
-		// TODO Auto-generated constructor stub
+
+		try
+		{
+			loadBackgroundImage(backgroundFile);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -98,7 +108,14 @@ public class LaserTutor extends Tutor
 	 */
 	public LaserTutor()
 	{
-		// TODO Auto-generated constructor stub
+		try
+		{
+			loadBackgroundImage(backgroundFile);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
