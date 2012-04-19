@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
+import laserDefense.LaserTutor;
 import core.Tutor;
 
 
@@ -40,6 +41,7 @@ public class TutorCanvas extends Canvas
 	protected BufferStrategy buffer;
 	
 	
+	
 	/**
 	 * Constructor <br>        
 	 *
@@ -52,7 +54,9 @@ public class TutorCanvas extends Canvas
 	public TutorCanvas()
 	{
 		super();
-		game = new Tutor();
+		
+		String[] array = {"One", "Two", "Three"};
+		game = new LaserTutor(array);
 	}
 	
 	/**

@@ -40,8 +40,8 @@ public class TutorGui implements Runnable
 	
 	private static final String[] TEST_ARRAY = {"Hello", "Goodbye", "Chiau", "Hallo"};
 	
-	public final static int WIDTH = 400,
-							HEIGHT = 400;
+	public final static int WIDTH = 600,
+							HEIGHT = 600;
 	
 		JFrame frame;
 		Canvas canvas;
