@@ -180,7 +180,7 @@ public class FileOperator
 	
 	/**
 	 * Writes an array of lines to a file specified by the constant parameter. This is a 
-	 * wrapper to make writing a single line to the file easier.<br>        
+	 * wrapper to make writing a single line to the file easier. Automatically appends it.<br>        
 	 *
 	 * <hr>
 	 * Date created: Apr 17, 2012 <br>
@@ -192,12 +192,12 @@ public class FileOperator
 	 * @param line - a String containing the line to be written to the file.
 	 * @throws IOException - if the file does not exist, or the write operation failed.
 	 */
-	public void write(int fileChoice, boolean overwrite, String line) throws IOException
+	public void write(int fileChoice, String line) throws IOException
 	{
 		String[] array = new String[1];
 		array[0] = line;
 		
-		write(fileChoice, overwrite, array);
+		write(fileChoice, true, array);
 	}
 
 }

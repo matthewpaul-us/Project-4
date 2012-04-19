@@ -1,6 +1,6 @@
 /**
  * ---------------------------------------------------------------------------
- * File name: Gui.java<br/>
+ * File name: Gui2.java<br/>
  * Project name: TypingTutor<br/>
  * ---------------------------------------------------------------------------
  * Creator's name and email: Matthew Paul, paulmr@goldmail.etsu.edu<br/>
@@ -12,17 +12,16 @@
 
 package front;
 
-import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferStrategy;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
 
 /**
  * Enter type purpose here<br>
@@ -35,133 +34,179 @@ import javax.swing.JPanel;
  */
 public class Gui implements Runnable
 {
-	public static final int WIDTH = 800,
-							HEIGHT = 800;
+//	The width of the game window. Controls the outer frame size
+	public static final int	WIDTH	= 600;
+//	the height of the game window. Controls the outer frame size
+	public static final int	HEIGHT	= 600;
 	
-	BufferStrategy buffer;
+//	The TutorCanvas that the game screen will be written on
+	TutorCanvas canvas;
 	
+//	The frame that holds the canvas
+	JFrame frame;
 
+	
 	/**
-	 * Enter method description here <br>        
+	 * Constructor <br>        
 	 *
 	 * <hr>
 	 * Date created: Apr 18, 2012 <br>
 	 * Date last modified: Apr 18, 2012 <br>
 	 *
 	 * <hr>
-	 * @param args
 	 */
-
 	public Gui()
 	{
-		JFrame frame = new JFrame("Top-level GUI");
+		frame = new JFrame("Typing Tutor");
 
 		JPanel panel = (JPanel) frame.getContentPane( );
 
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setLayout(null);
 
-		Canvas canvas = new Canvas();
+		canvas = new TutorCanvas();
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
-
+		
 		JMenuBar menuBar = new JMenuBar( );
-		JMenu menu = new JMenu("A Menu");
+		
+		JMenu fileMenu = new JMenu("File");
+		JMenuItem resetOption = new JMenuItem("Reset Game");
+		JMenuItem quitOption = new JMenuItem("Quit Game");
+		
+		fileMenu.add(resetOption);
+		fileMenu.add(quitOption);
+		
+		JMenu gameMenu = new JMenu("Game");
+		JMenuItem missileOption = new JMenuItem("Laser Defense");
+		JMenuItem speedOption = new JMenuItem("Speed Test");
+		
+		gameMenu.add(missileOption);
+		gameMenu.add(speedOption);
+		
+		
+		JMenu aboutMenu = new JMenu("About");
+		JMenuItem aboutOption = new JMenuItem("About Us");
+		
+		aboutMenu.add(aboutOption);
+		
 
-		menuBar.add(menu);
+		menuBar.add(fileMenu);
+		menuBar.add(gameMenu);
+		menuBar.add(aboutMenu);
+		
+		frame.setJMenuBar(menuBar);
 
 		panel.add(canvas);
 
 		canvas.addKeyListener(new TutorKeyListener());
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setJMenuBar(menuBar);
 		frame.pack();
 		frame.setResizable(false);
 		frame.setVisible(true);
-
-		canvas.createBufferStrategy(2);
-		buffer = canvas.getBufferStrategy();
-
+		
+		canvas.addFocusListener(new TutorFocusListener());
+		
+		canvas.setBufferStrategy( );
 		canvas.requestFocus();
 	}
 	
+	private class TutorFocusListener implements FocusListener
+	{
+
+		@Override
+		public void focusGained(FocusEvent arg0)
+		{
+			paused = false;
+		}
+
+		@Override
+		public void focusLost(FocusEvent arg0)
+		{
+			paused = true;
+		}
+		
+	}
+
 	private class TutorKeyListener implements KeyListener
 	{
 
 		@Override
 		public void keyPressed(KeyEvent e)
 		{
-//			do nothing
+			//			do nothing
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e)
 		{
-//			do nothing
+			//			do nothing
 		}
 
 		@Override
 		public void keyTyped(KeyEvent e)
 		{
-//			game.processCharacter(e);
+			canvas.processCharacter(e);
 		}
-		
+
 	}
 
 	long desiredFPS = 60;
-    long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
-    
-   boolean running = true;
-	
+	long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
+
+	boolean running = true;
+	private boolean	paused;
+
 	@Override
 	public void run()
 	{
 		long beginLoopTime;
-	      long endLoopTime;
-	      long currentUpdateTime = System.nanoTime();
-	      long lastUpdateTime;
-	      long deltaLoop;
-	      
-	      while(running){
-	         beginLoopTime = System.nanoTime();
-	         
-//	         render();
-	         
-	         lastUpdateTime = currentUpdateTime;
-	         currentUpdateTime = System.nanoTime();
-//	         update((int) ((currentUpdateTime - lastUpdateTime)/(1000*1000)));
-	         
-	         endLoopTime = System.nanoTime();
-	         deltaLoop = endLoopTime - beginLoopTime;
-	           
-	           if(deltaLoop > desiredDeltaLoop){
-	               //Do nothing. We are already late.
-	           }else{
-	               try{
-	                   Thread.sleep((desiredDeltaLoop - deltaLoop)/(1000*1000));
-	               }catch(InterruptedException e){
-	                   System.out.println(e.getMessage( ));
-	               }
-	           }
-	      }
+		long endLoopTime;
+		long currentUpdateTime = System.nanoTime();
+		long lastUpdateTime;
+		long deltaLoop;
+
+		while(running)
+		{
+			
+			beginLoopTime = System.nanoTime();
+
+			if (!paused)
+			{
+				canvas.render();
+			}
+			else
+			{
+				canvas.renderPausedScreen( );
+			}
+			lastUpdateTime = currentUpdateTime;
+			currentUpdateTime = System.nanoTime();
+			
+			if (!paused)
+			{
+				canvas.update((int) ((currentUpdateTime - lastUpdateTime)/(1000*1000)));
+			}
+			
+			endLoopTime = System.nanoTime();
+			deltaLoop = endLoopTime - beginLoopTime;
+
+			if(deltaLoop > desiredDeltaLoop){
+				//Do nothing. We are already late.
+			}else{
+				try{
+					Thread.sleep((desiredDeltaLoop - deltaLoop)/(1000*1000));
+				}catch(InterruptedException e){
+					System.out.println(e.getMessage( ));
+				}
+			}
+		}
 	}
 	
-	public static void render()
+	public static void main(String [ ] args)
 	{
-		
+		Gui gui = new Gui();
+		new Thread(gui).start( );
 	}
-	
-	public static void update(int deltaTime)
-	{
-		
-	}
-	
-	public static void main(String [] args)
-	   {
-		      
-		      Gui gui = new Gui();
-		      new Thread(gui).start( );
-	   }
 
 }
