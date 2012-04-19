@@ -109,7 +109,7 @@ public class WordPool
 	 */
 	public boolean hasMoreWords()
 	{
-		return queue.isEmpty( );
+		return !queue.isEmpty( );
 	}
 
 }

@@ -154,7 +154,10 @@ public class Word
 		this.cleared = word.isCleared( );
 		
 //		copy the image attached to the word
-		this.wordImage = copy(word.wordImage);
+		if (wordImage != null)
+			this.wordImage = copy(word.wordImage);
+		else
+			this.wordImage = null;
 		
 //		copy the coordinates of the image
 		this.locX = word.locX;
