@@ -85,6 +85,108 @@ public class FileOperator
 	}
 	
 	/**
+	 * Returns the word file. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @return File object that represents the word file
+	 */
+	public File getWordFile()
+	{
+		return wordFile;
+	}
+	
+	/**
+	 * Sets the word file to the specified file <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @param wordFile the File object that represents the word file
+	 * @throws IOException - if file does not exist
+	 */
+	public void setWordFile(File wordFile) throws IOException
+	{
+		if (wordFile.exists( ))
+			this.wordFile = new File(wordFile.toURI( ));
+		else
+			throw new IOException("File does not exist: " + wordFile.getAbsolutePath( ));
+	}
+	
+	/**
+	 * Gets the score file. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @return File object that represents the score file
+	 */
+	public File getScoreFile()
+	{
+		return scoreFile;
+	}
+	
+	/**
+	 * Sets the score file to the specified file <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @param scoreFile the File object that represents the score file
+	 * @throws IOException - if score file does not exist
+	 */
+	public void setScoreFile(File scoreFile) throws IOException
+	{
+		if (scoreFile.exists( ))
+			this.scoreFile = new File(scoreFile.toURI( ));
+		else
+			throw new IOException("File does not exist: " + scoreFile.getAbsolutePath( ));
+	}
+	
+	/**
+	 * Gets the results file <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @return The File object that represents the results file
+	 */
+	public File getResultsFile()
+	{
+		return resultsFile;
+	}
+	
+	/**
+	 * Sets the results file to the specified file <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @param resultsFile
+	 * @throws IOException - if the results file does not exist
+	 */
+	public void setResultsFile(File resultsFile) throws IOException
+	{	
+		if (resultsFile.exists( ))
+			this.resultsFile = new File(resultsFile.toURI( ));
+		else
+			throw new IOException("File does not exist: " + resultsFile.getAbsolutePath( ));
+	}
+	
+	/**
 	 * Returns an array containing all the lines in a file. The file is specified by passing an integer into the method. <br><br>
 	 * WORD_FILE - Indicates that the score file is requested. <br>
 	 * SCORE_FILE - Indicates that the score file is requested. <br>
@@ -169,6 +271,9 @@ public class FileOperator
 	public void write(int fileChoice, boolean overwrite, String[] lines) throws IOException
 	{
 		FileWriter outputFile = new FileWriter(chooseFile(fileChoice), overwrite);
+		
+		if(overwrite)
+			outputFile.write("\n");
 		
 		for (String line: lines)
 		{
