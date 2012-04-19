@@ -62,6 +62,9 @@ public class Tutor
 //	the wordpool from which the game draws its words
 	private WordPool pool;
 	
+//	a count of how many frames have passed since the game has started
+	protected int frameCount;
+	
 	
 	/**
 	 * Full Constructor <br>        
@@ -244,29 +247,32 @@ public class Tutor
 	 */
 	public void drawGame(Graphics g)
 	{
+//		set the color to black and write the frame count in the middle of the screen
 		g.setColor(Color.BLACK);
 		g.drawString(String.valueOf(frameCount), Gui.WIDTH / 2, Gui.HEIGHT / 2);
 		
+//		prepare an output buffer
 		StringBuffer output = new StringBuffer("");
 		
+//		draw each word that shows up on the screen
 		for (Word word: wordsOnScreen)
 		{
 			word.drawWord(g);
 		}
 		
+//		store all acceptable words in the output
 		for (Word word: acceptableWords)
 		{
 			output.append(String.valueOf(word.getCharacters( )) + " ");
 		}
 		
-		
+//		draw the stats, the output, and the character buffer
 		g.drawString("Score: " +String.valueOf(score) + " Errors: " + String.valueOf(errors) +
 			" Lives Left: " + String.valueOf(livesLeft), 10, Gui.HEIGHT - 20);
 		g.drawString(output.toString( ), 10, Gui.HEIGHT - 10);
 		g.drawString(buffer.toString( ), 10, Gui.HEIGHT);
 	}
 	
-	int frameCount;
 	/**
 	 * Updates the game. Meant to be overridden. <br>        
 	 *
@@ -279,15 +285,20 @@ public class Tutor
 	 */
 	public void update(int deltaTime)
 	{
+//		increment the frame count
 		frameCount++;
 		
+//		for every word on the screen...
 		for (int c = 0; c < wordsOnScreen.size( ); c++)
 		{
+//			for every fourth frame...
 			if (frameCount % 4 == 0)
+//				move the word down by one pixel
 				wordsOnScreen.get(c).offset(0, 1);
-			
+//			if the word reaches the bottom of the screen...
 			if (wordsOnScreen.get(c).getLocY( ) > TutorGui.HEIGHT)
 			{
+//				remove the word and take a life away
 				wordsOnScreen.remove(c);
 				livesLeft--;
 			}
@@ -320,6 +331,7 @@ public class Tutor
 	 */
 	public void initialize()
 	{
+//		initialize the acceptable word pool to all the words on the screen
 		acceptableWords = new ArrayList <Word>(wordsOnScreen);		
 	}
 	

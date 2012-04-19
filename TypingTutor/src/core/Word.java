@@ -15,6 +15,8 @@ package core;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -62,17 +64,25 @@ public class Word
 	 */
 	public Word(char[] characters)
 	{
+//		initialize the internal characters with the length of the characters
 		this.characters = new char[characters.length];
 		
+//		for all the space in the internal characters array...
 		for (int c = 0; c < this.characters.length; c++)
 		{
+//			copy the character over to the internal array
 			this.characters[c] = characters[c];
 		}
 		
+//		set the number of the cleared characters to 0
 		charactersCleared = 0;
+		
+//		if the length of the word is 0...
 		if (characters.length == 0)
+//			set cleared to true
 			cleared = true;
 		else
+//			set cleared to false
 			cleared = false;
 	}
 	
@@ -88,17 +98,35 @@ public class Word
 	 */
 	public Word(String word)
 	{
+//		call the array constructor and pass the character array of the string
 		this(word.toCharArray( ));
 	}
 	
+	
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @param word A String containing the word
+	 * @param randomPlace Boolean indicating a random starting place
+	 */
 	public Word(String word, boolean randomPlace)
 	{
+//		call the String constructor
 		this(word.toCharArray( ));
 		
+//		if the starting location needs to be randomized...
 		if (randomPlace)
 		{
+			
 			Random r = new Random();
 			
+//			randomly set the X and Y location
 			locX = r.nextInt(TutorGui.WIDTH);
 			locY = r.nextInt(TutorGui.HEIGHT);
 		}
@@ -116,10 +144,21 @@ public class Word
 	 */
 	public Word(Word word)
 	{
+//		call the character array constructor
 		this(word.getCharacters( ));
 		
+//		copy the number of the characters cleared
 		this.charactersCleared = word.getCharactersCleared( );
+		
+//		copy the cleared attribute
 		this.cleared = word.isCleared( );
+		
+//		copy the image attached to the word
+		this.wordImage = copy(word.wordImage);
+		
+//		copy the coordinates of the image
+		this.locX = word.locX;
+		this.locY = word.locY;
 	}
 	
 	/**
@@ -190,7 +229,7 @@ public class Word
 	}
 	
 	/**
-	 * Returns the next character that can be typed. <br>        
+	 * Returns the next character that needs to be typed. <br>        
 	 *
 	 * <hr>
 	 * Date created: Apr 15, 2012 <br>
@@ -201,9 +240,12 @@ public class Word
 	 */
 	public char getNextChar()
 	{
+//		if the length of the word is 0 or it is cleared...
 		if (characters.length == 0 || cleared)
+//			return a sentinal character
 			return '~';
 		else
+//			return the next character that needs to be typed
 			return characters[charactersCleared];
 	}
 	
@@ -211,11 +253,14 @@ public class Word
 	{
 		StringBuffer output = new StringBuffer("");
 		
+//		for every letter in the characters array and less than the characters already cleared...
 		for (int c = 0; c < characters.length && c < charactersCleared; c++)
 		{
+//			put the letter into the buffer
 			output.append(characters[c]);
 		}
 		
+//		return the buffer as a string
 		return output.toString( );
 	}
 	
@@ -307,6 +352,25 @@ public class Word
 	public void loadImage(File imageFile) throws IOException
 	{
 		wordImage = ImageIO.read(imageFile);
+	}
+	
+	/**
+	 * Performs a deep copy of a buffered image <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 19, 2012 <br>
+	 * Date last modified: Apr 19, 2012 <br>
+	 *
+	 * <hr>
+	 * @param bi The BufferedImage to copy
+	 * @return a copy of the BufferedImage
+	 */
+	static BufferedImage copy(BufferedImage bi) 
+	{
+		ColorModel cm = bi.getColorModel();
+		boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+		WritableRaster raster = bi.copyData(null);
+		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
 	
 	/**
