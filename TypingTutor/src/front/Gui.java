@@ -13,10 +13,16 @@
 package front;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,6 +51,23 @@ public class Gui implements Runnable
 	
 //	The frame that holds the canvas
 	JFrame frame;
+	JPanel panel;
+	
+	JMenuBar menuBar;
+	
+	JMenu fileMenu,
+		  gameMenu,
+		  aboutMenu;
+	
+	JMenuItem resetOption,
+			  quitOption,
+			  laserOption,
+			  speedOption,
+			  aboutOption;
+	
+	BufferedImage icon;
+	
+	File iconFile = new File("resources/laserIcon.gif");
 
 	
 	/**
@@ -59,8 +82,11 @@ public class Gui implements Runnable
 	public Gui()
 	{
 		frame = new JFrame("Typing Tutor");
+		
+		loadIcon();
+		frame.setIconImage(icon);
 
-		JPanel panel = (JPanel) frame.getContentPane( );
+		panel = (JPanel) frame.getContentPane( );
 
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setLayout(null);
@@ -69,34 +95,7 @@ public class Gui implements Runnable
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
 		
-		JMenuBar menuBar = new JMenuBar( );
-		
-		JMenu fileMenu = new JMenu("File");
-		JMenuItem resetOption = new JMenuItem("Reset Game");
-		JMenuItem quitOption = new JMenuItem("Quit Game");
-		
-		fileMenu.add(resetOption);
-		fileMenu.add(quitOption);
-		
-		JMenu gameMenu = new JMenu("Game");
-		JMenuItem missileOption = new JMenuItem("Laser Defense");
-		JMenuItem speedOption = new JMenuItem("Speed Test");
-		
-		gameMenu.add(missileOption);
-		gameMenu.add(speedOption);
-		
-		
-		JMenu aboutMenu = new JMenu("About");
-		JMenuItem aboutOption = new JMenuItem("About Us");
-		
-		aboutMenu.add(aboutOption);
-		
-
-		menuBar.add(fileMenu);
-		menuBar.add(gameMenu);
-		menuBar.add(aboutMenu);
-		
-		frame.setJMenuBar(menuBar);
+		buildMenuBar( );
 
 		panel.add(canvas);
 
@@ -111,6 +110,121 @@ public class Gui implements Runnable
 		
 		canvas.setBufferStrategy( );
 		canvas.requestFocus();
+	}
+
+
+
+
+
+	private void loadIcon()
+	{
+		try
+		{
+			icon = ImageIO.read(iconFile);
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error loading the custom icon! " + e.getMessage( ));
+		}
+	}
+
+
+
+
+
+	/**
+	 * Builds the menu bar for the GUI. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 20, 2012 <br>
+	 * Date last modified: Apr 20, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	
+	private void buildMenuBar()
+	{
+		menuBar = new JMenuBar( );
+		
+		fileMenu = new JMenu("File");
+		fileMenu.setMnemonic(KeyEvent.VK_F);
+		
+		resetOption = new JMenuItem("Reset Game");
+		resetOption.addActionListener(new TutorMenuListener( ));
+		resetOption.setMnemonic(KeyEvent.VK_R);
+		
+		quitOption = new JMenuItem("Quit Game");
+		quitOption.addActionListener(new TutorMenuListener( ));
+		quitOption.setMnemonic(KeyEvent.VK_Q);
+		
+		fileMenu.add(resetOption);
+		fileMenu.add(quitOption);
+		
+		gameMenu = new JMenu("Game");
+		gameMenu.setMnemonic(KeyEvent.VK_G);
+		
+		laserOption = new JMenuItem("Laser Defense");
+		laserOption.addActionListener(new TutorMenuListener( ));
+		laserOption.setMnemonic(KeyEvent.VK_L);
+		
+		speedOption = new JMenuItem("Speed Test");
+		speedOption.addActionListener(new TutorMenuListener( ));
+		speedOption.setMnemonic(KeyEvent.VK_S);
+		
+		gameMenu.add(laserOption);
+		gameMenu.add(speedOption);
+		
+		
+		aboutMenu = new JMenu("About");
+		aboutMenu.setMnemonic(KeyEvent.VK_A);
+		
+		aboutOption = new JMenuItem("About Us");
+		aboutOption.addActionListener(new TutorMenuListener( ));
+		aboutOption.setMnemonic(KeyEvent.VK_A);
+		
+		aboutMenu.add(aboutOption);
+		
+
+		menuBar.add(fileMenu);
+		menuBar.add(gameMenu);
+		menuBar.add(aboutMenu);
+		
+		frame.setJMenuBar(menuBar);
+	}
+	
+	private class TutorMenuListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if(e.getSource( ) == resetOption)
+			{
+				canvas.reset();
+			}
+			else if (e.getSource( ) == quitOption)
+			{
+				System.exit(0);
+			}
+			else if (e.getSource( ) == laserOption)
+			{
+				canvas.setExit(true);
+				canvas = null;
+				
+				canvas = new LaserCanvas();
+				
+				canvas.reset( );
+			}
+			else if (e.getSource( ) == speedOption)
+			{
+				
+			}
+			else if (e.getSource( ) == aboutOption)
+			{
+				new AboutDialog(frame);				
+			}
+		}
+		
 	}
 	
 	private class TutorFocusListener implements FocusListener
@@ -173,14 +287,15 @@ public class Gui implements Runnable
 			
 			beginLoopTime = System.nanoTime();
 
-			if (!paused)
+			if (!paused && !canvas.isExiting( ))
 			{
 				canvas.render();
 			}
-			else
+			else if (canvas != null && !canvas.isExiting( ))
 			{
 				canvas.renderPausedScreen( );
 			}
+
 			lastUpdateTime = currentUpdateTime;
 			currentUpdateTime = System.nanoTime();
 			
@@ -206,8 +321,11 @@ public class Gui implements Runnable
 	
 	
 	
+	
+	
 	public static void main(String [ ] args)
 	{
+
 		Gui gui = new Gui();
 		new Thread(gui).start( );
 	}

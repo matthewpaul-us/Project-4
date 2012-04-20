@@ -14,6 +14,7 @@ package front;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
@@ -40,6 +41,8 @@ public class TutorCanvas extends Canvas
 //	The bufferStrategy used to write to the canvas
 	protected BufferStrategy buffer;
 	
+	protected boolean exiting;
+	
 	
 	
 	/**
@@ -58,6 +61,8 @@ public class TutorCanvas extends Canvas
 		game = new Tutor();
 		
 		game.initialize( );
+		
+		exiting = false;
 	}
 	
 	/**
@@ -69,7 +74,7 @@ public class TutorCanvas extends Canvas
 	 *
 	 * <hr>
 	 */
-	public void render()
+	public synchronized void render()
 	{
 		Graphics g = buffer.getDrawGraphics( );
 
@@ -90,7 +95,7 @@ public class TutorCanvas extends Canvas
 	 *
 	 * <hr>
 	 */
-	public void renderPausedScreen()
+	public synchronized void renderPausedScreen()
 	{
 		Graphics g = buffer.getDrawGraphics( );
 
@@ -148,5 +153,21 @@ public class TutorCanvas extends Canvas
 	public void update(int deltaTime)
 	{
 		game.update(deltaTime);
+	}
+	
+	public void reset()
+	{
+		game = new Tutor();
+		game.initialize( );
+	}
+	
+	public void setExit(boolean exit)
+	{
+		exiting = exit;
+	}
+	
+	public boolean isExiting()
+	{
+		return exiting;
 	}
 }

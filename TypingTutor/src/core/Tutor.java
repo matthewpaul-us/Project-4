@@ -15,7 +15,9 @@ package core;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import front.Gui;
 import front.TutorGui;
 
@@ -31,16 +33,16 @@ import front.TutorGui;
  */
 public class Tutor
 {
-	private static final int	DEFAULT_LIVES_LEFT	= 3;
+	protected static final int	DEFAULT_LIVES_LEFT	= 3;
 
-	private static final int	DEFAULT_ERRORS	= 0;
+	protected static final int	DEFAULT_ERRORS	= 0;
 
-	private static final int 	DEFAULT_SCORE = 0;
+	protected static final int 	DEFAULT_SCORE = 0;
 
-	private static final int	CORRECT_WORD_SCORE	= 100;
+	protected static final int	CORRECT_WORD_SCORE	= 100;
 
 //	a list of words that are on the screen
-	private ArrayList<Word> wordsOnScreen,
+	protected ArrayList<Word> wordsOnScreen,
 	
 //	a list of words that have the valid inputs. These are the ones that can be typed, given what was typed before
 							acceptableWords,
@@ -49,21 +51,25 @@ public class Tutor
 							clearedWords;
 	
 //	the number of times a word can reach the end without being typed. After each word, it is decremented. When it's less than 1, game over
-	private int livesLeft;
+	protected int livesLeft;
 	
-	private int score;
+	protected int score;
 	
 //	the number of incorrectly typed characters
-	private int errors;
+	protected int errors;
 	
 //	the buffer containing the typed characters
-	private StringBuffer buffer;
+	protected StringBuffer buffer;
 	
 //	the wordpool from which the game draws its words
-	private WordPool pool;
+	protected WordPool pool;
 	
 //	a count of how many frames have passed since the game has started
 	protected int frameCount;
+	
+	protected Word killedWord;
+
+	private boolean	gameOver;
 	
 	
 	/**
@@ -95,6 +101,38 @@ public class Tutor
 		this.errors = errors;
 		
 		this.buffer = new StringBuffer(buffer);
+		
+		FileOperator file = new FileOperator( );
+		
+		String [ ] lines = null;
+		
+		try
+		{
+			lines = file.read(FileOperator.WORD_FILE);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.pool = createWordPool(lines);
+		
+		file = null;
+	}
+	
+	protected WordPool createWordPool(String[] lines)
+	{
+		Word[] words = new Word[lines.length];
+		
+		Random r = new Random();
+		
+		for (int c = 0; c < words.length; c++)
+		{
+			words[c] = new Word(lines[c], r.nextInt(600), 0);
+		}
+		
+		return new WordPool(words);
 	}
 	
 	
@@ -121,7 +159,7 @@ public class Tutor
 		
 		for (String word: array)
 		{
-			list.add(new Word(word, true));
+			list.add(new Word(word, 0, 0));
 		}
 		
 		this.wordsOnScreen = list;
@@ -185,8 +223,13 @@ public class Tutor
 //					add the correct amount to the score
 					score += CORRECT_WORD_SCORE;
 					
-//					remove the word from the words on the screen
+					killedWord = acceptableWords.get(c);
+					
+//					remove the word from the words on the screen and add another from the word pool
 					wordsOnScreen.remove(acceptableWords.get(c));
+					
+					if(pool.hasMoreWords( ))
+						wordsOnScreen.add(pool.getNextWord( ));
 					
 //					add the word to the list of cleared words
 					clearedWords.add(acceptableWords.get(c));
@@ -304,6 +347,9 @@ public class Tutor
 			}
 		}
 		
+		if(livesLeft < 1)
+			gameOver = true;
+		
 	}
 	
 	/**
@@ -331,6 +377,11 @@ public class Tutor
 	 */
 	public void initialize()
 	{
+		for (int c = 0; c < 5; c++)
+		{
+			wordsOnScreen.add(pool.getNextWord( ));
+		}
+		
 //		initialize the acceptable word pool to all the words on the screen
 		acceptableWords = new ArrayList <Word>(wordsOnScreen);		
 	}

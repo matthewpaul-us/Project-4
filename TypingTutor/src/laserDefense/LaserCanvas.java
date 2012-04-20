@@ -42,6 +42,8 @@ public class LaserCanvas extends TutorCanvas
 	@Override
 	public void renderPausedScreen()
 	{
+		if(!exiting)
+		{
 		Graphics g = buffer.getDrawGraphics( );
 
 		g.setColor(Color.DARK_GRAY);
@@ -52,7 +54,14 @@ public class LaserCanvas extends TutorCanvas
 
 		g.dispose( );
 		buffer.show( );
-		
+		}
+	}
+	
+	@Override
+	public void reset()
+	{
+		game = new LaserTutor( );
+		game.initialize( );
 	}
 
 }

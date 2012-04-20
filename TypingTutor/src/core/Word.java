@@ -37,20 +37,20 @@ public class Word
 {
 	
 //	the collection of characters that make up the word
-	private char[] characters;
+	protected char[] characters;
 	
 //	the number of characters that has been typed
-	private int charactersCleared;
+	protected int charactersCleared;
 	
 //	whether or not the word has already been typed
-	private boolean cleared;
+	protected boolean cleared;
 	
 //	the picture that represents the word
-	private BufferedImage wordImage = null;
+	protected BufferedImage wordImage = null;
 	
 //	the coordinates of the word on the canvas
-	private int locX,
-				locY;
+	protected int locX,
+				  locY;
 	
 	/**
 	 * Full Constructor <br>        
@@ -115,21 +115,14 @@ public class Word
 	 * @param word A String containing the word
 	 * @param randomPlace Boolean indicating a random starting place
 	 */
-	public Word(String word, boolean randomPlace)
+	public Word(String word, int x, int y)
 	{
 //		call the String constructor
 		this(word.toCharArray( ));
 		
-//		if the starting location needs to be randomized...
-		if (randomPlace)
-		{
-			
-			Random r = new Random();
-			
-//			randomly set the X and Y location
-			locX = r.nextInt(TutorGui.WIDTH);
-			locY = r.nextInt(TutorGui.HEIGHT);
-		}
+		locX = x;
+		locY = y;
+
 	}
 	
 	/**
@@ -154,8 +147,8 @@ public class Word
 		this.cleared = word.isCleared( );
 		
 //		copy the image attached to the word
-		if (wordImage != null)
-			this.wordImage = copy(word.wordImage);
+		if (word.wordImage != null)
+			this.wordImage = word.wordImage;
 		else
 			this.wordImage = null;
 		
@@ -164,6 +157,85 @@ public class Word
 		this.locY = word.locY;
 	}
 	
+	public Word copy()
+	{
+		Word copy = new Word(this.getCharacters( ));
+//		call the character array constructor
+		
+//		copy the number of the characters cleared
+		copy.charactersCleared = this.charactersCleared;
+		
+//		copy the cleared attribute
+		copy.cleared = this.cleared;
+		
+//		copy the image attached to the word
+		if (this.wordImage != null)
+			copy.wordImage = this.wordImage;
+		else
+			copy.wordImage = null;
+		
+//		copy the coordinates of the image
+		copy.locX = this.locX;
+		copy.locY = this.locY;
+		return copy;
+	}
+	
+	/**
+	 * @return wordImage
+	 */
+	public BufferedImage getWordImage()
+	{
+		return wordImage;
+	}
+
+	/**
+	 * @param wordImage the wordImage to set
+	 */
+	public void setWordImage(BufferedImage wordImage)
+	{
+		this.wordImage = wordImage;
+	}
+
+	/**
+	 * @param characters the characters to set
+	 */
+	public void setCharacters(char [ ] characters)
+	{
+		this.characters = characters;
+	}
+
+	/**
+	 * @param charactersCleared the charactersCleared to set
+	 */
+	public void setCharactersCleared(int charactersCleared)
+	{
+		this.charactersCleared = charactersCleared;
+	}
+
+	/**
+	 * @param cleared the cleared to set
+	 */
+	public void setCleared(boolean cleared)
+	{
+		this.cleared = cleared;
+	}
+
+	/**
+	 * @param locX the locX to set
+	 */
+	public void setLocX(int locX)
+	{
+		this.locX = locX;
+	}
+
+	/**
+	 * @param locY the locY to set
+	 */
+	public void setLocY(int locY)
+	{
+		this.locY = locY;
+	}
+
 	/**
 	 * Returns an array containing the characters that make up the word. The array is copy-safe. <br>        
 	 *
@@ -358,25 +430,6 @@ public class Word
 	}
 	
 	/**
-	 * Performs a deep copy of a buffered image <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 19, 2012 <br>
-	 * Date last modified: Apr 19, 2012 <br>
-	 *
-	 * <hr>
-	 * @param bi The BufferedImage to copy
-	 * @return a copy of the BufferedImage
-	 */
-	static BufferedImage copy(BufferedImage bi) 
-	{
-		ColorModel cm = bi.getColorModel();
-		boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
-		WritableRaster raster = bi.copyData(null);
-		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
-	}
-	
-	/**
 	 * toString method that displays the word, the characters cleared, and the cleared status. <br>        
 	 *
 	 * <hr>
@@ -391,6 +444,6 @@ public class Word
 	{
 		return "Word: \"" + String.valueOf(characters) + " (" + locX + ", " + locY + ")" + "\tLength: " + characters.length + 
 						"\tCharacters Cleared: " + charactersCleared + "\tNext Character: " + 
-						getNextChar( ) + "\tWord Cleared: " + cleared;
+						getNextChar( ) + "\tWord Cleared: " + cleared + " Image: " + wordImage;
 	}
 }

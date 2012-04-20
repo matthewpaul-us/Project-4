@@ -48,7 +48,7 @@ public class WordPool
 		
 		for (int c = 0; c < words.length; c++)
 		{
-			queue.add(new Word(words[c]));
+			queue.add(words[c].copy( ));
 		}
 	}
 	
@@ -79,7 +79,7 @@ public class WordPool
 	 */
 	public void addWord(Word word)
 	{
-		queue.add(new Word(word));
+		queue.add(word.copy( ));
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class WordPool
 	 */
 	public Word getNextWord()
 	{
-		return new Word(queue.poll( ));
+		return queue.poll( ).copy( );
 	}
 	
 	/**
