@@ -19,8 +19,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import core.Tutor;
 
@@ -108,7 +106,8 @@ public class TutorGui implements Runnable
     
    boolean running = true;
    
-   public void run()
+   @Override
+public void run()
    {
 	   long beginLoopTime;
 	      long endLoopTime;

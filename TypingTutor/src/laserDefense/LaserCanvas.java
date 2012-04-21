@@ -30,6 +30,11 @@ import front.TutorCanvas;
 public class LaserCanvas extends TutorCanvas
 {
 	
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
 	public LaserCanvas()
 	{
 		super();
@@ -42,8 +47,6 @@ public class LaserCanvas extends TutorCanvas
 	@Override
 	public void renderPausedScreen()
 	{
-		if(!exiting)
-		{
 		Graphics g = buffer.getDrawGraphics( );
 
 		g.setColor(Color.DARK_GRAY);
@@ -54,7 +57,6 @@ public class LaserCanvas extends TutorCanvas
 
 		g.dispose( );
 		buffer.show( );
-		}
 	}
 	
 	@Override

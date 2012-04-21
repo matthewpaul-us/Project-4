@@ -49,24 +49,29 @@ public class Gui implements Runnable
 //	The TutorCanvas that the game screen will be written on
 	TutorCanvas canvas;
 	
-//	The frame that holds the canvas
+//	The frame and panel that holds the canvas
 	JFrame frame;
 	JPanel panel;
 	
+//	menu bar for the gui
 	JMenuBar menuBar;
 	
+//	menus for the gui
 	JMenu fileMenu,
 		  gameMenu,
 		  aboutMenu;
 	
+//	menu items for the gui
 	JMenuItem resetOption,
 			  quitOption,
 			  laserOption,
 			  speedOption,
 			  aboutOption;
 	
+//	image for the custom icon
 	BufferedImage icon;
 	
+//	file for the custom icon
 	File iconFile = new File("resources/laserIcon.gif");
 
 	
@@ -81,41 +86,56 @@ public class Gui implements Runnable
 	 */
 	public Gui()
 	{
-		frame = new JFrame("Typing Tutor");
+//		create a frame with the title 
+		frame = new JFrame("Laser Defense");
 		
+//		load and set the custom icon
 		loadIcon();
 		frame.setIconImage(icon);
 
+//		create the panel with the dimension constants
 		panel = (JPanel) frame.getContentPane( );
 
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setLayout(null);
 
+//		create a new laser canvas
 		canvas = new LaserCanvas();
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
 		
+//		build the menu bar
 		buildMenuBar( );
 
+//		add the canvas to the panel
 		panel.add(canvas);
 
+//		add the specialized key listener to the canvas to handle keyboard input
 		canvas.addKeyListener(new TutorKeyListener());
 
+//		set the frame to exit on close, pack it, then display it
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setResizable(false);
 		frame.setVisible(true);
 		
+//		add a focus listener to the canvas to check if the user is paying attention
 		canvas.addFocusListener(new TutorFocusListener());
 		
+//		create the buffer strategy and ask for the focus
 		canvas.setBufferStrategy( );
 		canvas.requestFocus();
 	}
 
-
-
-
-
+	/**
+	 * Load the custom icon. Outputs the error to the console if ther is one <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 20, 2012 <br>
+	 * Date last modified: Apr 20, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	private void loadIcon()
 	{
 		try
@@ -141,7 +161,6 @@ public class Gui implements Runnable
 	 *
 	 * <hr>
 	 */
-	
 	private void buildMenuBar()
 	{
 		menuBar = new JMenuBar( );
@@ -160,21 +179,6 @@ public class Gui implements Runnable
 		fileMenu.add(resetOption);
 		fileMenu.add(quitOption);
 		
-		gameMenu = new JMenu("Game");
-		gameMenu.setMnemonic(KeyEvent.VK_G);
-		
-		laserOption = new JMenuItem("Laser Defense");
-		laserOption.addActionListener(new TutorMenuListener( ));
-		laserOption.setMnemonic(KeyEvent.VK_L);
-		
-		speedOption = new JMenuItem("Speed Test");
-		speedOption.addActionListener(new TutorMenuListener( ));
-		speedOption.setMnemonic(KeyEvent.VK_S);
-		
-		gameMenu.add(laserOption);
-		gameMenu.add(speedOption);
-		
-		
 		aboutMenu = new JMenu("About");
 		aboutMenu.setMnemonic(KeyEvent.VK_A);
 		
@@ -186,56 +190,65 @@ public class Gui implements Runnable
 		
 
 		menuBar.add(fileMenu);
-		menuBar.add(gameMenu);
 		menuBar.add(aboutMenu);
 		
 		frame.setJMenuBar(menuBar);
 	}
 	
+	
+	/**
+	 * Private inner class to handle the menus<br>
+	 *
+	 * <hr>
+	 * Date created: Apr 20, 2012<br>
+	 * Date last modified: Apr 20, 2012<br>
+	 * <hr>
+	 * @author Matthew Paul
+	 */
 	private class TutorMenuListener implements ActionListener
 	{
 
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
+//			if the button clicked was the reset, call the canvas's reset method
 			if(e.getSource( ) == resetOption)
 			{
 				canvas.reset();
 			}
+//			if its the quit button, close the JVM
 			else if (e.getSource( ) == quitOption)
 			{
 				System.exit(0);
 			}
-			else if (e.getSource( ) == laserOption)
-			{
-				canvas.setExit(true);
-				canvas = null;
-				
-				canvas = new LaserCanvas();
-				
-				canvas.reset( );
-			}
-			else if (e.getSource( ) == speedOption)
-			{
-				
-			}
+//			if about, create our AWESOME dialog frame
 			else if (e.getSource( ) == aboutOption)
 			{
 				new AboutDialog(frame);				
 			}
 		}
-		
 	}
 	
+	/**
+	 * Focus listener to check to make sure the player is paying attention<br>
+	 *
+	 * <hr>
+	 * Date created: Apr 20, 2012<br>
+	 * Date last modified: Apr 20, 2012<br>
+	 * <hr>
+	 * @author Matthew Paul
+	 */
 	private class TutorFocusListener implements FocusListener
 	{
 
+//		if you look at the screen, unpause the game
 		@Override
 		public void focusGained(FocusEvent arg0)
 		{
 			paused = false;
 		}
 
+//		if you look away, pause the game
 		@Override
 		public void focusLost(FocusEvent arg0)
 		{
@@ -244,6 +257,15 @@ public class Gui implements Runnable
 		
 	}
 
+	/**
+	 * Key listener to handle all the keypresses<br>
+	 *
+	 * <hr>
+	 * Date created: Apr 20, 2012<br>
+	 * Date last modified: Apr 20, 2012<br>
+	 * <hr>
+	 * @author Matthew Paul
+	 */
 	private class TutorKeyListener implements KeyListener
 	{
 
@@ -259,6 +281,7 @@ public class Gui implements Runnable
 			//			do nothing
 		}
 
+//		when a key is typed, pass it through the canvas to the game
 		@Override
 		public void keyTyped(KeyEvent e)
 		{
@@ -267,15 +290,31 @@ public class Gui implements Runnable
 
 	}
 
+//	the FPS that I want to have
 	long desiredFPS = 60;
+	
+//	how long my ticks can be and get the FPS I want
 	long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
+//	running allows me to stop execution
 	boolean running = true;
+//	paused is true if the game is paused
 	private boolean	paused;
 
+	/**
+	 * Calculates and times the render and update methods for the game <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 20, 2012 <br>
+	 * Date last modified: Apr 20, 2012 <br>
+	 *
+	 * <hr>
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run()
 	{
+//		variables related to timing
 		long beginLoopTime;
 		long endLoopTime;
 		long currentUpdateTime = System.nanoTime();
@@ -287,19 +326,26 @@ public class Gui implements Runnable
 			
 			beginLoopTime = System.nanoTime();
 
-			if (!paused && !canvas.isExiting( ))
-			{
-				canvas.render();
-			}
-			else if (canvas != null && !canvas.isExiting( ))
+//			if its not paused, render the game; otherwise render the pause screen
+			if (paused)
 			{
 				canvas.renderPausedScreen( );
+				
+			}
+			else if (canvas.isGameOver( ))
+			{
+				canvas.renderGameOver();
+			}
+			else
+			{
+				canvas.render();
 			}
 
 			lastUpdateTime = currentUpdateTime;
 			currentUpdateTime = System.nanoTime();
 			
-			if (!paused)
+//			if not paused, update the game
+			if (!paused || !canvas.isGameOver( ))
 			{
 				canvas.update((int) ((currentUpdateTime - lastUpdateTime)/(1000*1000)));
 			}
@@ -307,25 +353,27 @@ public class Gui implements Runnable
 			endLoopTime = System.nanoTime();
 			deltaLoop = endLoopTime - beginLoopTime;
 
-			if(deltaLoop > desiredDeltaLoop){
-				//Do nothing. We are already late.
-			}else{
-				try{
+			if(deltaLoop <= desiredDeltaLoop)
+			{
+				try
+				{
 					Thread.sleep((desiredDeltaLoop - deltaLoop)/(1000*1000));
-				}catch(InterruptedException e){
+				}
+				catch(InterruptedException e)
+				{
 					System.out.println(e.getMessage( ));
 				}
 			}
+			else
+			{
+				//Do nothing. We are already late.
+			}
 		}
 	}
-	
-	
-	
-	
-	
+
 	public static void main(String [ ] args)
 	{
-
+//		create an instance and set it running
 		Gui gui = new Gui();
 		new Thread(gui).start( );
 	}

@@ -15,13 +15,9 @@ package core;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 import javax.imageio.ImageIO;
-import front.TutorGui;
 
 
 /**
@@ -440,6 +436,7 @@ public class Word
 	 * @return
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		return "Word: \"" + String.valueOf(characters) + " (" + locX + ", " + locY + ")" + "\tLength: " + characters.length + 

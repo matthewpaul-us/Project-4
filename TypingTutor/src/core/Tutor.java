@@ -68,9 +68,10 @@ public class Tutor
 	protected int frameCount;
 	
 	protected Word killedWord;
-
-	private boolean	gameOver;
 	
+	protected boolean gameOver;
+	
+	protected int wpm;
 	
 	/**
 	 * Full Constructor <br>        
@@ -238,17 +239,7 @@ public class Tutor
 					acceptableWords.remove(c);
 					
 //					set the acceptable words to all the words on the screen
-					acceptableWords = new ArrayList<Word>(wordsOnScreen);
-					
-//					for every word in the acceptable word list
-					for (Word word: acceptableWords)
-					{
-//						reset the word's pointer back to 0
-						word.reset( );
-					}
-					
-//					clear the buffer
-					buffer.delete(0, buffer.length( ));
+					resetAcceptableWords( );
 				}
 			}
 		}
@@ -275,6 +266,31 @@ public class Tutor
 				i--;
 			}
 		}
+	}
+
+	/**
+	 * Enter method description here <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 21, 2012 <br>
+	 * Date last modified: Apr 21, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	
+	protected void resetAcceptableWords()
+	{
+		acceptableWords = new ArrayList<Word>(wordsOnScreen);
+		
+//		for every word in the acceptable word list
+		for (Word word: acceptableWords)
+		{
+//			reset the word's pointer back to 0
+			word.reset( );
+		}
+		
+//		clear the buffer
+		buffer.delete(0, buffer.length( ));
 	}
 	
 	/**
@@ -335,35 +351,63 @@ public class Tutor
 		for (int c = 0; c < wordsOnScreen.size( ); c++)
 		{
 //			for every fourth frame...
-			if (frameCount % 4 == 0)
+			if (frameCount %  determineDifficulty( ) == 0)
 //				move the word down by one pixel
 				wordsOnScreen.get(c).offset(0, 1);
 //			if the word reaches the bottom of the screen...
-			if (wordsOnScreen.get(c).getLocY( ) > TutorGui.HEIGHT)
+			if (wordsOnScreen.get(c).getLocY( ) > 375)
 			{
 //				remove the word and take a life away
+				acceptableWords.remove(wordsOnScreen.get(c));
 				wordsOnScreen.remove(c);
+				
+				c--;
+				
+				resetAcceptableWords( );
+				
 				livesLeft--;
 			}
 		}
 		
-		if(livesLeft < 1)
-			gameOver = true;
+		int charactersTyped = 0;
 		
+		for (Word word: clearedWords)
+		{
+			charactersTyped += word.getCharactersCleared( );
+		}
+		wpm = (charactersTyped == 0? 1: charactersTyped) * 720 / (frameCount == 0? 1: frameCount);
+		
+		if(livesLeft < 1)
+		{
+			gameOver = true;
+		}
+	}
+	
+	private int determineDifficulty()
+	{
+		if (wpm < 1)
+			return 4;
+		else if (wpm < 10)
+			return 3;
+		else if (wpm < 30)
+			return 2;
+		else
+			return 1;
 	}
 	
 	/**
-	 * Method that informs the user that he has failed. Meant to be overridden. <br>        
+	 * Returns whether the game has been lost or not <br>        
 	 *
 	 * <hr>
-	 * Date created: Apr 17, 2012 <br>
-	 * Date last modified: Apr 17, 2012 <br>
+	 * Date created: Apr 21, 2012 <br>
+	 * Date last modified: Apr 21, 2012 <br>
 	 *
 	 * <hr>
+	 * @return boolean. True indicates game has been lost.
 	 */
-	public void gameOver()
+	public boolean isGameOver()
 	{
-		
+		return gameOver;
 	}
 	
 	/**
@@ -384,6 +428,21 @@ public class Tutor
 		
 //		initialize the acceptable word pool to all the words on the screen
 		acceptableWords = new ArrayList <Word>(wordsOnScreen);		
+	}
+
+	/**
+	 * Render the game over screen. Meant to be overridden. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 21, 2012 <br>
+	 * Date last modified: Apr 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
+	public void renderGameOver(Graphics g)
+	{
+		g.drawString("Game Over!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
 	
 	

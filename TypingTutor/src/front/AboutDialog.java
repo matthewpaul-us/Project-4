@@ -12,20 +12,13 @@
 
 package front;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dialog;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.List;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

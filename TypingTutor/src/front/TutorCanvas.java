@@ -14,11 +14,9 @@ package front;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
-import laserDefense.LaserTutor;
 import core.Tutor;
 
 
@@ -41,10 +39,6 @@ public class TutorCanvas extends Canvas
 //	The bufferStrategy used to write to the canvas
 	protected BufferStrategy buffer;
 	
-	protected boolean exiting;
-	
-	
-	
 	/**
 	 * Constructor <br>        
 	 *
@@ -61,8 +55,6 @@ public class TutorCanvas extends Canvas
 		game = new Tutor();
 		
 		game.initialize( );
-		
-		exiting = false;
 	}
 	
 	/**
@@ -74,7 +66,7 @@ public class TutorCanvas extends Canvas
 	 *
 	 * <hr>
 	 */
-	public synchronized void render()
+	public void render()
 	{
 		Graphics g = buffer.getDrawGraphics( );
 
@@ -95,7 +87,7 @@ public class TutorCanvas extends Canvas
 	 *
 	 * <hr>
 	 */
-	public synchronized void renderPausedScreen()
+	public void renderPausedScreen()
 	{
 		Graphics g = buffer.getDrawGraphics( );
 
@@ -107,6 +99,21 @@ public class TutorCanvas extends Canvas
 
 		g.dispose( );
 		buffer.show( );
+	}
+	
+	/**
+	 * States whether the game has been lost or not <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 21, 2012 <br>
+	 * Date last modified: Apr 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @return boolean. True indicates game has been lost.
+	 */
+	public boolean isGameOver()
+	{
+		return game.isGameOver( );
 	}
 	
 	/**
@@ -160,14 +167,16 @@ public class TutorCanvas extends Canvas
 		game = new Tutor();
 		game.initialize( );
 	}
-	
-	public void setExit(boolean exit)
+
+	public void renderGameOver()
 	{
-		exiting = exit;
-	}
-	
-	public boolean isExiting()
-	{
-		return exiting;
+		Graphics g = buffer.getDrawGraphics( );
+
+		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
+
+		game.renderGameOver(g);
+
+		g.dispose( );
+		buffer.show( );
 	}
 }

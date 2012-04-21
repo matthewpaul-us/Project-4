@@ -13,7 +13,6 @@
 package laserDefense;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Random;
-import java.util.prefs.BackingStoreException;
 import javax.imageio.ImageIO;
 import core.FileOperator;
 import core.Tutor;
@@ -43,10 +41,12 @@ public class LaserTutor extends Tutor
 {
 	
 	BufferedImage backgroundImage,
-				  crosshairImage;
+				  crosshairImage,
+				  gameOverImage;
 	
 	File backgroundFile = new File("resources/laserBackground.gif");
 	File crosshairFile = new File("resources/laserCrossHairs.gif");
+	File gameOverFile = new File("resources/gameOverScreen.gif");
 	
 
 	/**
@@ -101,7 +101,6 @@ public class LaserTutor extends Tutor
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage( ));
 		}
 	}
@@ -166,16 +165,8 @@ public class LaserTutor extends Tutor
 		
 		g.setColor(Color.WHITE);
 		g.drawString("Score: " + score, 10, Gui.HEIGHT / 30);
-		g.drawString("High Score: ", 10, Gui.HEIGHT / 30 + 13);
-		g.drawString("Errors: " + errors, 10, Gui.HEIGHT / 30 + 26);
-		
-		int charactersTyped = 0;
-		
-		for (Word word: clearedWords)
-		{
-			charactersTyped += word.getCharactersCleared( );
-		}
-		int wpm = (charactersTyped == 0? 1: charactersTyped) * 720 / (frameCount == 0? 1: frameCount);
+		g.drawString("Errors: " + errors, 10, Gui.HEIGHT / 30 + 13);
+		g.drawString("Lives: " + livesLeft, 10, Gui.HEIGHT / 30 + 26);
 		g.drawString("WPM: " + wpm, 10, Gui.HEIGHT / 30 + 39);		
 		
 		try
@@ -193,12 +184,6 @@ public class LaserTutor extends Tutor
 		if (killedWord != null)
 			drawKillShot(g);
 	}
-	
-//	@Override
-//	public void update(int deltaTime)
-//	{
-//		
-//	}
 	
 	private void drawKillShot(Graphics g)
 	{
@@ -220,21 +205,22 @@ public class LaserTutor extends Tutor
 			g.drawImage(crosshairImage, word.getLocX( ) - crosshairImage.getWidth( ) / 2, word.getLocY( ) - crosshairImage.getHeight( ) / 2, null);
 		}
 	}
-
+	
 	@Override
-	public void gameOver()
+	public void renderGameOver(Graphics g)
 	{
-		
+		g.drawImage(gameOverImage, 0, 0, null);
 	}
 	
 	private void loadImages() throws IOException
 	{
 			loadBackgroundImage();
-			loadCrosshairFile();
+			loadCrosshairImage();
+			loadGameOverImage();
 
 	}
 	
-	private void loadCrosshairFile() throws IOException
+	private void loadCrosshairImage() throws IOException
 	{
 		crosshairImage = ImageIO.read(crosshairFile);
 	}
@@ -242,6 +228,11 @@ public class LaserTutor extends Tutor
 	private void loadBackgroundImage() throws IOException
 	{
 		backgroundImage = ImageIO.read(backgroundFile);
+	}
+	
+	private void loadGameOverImage() throws IOException
+	{
+		gameOverImage = ImageIO.read(gameOverFile);
 	}
 
 }
