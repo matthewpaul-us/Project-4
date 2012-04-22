@@ -17,6 +17,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Random;
@@ -42,11 +43,22 @@ public class LaserTutor extends Tutor
 	
 	BufferedImage backgroundImage,
 				  crosshairImage,
-				  gameOverImage;
+				  gameOverImage,
+				  winImage,
+				  lives3Image,
+				  lives2Image,
+				  lives1Image;
 	
 	File backgroundFile = new File("resources/laserBackground.gif");
 	File crosshairFile = new File("resources/laserCrossHairs.gif");
 	File gameOverFile = new File("resources/gameOverScreen.gif");
+	File winFile = new File("resources/winScreen.gif");
+	
+	File lives3File = new File("resources/shield3Lives.gif");
+	File lives2File = new File("resources/shield2Lives.gif");
+	File lives1File = new File("resources/shield1Life.gif");
+	
+	DecimalFormat f = new DecimalFormat("#,##0");
 	
 
 	/**
@@ -161,13 +173,9 @@ public class LaserTutor extends Tutor
 	{
 		g.drawImage(backgroundImage, 0, 0, Gui.WIDTH, Gui.HEIGHT, null);
 		
+		drawHUD(g);
 		
-		
-		g.setColor(Color.WHITE);
-		g.drawString("Score: " + score, 10, Gui.HEIGHT / 30);
-		g.drawString("Errors: " + errors, 10, Gui.HEIGHT / 30 + 13);
-		g.drawString("Lives: " + livesLeft, 10, Gui.HEIGHT / 30 + 26);
-		g.drawString("WPM: " + wpm, 10, Gui.HEIGHT / 30 + 39);		
+		drawLives(g);
 		
 		try
 		{
@@ -176,13 +184,62 @@ public class LaserTutor extends Tutor
 		}
 		catch (ConcurrentModificationException e)
 		{
-			e.printStackTrace();
+			FileOperator file = new FileOperator( );
+			
+			try
+			{
+				file.write(FileOperator.RESULTS_FILE, "Error!");
+			}
+			catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 		
 		drawCrosshairs(g);
 		
 		if (killedWord != null)
 			drawKillShot(g);
+	}
+
+	private void drawLives(Graphics g)
+	{
+		System.out.println("Drawing Life!");
+		g.drawImage(lives3Image, 0, 295, 600, 200, null);
+		switch(livesLeft)
+		{
+			case 3:
+				g.drawImage(lives3Image, 0, 295, 600, 200, null);
+				break;
+			case 2:
+				g.drawImage(lives2Image, 0, 295, 600, 200, null);
+				break;
+			case 1:
+				g.drawImage(lives1Image, 0, 295, 600, 200, null);
+				break;
+			default:
+				System.out.println("Error! Default case reached in drawLives()");
+		}
+	}
+
+	/**
+	 * Draw the HUD for the game <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 21, 2012 <br>
+	 * Date last modified: Apr 21, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
+	
+	protected void drawHUD(Graphics g)
+	{
+		g.setColor(Color.WHITE);
+		g.drawString("Score: " + f.format(score), 10, Gui.HEIGHT / 30);
+		g.drawString("Errors: " + errors, 10, Gui.HEIGHT / 30 + 13);
+		g.drawString("Aliens Defeated: " + clearedWords.size( ), 10, Gui.HEIGHT / 30 + 26);
+		g.drawString("WPM: " + wpm, 10, Gui.HEIGHT / 30 + 39);
 	}
 	
 	private void drawKillShot(Graphics g)
@@ -209,7 +266,16 @@ public class LaserTutor extends Tutor
 	@Override
 	public void renderGameOver(Graphics g)
 	{
+		
 		g.drawImage(gameOverImage, 0, 0, null);
+		drawHUD(g);
+	}
+	
+	@Override
+	public void renderWin(Graphics g)
+	{
+		g.drawImage(winImage, 0, 0, null);
+		drawHUD(g);
 	}
 	
 	private void loadImages() throws IOException
@@ -217,9 +283,23 @@ public class LaserTutor extends Tutor
 			loadBackgroundImage();
 			loadCrosshairImage();
 			loadGameOverImage();
+			loadWinImage();
+			loadShieldImages();
 
 	}
 	
+	private void loadShieldImages() throws IOException 
+	{
+		lives3Image = ImageIO.read(lives3File);
+		lives2Image = ImageIO.read(lives2File);
+		lives1Image = ImageIO.read(lives1File);
+	}
+
+	private void loadWinImage() throws IOException
+	{
+		winImage = ImageIO.read(winFile);
+	}
+
 	private void loadCrosshairImage() throws IOException
 	{
 		crosshairImage = ImageIO.read(crosshairFile);
@@ -234,5 +314,7 @@ public class LaserTutor extends Tutor
 	{
 		gameOverImage = ImageIO.read(gameOverFile);
 	}
+	
+
 
 }

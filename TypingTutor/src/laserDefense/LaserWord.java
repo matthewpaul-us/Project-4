@@ -55,9 +55,15 @@ public class LaserWord extends Word
 		FontMetrics metrics = g.getFontMetrics();
 		g.drawImage(wordImage, locX - wordImage.getWidth( ) / 2, locY - wordImage.getHeight( ) / 2, null);
 		
-		g.setColor(Color.BLUE);
+		g.setColor(Color.RED);
 		Rectangle2D rect = metrics.getStringBounds(text, g);
-		g.drawString(String.valueOf(characters),(int) (locX - rect.getCenterX( )), (int) (locY - rect.getCenterY( )));
+		int wordX = (int) (locX - rect.getCenterX( ));
+		int wordY = (int) (locY - rect.getCenterY( ));
+		
+		g.drawString(String.valueOf(characters), wordX , wordY);
+		
+		g.setColor(Color.BLUE);
+		g.drawString(getClearedString( ), wordX, wordY - 13);
 	}
 	
 	@Override

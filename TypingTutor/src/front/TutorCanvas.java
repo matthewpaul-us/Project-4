@@ -179,4 +179,21 @@ public class TutorCanvas extends Canvas
 		g.dispose( );
 		buffer.show( );
 	}
+
+	public boolean isWin()
+	{
+		return game.isWin( );
+	}
+
+	public void renderWinScreen()
+	{
+		Graphics g = buffer.getDrawGraphics( );
+
+		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
+
+		game.renderWin(g);
+
+		g.dispose( );
+		buffer.show( );
+	}
 }

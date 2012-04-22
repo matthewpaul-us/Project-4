@@ -336,6 +336,10 @@ public class Gui implements Runnable
 			{
 				canvas.renderGameOver();
 			}
+			else if (canvas.isWin())
+			{
+				canvas.renderWinScreen();
+			}
 			else
 			{
 				canvas.render();
@@ -345,7 +349,7 @@ public class Gui implements Runnable
 			currentUpdateTime = System.nanoTime();
 			
 //			if not paused, update the game
-			if (!paused || !canvas.isGameOver( ))
+			if (!paused && !canvas.isGameOver( ) && !canvas.isWin( ))
 			{
 				canvas.update((int) ((currentUpdateTime - lastUpdateTime)/(1000*1000)));
 			}

@@ -33,6 +33,8 @@ import front.TutorGui;
  */
 public class Tutor
 {
+	protected static final int	ERROR_DEDUCTION	= 10;
+
 	protected static final int	DEFAULT_LIVES_LEFT	= 3;
 
 	protected static final int	DEFAULT_ERRORS	= 0;
@@ -72,6 +74,8 @@ public class Tutor
 	protected boolean gameOver;
 	
 	protected int wpm;
+
+	public boolean	win;
 	
 	/**
 	 * Full Constructor <br>        
@@ -113,7 +117,6 @@ public class Tutor
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -258,7 +261,7 @@ public class Tutor
 		for (int i = 0; i < acceptableWords.size( ); i++)
 		{
 //			if the word's already typed characters does not equal what's in the buffer
-			if (!acceptableWords.get(i).getClearedChars( ).equals(buffer.toString( )))
+			if (!acceptableWords.get(i).getClearedString( ).equals(buffer.toString( )))
 			{
 //				remove the word from the list of acceptable words
 				acceptableWords.remove(i);
@@ -354,8 +357,8 @@ public class Tutor
 			if (frameCount %  determineDifficulty( ) == 0)
 //				move the word down by one pixel
 				wordsOnScreen.get(c).offset(0, 1);
-//			if the word reaches the bottom of the screen...
-			if (wordsOnScreen.get(c).getLocY( ) > 375)
+//			if the word reaches the shield...
+			if (wordsOnScreen.get(c).getLocY( ) > 420)
 			{
 //				remove the word and take a life away
 				acceptableWords.remove(wordsOnScreen.get(c));
@@ -375,12 +378,55 @@ public class Tutor
 		{
 			charactersTyped += word.getCharactersCleared( );
 		}
-		wpm = (charactersTyped == 0? 1: charactersTyped) * 720 / (frameCount == 0? 1: frameCount);
+		
+		if(!gameOver)
+			wpm = (charactersTyped == 0? 1: charactersTyped) * 720 / (frameCount == 0? 1: frameCount);
 		
 		if(livesLeft < 1)
 		{
-			gameOver = true;
+			makeGameOver( );
 		}
+		
+		if(!gameOver && !pool.hasMoreWords( ) && wordsOnScreen.isEmpty( ))
+			makeWin();
+	}
+
+	/**
+	 * Does the win stuff for the player <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 21, 2012 <br>
+	 * Date last modified: Apr 21, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	protected void makeWin()
+	{
+		win = true;
+		score *= wpm;
+		score -= errors * ERROR_DEDUCTION;
+	}
+	
+	public boolean isWin()
+	{
+		return win;
+	}
+
+	/**
+	 * Sets the things necessary for game over <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 21, 2012 <br>
+	 * Date last modified: Apr 21, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	
+	protected void makeGameOver()
+	{
+		gameOver = true;
+		score *= wpm;
+		score -= errors * ERROR_DEDUCTION;
 	}
 	
 	private int determineDifficulty()
@@ -421,7 +467,7 @@ public class Tutor
 	 */
 	public void initialize()
 	{
-		for (int c = 0; c < 5; c++)
+		for (int c = 0; c < 5 && pool.hasMoreWords( ); c++)
 		{
 			wordsOnScreen.add(pool.getNextWord( ));
 		}
@@ -443,6 +489,11 @@ public class Tutor
 	public void renderGameOver(Graphics g)
 	{
 		g.drawString("Game Over!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+	}
+
+	public void renderWin(Graphics g)
+	{
+		g.drawString("You Won!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
 	
 	

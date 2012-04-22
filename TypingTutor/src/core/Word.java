@@ -320,7 +320,7 @@ public class Word
 			return characters[charactersCleared];
 	}
 	
-	public String getClearedChars()
+	public String getClearedString()
 	{
 		StringBuffer output = new StringBuffer("");
 		
