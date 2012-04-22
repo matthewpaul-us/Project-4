@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Date;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import core.FileOperator;
@@ -186,9 +187,10 @@ public class LaserTutor extends Tutor
 		{
 			FileOperator file = new FileOperator( );
 			
+			System.out.println("Error logged!");
 			try
 			{
-				file.write(FileOperator.RESULTS_FILE, "Error!");
+				file.write(FileOperator.RESULTS_FILE, new Date().toString( ) + " | Error! " + e.getMessage( ));
 			}
 			catch (IOException e1)
 			{
@@ -204,8 +206,6 @@ public class LaserTutor extends Tutor
 
 	private void drawLives(Graphics g)
 	{
-		System.out.println("Drawing Life!");
-		g.drawImage(lives3Image, 0, 295, 600, 200, null);
 		switch(livesLeft)
 		{
 			case 3:

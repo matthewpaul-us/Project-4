@@ -67,7 +67,7 @@ public class Word
 		for (int c = 0; c < this.characters.length; c++)
 		{
 //			copy the character over to the internal array
-			this.characters[c] = characters[c];
+			this.characters[c] = Character.toLowerCase(characters[c]);
 		}
 		
 //		set the number of the cleared characters to 0
@@ -95,7 +95,8 @@ public class Word
 	public Word(String word)
 	{
 //		call the array constructor and pass the character array of the string
-		this(word.toCharArray( ));
+		
+		this(word.toLowerCase( ).toCharArray( ));
 	}
 	
 	
