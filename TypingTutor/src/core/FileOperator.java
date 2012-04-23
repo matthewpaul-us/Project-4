@@ -31,6 +31,12 @@ import java.util.Scanner;
  */
 public class FileOperator
 {
+	//////////////////
+	//				
+	//	FIELDS		
+	//				
+	//////////////////
+//	default file paths
 	public static final String	DEFAULT_WORD_FILE	= "resources/wordList.txt";
 	public static final String	DEFAULT_SCORE_FILE	= "highScores.txt";
 	public static final String	DEFAULT_RESULTS_FILE	= "results.txt";
@@ -46,6 +52,11 @@ public class FileOperator
 //	File that contains the results of the score
 				 resultsFile;
 	
+//////////////////
+//				
+//	CONSTRUCTORS
+//				
+//////////////////
 	
 	/**
 	 * Full Constructor <br>        
@@ -83,6 +94,13 @@ public class FileOperator
 	{
 		this(new File(DEFAULT_WORD_FILE), new File(DEFAULT_SCORE_FILE), new File(DEFAULT_RESULTS_FILE));
 	}
+	
+	
+//////////////////
+//	
+//	METHODS
+//	
+//////////////////
 	
 	/**
 	 * Returns the word file. <br>        
