@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import front.Gui;
-import front.TutorGui;
 
 
 /**
@@ -33,7 +32,7 @@ import front.TutorGui;
  */
 public class Tutor
 {
-	protected static final int	ERROR_DEDUCTION	= 10;
+	protected static final int	ERROR_DEDUCTION	= 30;
 
 	protected static final int	DEFAULT_LIVES_LEFT	= 3;
 
