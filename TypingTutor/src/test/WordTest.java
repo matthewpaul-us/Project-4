@@ -104,7 +104,7 @@ public class WordTest
 		
 		System.out.println("Copying testWord");
 		
-		Word test2 = new Word(testWord);
+		Word test2 = testWord.copy( );
 		
 		System.out.println("Origninal: " + testWord);
 		System.out.println("Copy: " + test2);

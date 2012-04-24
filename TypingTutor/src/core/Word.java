@@ -31,6 +31,11 @@ import javax.imageio.ImageIO;
  */
 public class Word
 {
+//////////////////
+//
+//FIELDS
+//
+//////////////////
 	
 //	the collection of characters that make up the word
 	protected char[] characters;
@@ -47,6 +52,15 @@ public class Word
 //	the coordinates of the word on the canvas
 	protected int locX,
 				  locY;
+	
+	
+//////////////////
+//
+//CONSTRUCTORS
+//
+//////////////////
+	
+	
 	
 	/**
 	 * Full Constructor <br>        
@@ -95,7 +109,6 @@ public class Word
 	public Word(String word)
 	{
 //		call the array constructor and pass the character array of the string
-		
 		this(word.toLowerCase( ).toCharArray( ));
 	}
 	
@@ -122,38 +135,24 @@ public class Word
 
 	}
 	
-	/**
-	 * Copy Constructor <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 15, 2012 <br>
-	 * Date last modified: Apr 15, 2012 <br>
-	 *
-	 * <hr>
-	 * @param word The Word object to copy.
-	 */
-	public Word(Word word)
-	{
-//		call the character array constructor
-		this(word.getCharacters( ));
-		
-//		copy the number of the characters cleared
-		this.charactersCleared = word.getCharactersCleared( );
-		
-//		copy the cleared attribute
-		this.cleared = word.isCleared( );
-		
-//		copy the image attached to the word
-		if (word.wordImage != null)
-			this.wordImage = word.wordImage;
-		else
-			this.wordImage = null;
-		
-//		copy the coordinates of the image
-		this.locX = word.locX;
-		this.locY = word.locY;
-	}
 	
+//////////////////
+//
+//METHODS
+//
+//////////////////
+	
+	
+	/**
+	 * Copy method to perform a polymorphically correct deep copy. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @return A Word object that is a copy of the calling object.
+	 */
 	public Word copy()
 	{
 		Word copy = new Word(this.getCharacters( ));
@@ -224,7 +223,22 @@ public class Word
 	{
 		this.locX = locX;
 	}
-
+	
+	/**
+	 * Getter for X-coordinate <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
+	public int getLocX()
+	{
+		return locX;
+	}
+	
 	/**
 	 * @param locY the locY to set
 	 */
@@ -233,6 +247,21 @@ public class Word
 		this.locY = locY;
 	}
 
+	/**
+	 * Getter for Y-coordinate <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
+	public int getLocY()
+	{
+		return locY;
+	}
+	
 	/**
 	 * Returns an array containing the characters that make up the word. The array is copy-safe. <br>        
 	 *
@@ -321,6 +350,16 @@ public class Word
 			return characters[charactersCleared];
 	}
 	
+	/**
+	 * Returns a string with the letters that have been cleared so far. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @return A String with cleared letters.
+	 */
 	public String getClearedString()
 	{
 		StringBuffer output = new StringBuffer("");
@@ -387,23 +426,36 @@ public class Word
 		g.setColor(Color.BLUE);
 		g.drawString(String.valueOf(characters), locX, locY);
 	}
+
 	
-	public int getLocX()
-	{
-		return locX;
-	}
-	
-	public int getLocY()
-	{
-		return locY;
-	}
-	
+	/**
+	 * Moves the word to the specified location <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param locX int that contains the x location of the word, in pixels
+	 * @param locY int that contains the y location of the word, in pixels
+	 */
 	public void move(int locX, int locY)
 	{
 		this.locX = locX;
 		this.locY = locY;
 	}
 	
+	/**
+	 * Adds the specified offset to the word <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param offX the offset in the X axis, in pixels
+	 * @param offY the offset in the Y axis, in pixels
+	 */
 	public void offset(int offX, int offY)
 	{
 		this.locX += offX;
