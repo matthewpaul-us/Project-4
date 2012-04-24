@@ -31,6 +31,14 @@ import core.Tutor;
  */
 public class TutorCanvas extends Canvas
 {
+	
+//////////////////
+//
+//FIELDS
+//
+//////////////////
+	
+	
 	private static final long	serialVersionUID	= 1L;
 	
 //	The game object for the canvas to run
@@ -38,6 +46,14 @@ public class TutorCanvas extends Canvas
 	
 //	The bufferStrategy used to write to the canvas
 	protected BufferStrategy buffer;
+	
+	
+//////////////////
+//
+//CONSTRUCTOR
+//
+//////////////////
+	
 	
 	/**
 	 * Constructor <br>        
@@ -56,6 +72,14 @@ public class TutorCanvas extends Canvas
 		
 		game.initialize( );
 	}
+	
+	
+//////////////////
+//
+//METHODS
+//
+//////////////////
+	
 	
 	/**
 	 * Renders a regular frame of the game. <br>        
@@ -162,12 +186,30 @@ public class TutorCanvas extends Canvas
 		game.update(deltaTime);
 	}
 	
+	/**
+	 * Resets the canvas game and initializes it. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	public void reset()
 	{
 		game = new Tutor();
 		game.initialize( );
 	}
 
+	/**
+	 * Clears the screen, renders the gameover screen and shows it. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	public void renderGameOver()
 	{
 		Graphics g = buffer.getDrawGraphics( );
@@ -180,11 +222,30 @@ public class TutorCanvas extends Canvas
 		buffer.show( );
 	}
 
+	/**
+	 * Returns whether the game is won or not <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @return True if the game is won
+	 */
 	public boolean isWin()
 	{
 		return game.isWin( );
 	}
 
+	/**
+	 * Clears the screen, renders the win screen, and shows it. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	public void renderWinScreen()
 	{
 		Graphics g = buffer.getDrawGraphics( );
