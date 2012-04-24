@@ -28,10 +28,26 @@ import java.util.Queue;
  */
 public class WordPool
 {
+	
+	
+//////////////////
+//
+//FIELDS
+//
+//////////////////
+	
+	
 //	a first-in-first-out queue of the words in the pool. Can be replaced with an arrayList if need be
 	private Queue<Word> queue;
 	
 	
+//////////////////
+//
+//CONSTRUCTORS
+//
+//////////////////
+
+
 	/**
 	 * Constructor. Places word array into queue in the order of the array. <br>        
 	 *
@@ -66,6 +82,14 @@ public class WordPool
 	{
 		queue = new LinkedList<Word>();
 	}
+	
+	
+//////////////////
+//
+//FIELDS
+//
+//////////////////
+
 	
 	/**
 	 * Adds a word to the end of the queue. <br>        
