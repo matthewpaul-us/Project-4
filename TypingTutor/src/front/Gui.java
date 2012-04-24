@@ -31,7 +31,9 @@ import javax.swing.JPanel;
 import laserDefense.LaserCanvas;
 
 /**
- * Enter type purpose here<br>
+ * Runs the gui of the program. Contains all other pieces of the code. The timing
+ * algorithm was coded by Gudradain on 
+ * http://www.java-gaming.org/index.php?PHPSESSID=sdq8f3rbfsdgupc2cn008jt0q6&topic=21919.0<br>
  *
  * <hr>
  * Date created: Apr 18, 2012<br>
@@ -41,6 +43,15 @@ import laserDefense.LaserCanvas;
  */
 public class Gui implements Runnable
 {
+	
+	
+//////////////////
+//
+//FIELDS
+//
+//////////////////
+	
+	
 //	The width of the game window. Controls the outer frame size
 	public static final int	WIDTH	= 600;
 //	the height of the game window. Controls the outer frame size
@@ -73,7 +84,25 @@ public class Gui implements Runnable
 	
 //	file for the custom icon
 	File iconFile = new File("resources/laserIcon.gif");
+	
+//	the FPS that I want to have
+	long desiredFPS = 60;
+	
+//	how long my ticks can be and get the FPS I want
+	long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
 
+//	running allows me to stop execution
+	boolean running = true;
+//	paused is true if the game is paused
+	private boolean	paused;
+
+	
+//////////////////
+//
+//CONSTRUCTORS
+//
+//////////////////
+	
 	
 	/**
 	 * Constructor <br>        
@@ -126,6 +155,14 @@ public class Gui implements Runnable
 		canvas.setBufferStrategy( );
 		canvas.requestFocus();
 	}
+	
+	
+//////////////////
+//
+//METHODS
+//
+//////////////////
+	
 
 	/**
 	 * Load the custom icon. Outputs the error to the console if ther is one <br>        
@@ -149,11 +186,8 @@ public class Gui implements Runnable
 	}
 
 
-
-
-
 	/**
-	 * Builds the menu bar for the GUI. <br>        
+	 * Builds the menu bar for the GUI. Creates the menu. It registers a TutorMenuListener with the buttons. <br>        
 	 *
 	 * <hr>
 	 * Date created: Apr 20, 2012 <br>
@@ -290,19 +324,9 @@ public class Gui implements Runnable
 
 	}
 
-//	the FPS that I want to have
-	long desiredFPS = 60;
-	
-//	how long my ticks can be and get the FPS I want
-	long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
-
-//	running allows me to stop execution
-	boolean running = true;
-//	paused is true if the game is paused
-	private boolean	paused;
-
 	/**
-	 * Calculates and times the render and update methods for the game <br>        
+	 * Calculates and times the render and update methods for the game. Originally
+	 * coded by Gudradain; I changed the code to fit my needs. <br>        
 	 *
 	 * <hr>
 	 * Date created: Apr 20, 2012 <br>
@@ -326,7 +350,7 @@ public class Gui implements Runnable
 			
 			beginLoopTime = System.nanoTime();
 
-//			if its not paused, render the game; otherwise render the pause screen
+//			if its not paused and its a normal frame, render the game; otherwise render the appropriate screen
 			if (paused)
 			{
 				canvas.renderPausedScreen( );
@@ -375,6 +399,16 @@ public class Gui implements Runnable
 		}
 	}
 
+	/**
+	 * Main method of the program. Instantiates a gui object and sets it to run <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param args
+	 */
 	public static void main(String [ ] args)
 	{
 //		create an instance and set it running
