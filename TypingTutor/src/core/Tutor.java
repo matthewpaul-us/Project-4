@@ -17,6 +17,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Date;
 import java.util.Random;
 import front.Gui;
 
@@ -32,14 +34,24 @@ import front.Gui;
  */
 public class Tutor
 {
+//////////////////
+//	
+//FIELDS
+//	
+//////////////////
+//	How many points are deducted from the score for every error
 	protected static final int	ERROR_DEDUCTION	= 30;
 
+//	how many lives to start out with
 	protected static final int	DEFAULT_LIVES_LEFT	= 3;
 
+//	how many errors to start out with
 	protected static final int	DEFAULT_ERRORS	= 0;
 
+//	the score to start at
 	protected static final int 	DEFAULT_SCORE = 0;
 
+//	how many points the player gets for clearing a word
 	protected static final int	CORRECT_WORD_SCORE	= 100;
 
 //	a list of words that are on the screen
@@ -54,6 +66,7 @@ public class Tutor
 //	the number of times a word can reach the end without being typed. After each word, it is decremented. When it's less than 1, game over
 	protected int livesLeft;
 	
+//	Score for the player
 	protected int score;
 	
 //	the number of incorrectly typed characters
@@ -68,13 +81,27 @@ public class Tutor
 //	a count of how many frames have passed since the game has started
 	protected int frameCount;
 	
+//	Word that was killed in the last update cycle. This mostly null. It is set to a word to do drawings but is reset to null afterwards
 	protected Word killedWord;
 	
+//	true if the game is over
 	protected boolean gameOver;
 	
+//	the words per minute of the player. Based on standard 5 character word
 	protected int wpm;
 
+//	true if player won the game
 	public boolean	win;
+	
+	
+	
+//////////////////
+//	
+//CONSTRUCTORS
+//	
+//////////////////
+	
+	
 	
 	/**
 	 * Full Constructor <br>        
@@ -187,6 +214,13 @@ public class Tutor
 			new StringBuffer(""));
 	}
 	
+	
+//////////////////
+//
+//METHODS
+//
+//////////////////
+	
 	/**
 	 * Processes the character that the user has typed. <br>        
 	 *
@@ -271,7 +305,7 @@ public class Tutor
 	}
 
 	/**
-	 * Enter method description here <br>        
+	 * Reset the characters that have been typed so far. <br>        
 	 *
 	 * <hr>
 	 * Date created: Apr 21, 2012 <br>
@@ -363,29 +397,53 @@ public class Tutor
 				acceptableWords.remove(wordsOnScreen.get(c));
 				wordsOnScreen.remove(c);
 				
+//				decrement the counter
 				c--;
 				
+//				reset all the acceptable words
 				resetAcceptableWords( );
 				
+//				decrement the lives left
 				livesLeft--;
 			}
 		}
 		
+//		create accumulator for the characters typed
 		int charactersTyped = 0;
 		
-		for (Word word: clearedWords)
+//		catch the concurrent modification and place it in a text file
+		try
 		{
-			charactersTyped += word.getCharactersCleared( );
+			for (Word word: clearedWords)
+			{
+				charactersTyped += word.getCharactersCleared( );
+			}
+		}
+		catch (ConcurrentModificationException e)
+		{
+			FileOperator file = new FileOperator( );
+			
+			System.out.println("Error logged!");
+			try
+			{
+				file.write(FileOperator.RESULTS_FILE, new Date().toString( ) + " | Error! " + e.getMessage( ));
+			}
+			catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 		
-		if(!gameOver)
-			wpm = (charactersTyped == 0? 1: charactersTyped) * 720 / (frameCount == 0? 1: frameCount);
+//		calculate the words per minute
+		wpm = (charactersTyped == 0? 1: charactersTyped) * 720 / (frameCount == 0? 1: frameCount);
 		
+//		if there are no lives left, game over for the player
 		if(livesLeft < 1)
 		{
 			makeGameOver( );
 		}
 		
+//		if there is no gameover, the pool has no words, and no words on the screen
 		if(!gameOver && !pool.hasMoreWords( ) && wordsOnScreen.isEmpty( ))
 			makeWin();
 	}
@@ -406,6 +464,16 @@ public class Tutor
 		score -= errors * ERROR_DEDUCTION;
 	}
 	
+	/**
+	 * return true if the players make a win. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
 	public boolean isWin()
 	{
 		return win;
@@ -428,6 +496,16 @@ public class Tutor
 		score -= errors * ERROR_DEDUCTION;
 	}
 	
+	/**
+	 * Determine the difficulty based on the words-per-minute <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @return
+	 */
 	private int determineDifficulty()
 	{
 		if (wpm < 1)
@@ -490,6 +568,16 @@ public class Tutor
 		g.drawString("Game Over!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
 
+	/**
+	 * Render the win screen, for the win. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
 	public void renderWin(Graphics g)
 	{
 		g.drawString("You Won!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
