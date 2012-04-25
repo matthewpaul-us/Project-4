@@ -296,6 +296,9 @@ public class Tutor
 //			if the word's already typed characters does not equal what's in the buffer
 			if (!acceptableWords.get(i).getClearedString( ).equals(buffer.toString( )))
 			{
+//				reset the word that is being removed
+				acceptableWords.get(i).reset( );
+				
 //				remove the word from the list of acceptable words
 				acceptableWords.remove(i);
 //				decrement the iterating variable to keep subscripts in the correct place
@@ -410,28 +413,9 @@ public class Tutor
 		
 //		create accumulator for the characters typed
 		int charactersTyped = 0;
-		
-//		catch the concurrent modification and place it in a text file
-		try
+		for (int c = 0; c < clearedWords.size( ); c++)
 		{
-			for (Word word: clearedWords)
-			{
-				charactersTyped += word.getCharactersCleared( );
-			}
-		}
-		catch (ConcurrentModificationException e)
-		{
-			FileOperator file = new FileOperator( );
-			
-			System.out.println("Error logged!");
-			try
-			{
-				file.write(FileOperator.RESULTS_FILE, new Date().toString( ) + " | Error! " + e.getMessage( ));
-			}
-			catch (IOException e1)
-			{
-				e1.printStackTrace();
-			}
+			charactersTyped += clearedWords.get(c).getCharactersCleared( );
 		}
 		
 //		calculate the words per minute
@@ -469,7 +453,7 @@ public class Tutor
 	 *
 	 * <hr>
 	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 24, 2012 <br>
+	 * Date last modified: Apr 25, 2012 <br>
 	 *
 	 * <hr>
 	 * @return
@@ -501,7 +485,7 @@ public class Tutor
 	 *
 	 * <hr>
 	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 24, 2012 <br>
+	 * Date last modified: Apr 25, 2012 <br>
 	 *
 	 * <hr>
 	 * @return
@@ -573,7 +557,7 @@ public class Tutor
 	 *
 	 * <hr>
 	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 24, 2012 <br>
+	 * Date last modified: Apr 25, 2012 <br>
 	 *
 	 * <hr>
 	 * @param g

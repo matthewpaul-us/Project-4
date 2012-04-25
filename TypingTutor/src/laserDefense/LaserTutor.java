@@ -240,26 +240,12 @@ public class LaserTutor extends Tutor
 //		draw the lives
 		drawLives(g);
 		
-//		Draw the words on the screen. Catch the concurrent modification exception and put it into the results.txt file
-		try
+//		draw the words
+		for (int c = 0; c < wordsOnScreen.size( ); c++)
 		{
-			for (Word word: wordsOnScreen)
-				word.drawWord(g);
+			wordsOnScreen.get(c).drawWord(g);
 		}
-		catch (ConcurrentModificationException e)
-		{
-			FileOperator file = new FileOperator( );
-			
-			System.out.println("Error logged!");
-			try
-			{
-				file.write(FileOperator.RESULTS_FILE, new Date().toString( ) + " | Error! " + e.getMessage( ));
-			}
-			catch (IOException e1)
-			{
-				e1.printStackTrace();
-			}
-		}
+		
 		
 //		draw the crosshairs
 		drawCrosshairs(g);
