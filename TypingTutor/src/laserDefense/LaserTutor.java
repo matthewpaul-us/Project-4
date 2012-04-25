@@ -19,8 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Date;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import core.FileOperator;

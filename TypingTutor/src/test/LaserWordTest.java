@@ -12,9 +12,9 @@
 
 package test;
 
+import laserDefense.LaserWord;
 import core.Word;
 import core.WordPool;
-import laserDefense.LaserWord;
 
 
 /**

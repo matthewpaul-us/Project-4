@@ -17,8 +17,6 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Date;
 import java.util.Random;
 import front.Gui;
 
