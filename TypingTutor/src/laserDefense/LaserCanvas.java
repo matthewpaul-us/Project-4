@@ -30,11 +30,32 @@ import front.TutorCanvas;
 public class LaserCanvas extends TutorCanvas
 {
 	
-	/**
-	 * 
-	 */
+//////////////////
+//
+//FIELDS
+//
+//////////////////
+	
 	private static final long	serialVersionUID	= 1L;
 
+	
+//////////////////
+//
+//CONSTRUCTORS
+//
+//////////////////
+	
+	
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 */
 	public LaserCanvas()
 	{
 		super();
@@ -44,6 +65,22 @@ public class LaserCanvas extends TutorCanvas
 		game.initialize( );
 	}
 	
+//////////////////
+//
+//METHODS
+//
+//////////////////
+	
+	/**
+	 * Renders a dark grey pause screen with the word pause in the middle <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @see front.TutorCanvas#renderPausedScreen()
+	 */
 	@Override
 	public void renderPausedScreen()
 	{
@@ -59,6 +96,16 @@ public class LaserCanvas extends TutorCanvas
 		buffer.show( );
 	}
 	
+	/**
+	 * Resets the game and initializes it. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @see front.TutorCanvas#reset()
+	 */
 	@Override
 	public void reset()
 	{
