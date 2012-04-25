@@ -31,7 +31,7 @@ import front.Gui;
 
 
 /**
- * Enter type purpose here<br>
+ * A specialized game class that does a missile command like typing game.<br>
  *
  * <hr>
  * Date created: Apr 19, 2012<br>
@@ -42,6 +42,14 @@ import front.Gui;
 public class LaserTutor extends Tutor
 {
 	
+//////////////////
+//
+//FIELDS
+//
+//////////////////
+	
+	
+//	buffered images for the different images used in the game
 	BufferedImage backgroundImage,
 				  crosshairImage,
 				  gameOverImage,
@@ -50,6 +58,7 @@ public class LaserTutor extends Tutor
 				  lives2Image,
 				  lives1Image;
 	
+//	files used for the images
 	File backgroundFile = new File("resources/laserBackground.gif");
 	File crosshairFile = new File("resources/laserCrossHairs.gif");
 	File gameOverFile = new File("resources/gameOverScreen.gif");
@@ -59,9 +68,17 @@ public class LaserTutor extends Tutor
 	File lives2File = new File("resources/shield2Lives.gif");
 	File lives1File = new File("resources/shield1Life.gif");
 	
+//	formatter used for the score
 	DecimalFormat f = new DecimalFormat("#,##0");
 	
 
+//////////////////
+//
+//CONSTRUCTORS
+//
+//////////////////
+	
+	
 	/**
 	 * Constructor <br>        
 	 *
@@ -82,15 +99,19 @@ public class LaserTutor extends Tutor
 						ArrayList <LaserWord> clearedWords, int livesLeft,
 						int errors, StringBuffer buffer)
 	{
+//		create the array lists used
 		this.wordsOnScreen = new ArrayList<Word>(wordsOnScreen);
 		this.acceptableWords = new ArrayList<Word>(acceptableWords);
 		this.clearedWords = new ArrayList<Word>(clearedWords);
 		
+//		set the livesLeft and error
 		this.livesLeft = livesLeft;
 		this.errors = errors;
 		
+//		set the buffer
 		this.buffer = new StringBuffer(buffer);
 		
+//		create a file operator to read in the text file
 		FileOperator file = new FileOperator( );
 		
 		String [ ] lines = null;
@@ -104,10 +125,13 @@ public class LaserTutor extends Tutor
 			e.printStackTrace();
 		}
 		
+//		create the pool from the words
 		this.pool = createWordPool(lines);
 		
+//		set the file operator to be cleaned up
 		file = null;
 		
+//		load the images needed
 		try
 		{
 			loadImages( );
@@ -154,30 +178,69 @@ public class LaserTutor extends Tutor
 		}
 	}
 	
+	
+//////////////////
+//
+//METHODS
+//
+//////////////////
+	
+	
+	/**
+	 * Creates a word pool from an array of strings. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param lines String array of words
+	 * @return WordPool containing the words
+	 * @see core.Tutor#createWordPool(java.lang.String[])
+	 */
 	@Override
 	protected WordPool createWordPool(String [ ] lines)
 	{
+//		create array of laser words
 		LaserWord[] words = new LaserWord[lines.length];
 		
+//		initialize random variable 
 		Random r = new Random();
 		
+//		create a new laserWord with a random x-location
 		for (int c = 0; c < words.length; c++)
 		{
 			words[c] = new LaserWord(lines[c], r.nextInt(530) + 35, 0);
 		}
 		
+//		return the wordpool
 		return new WordPool(words);
 	}
 	
+	/**
+	 * Draws the normal frames of the game. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g the Graphics object to be drawn to.
+	 * @see core.Tutor#drawGame(java.awt.Graphics)
+	 */
 	@Override
 	public void drawGame(Graphics g)
 	{
+//		draw the background
 		g.drawImage(backgroundImage, 0, 0, Gui.WIDTH, Gui.HEIGHT, null);
 		
+//		draw the HUD
 		drawHUD(g);
 		
+//		draw the lives
 		drawLives(g);
 		
+//		Draw the words on the screen. Catch the concurrent modification exception and put it into the results.txt file
 		try
 		{
 			for (Word word: wordsOnScreen)
@@ -198,12 +261,24 @@ public class LaserTutor extends Tutor
 			}
 		}
 		
+//		draw the crosshairs
 		drawCrosshairs(g);
 		
+//		if a word needs to be shot, shoot it
 		if (killedWord != null)
 			drawKillShot(g);
 	}
 
+	/**
+	 * Draw the shield that protects the city <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g the Graphics object to be drawn to.
+	 */
 	private void drawLives(Graphics g)
 	{
 		switch(livesLeft)
@@ -217,6 +292,7 @@ public class LaserTutor extends Tutor
 			case 1:
 				g.drawImage(lives1Image, 0, 295, 600, 200, null);
 				break;
+//			it should never reach the default case
 			default:
 				System.out.println("Error! Default case reached in drawLives()");
 		}
@@ -230,7 +306,7 @@ public class LaserTutor extends Tutor
 	 * Date last modified: Apr 21, 2012 <br>
 	 *
 	 * <hr>
-	 * @param g
+	 * @param g the Graphics object to be drawn to.
 	 */
 	
 	protected void drawHUD(Graphics g)
@@ -242,15 +318,36 @@ public class LaserTutor extends Tutor
 		g.drawString("WPM: " + wpm, 10, Gui.HEIGHT / 30 + 39);
 	}
 	
+	/**
+	 * Draws a line from the base to the word to be killed. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g the Graphics object to be drawn to.
+	 */
 	private void drawKillShot(Graphics g)
 	{
 		g.setColor(Color.ORANGE);
 		
 		g.drawLine(288, 442, killedWord.getLocX( ), killedWord.getLocY( ));
 		
+//		remove the killedWord to stop drawing the line to it
 		killedWord = null;
 	}
 
+	/**
+	 * Draw the crosshairs around the acceptable words. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g the Graphics object to be drawn to.
+	 */
 	private void drawCrosshairs(Graphics g)
 	{
 		Word word;
@@ -263,6 +360,17 @@ public class LaserTutor extends Tutor
 		}
 	}
 	
+	/**
+	 * Displays the game over screen. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g the Graphics object to be drawn to.
+	 * @see core.Tutor#renderGameOver(java.awt.Graphics)
+	 */
 	@Override
 	public void renderGameOver(Graphics g)
 	{
@@ -271,6 +379,17 @@ public class LaserTutor extends Tutor
 		drawHUD(g);
 	}
 	
+	/**
+	 * Displays the win screen. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g the Graphics object to be drawn to.
+	 * @see core.Tutor#renderWin(java.awt.Graphics)
+	 */
 	@Override
 	public void renderWin(Graphics g)
 	{
@@ -278,6 +397,16 @@ public class LaserTutor extends Tutor
 		drawHUD(g);
 	}
 	
+	/**
+	 * Loads all the necessary images. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @throws IOException
+	 */
 	private void loadImages() throws IOException
 	{
 			loadBackgroundImage();
@@ -288,6 +417,16 @@ public class LaserTutor extends Tutor
 
 	}
 	
+	/**
+	 * Loads the shield images <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @throws IOException
+	 */
 	private void loadShieldImages() throws IOException 
 	{
 		lives3Image = ImageIO.read(lives3File);
@@ -295,21 +434,61 @@ public class LaserTutor extends Tutor
 		lives1Image = ImageIO.read(lives1File);
 	}
 
+	/**
+	 * Loads the win image <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @throws IOException
+	 */
 	private void loadWinImage() throws IOException
 	{
 		winImage = ImageIO.read(winFile);
 	}
 
+	/**
+	 * Loads the crosshair image <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @throws IOException
+	 */
 	private void loadCrosshairImage() throws IOException
 	{
 		crosshairImage = ImageIO.read(crosshairFile);
 	}
 	
+	/**
+	 * Loads the background image. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @throws IOException
+	 */
 	private void loadBackgroundImage() throws IOException
 	{
 		backgroundImage = ImageIO.read(backgroundFile);
 	}
 	
+	/**
+	 * Loads the game over image. <br>        
+	 *
+	 * <hr>
+	 * Date created: Apr 24, 2012 <br>
+	 * Date last modified: Apr 24, 2012 <br>
+	 *
+	 * <hr>
+	 * @throws IOException
+	 */
 	private void loadGameOverImage() throws IOException
 	{
 		gameOverImage = ImageIO.read(gameOverFile);
