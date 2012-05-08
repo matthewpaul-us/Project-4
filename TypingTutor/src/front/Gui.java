@@ -28,6 +28,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import core.State;
 import laserDefense.LaserCanvas;
 
 /**
@@ -93,8 +94,6 @@ public class Gui implements Runnable
 
 //	running allows me to stop execution
 	boolean running = true;
-//	paused is true if the game is paused
-	private boolean	paused;
 
 	
 //////////////////
@@ -279,14 +278,14 @@ public class Gui implements Runnable
 		@Override
 		public void focusGained(FocusEvent arg0)
 		{
-			paused = false;
+			canvas.setGameState(State.LOOP);
 		}
 
 //		if you look away, pause the game
 		@Override
 		public void focusLost(FocusEvent arg0)
 		{
-			paused = true;
+			canvas.setGameState(State.PAUSED);
 		}
 		
 	}
@@ -349,34 +348,15 @@ public class Gui implements Runnable
 		{
 			
 			beginLoopTime = System.nanoTime();
-
-//			if its not paused and its a normal frame, render the game; otherwise render the appropriate screen
-			if (paused)
-			{
-				canvas.renderPausedScreen( );
-				
-			}
-			else if (canvas.isGameOver( ))
-			{
-				canvas.renderGameOver();
-			}
-			else if (canvas.isWin())
-			{
-				canvas.renderWinScreen();
-			}
-			else
-			{
-				canvas.render();
-			}
+			
+			canvas.render( );
 
 			lastUpdateTime = currentUpdateTime;
 			currentUpdateTime = System.nanoTime();
 			
-//			if not paused, update the game
-			if (!paused && !canvas.isGameOver( ) && !canvas.isWin( ))
-			{
-				canvas.update((int) ((currentUpdateTime - lastUpdateTime)/(1000*1000)));
-			}
+//			update the game
+			canvas.update((int) ((currentUpdateTime - lastUpdateTime)/(1000*1000)));
+
 			
 			endLoopTime = System.nanoTime();
 			deltaLoop = endLoopTime - beginLoopTime;

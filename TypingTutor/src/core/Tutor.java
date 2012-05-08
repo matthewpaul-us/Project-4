@@ -81,16 +81,11 @@ public class Tutor
 	
 //	Word that was killed in the last update cycle. This mostly null. It is set to a word to do drawings but is reset to null afterwards
 	protected Word killedWord;
-	
-//	true if the game is over
-	protected boolean gameOver;
-	
+		
 //	the words per minute of the player. Based on standard 5 character word
 	protected int wpm;
-
-//	true if player won the game
-	public boolean	win;
 	
+//	represents the state of the game
 	private State gameState;
 	
 	
@@ -383,53 +378,52 @@ public class Tutor
 	 */
 	public void update(int deltaTime)
 	{
-//		increment the frame count
-		frameCount++;
-		
-//		for every word on the screen...
-		for (int c = 0; c < wordsOnScreen.size( ); c++)
+		if (gameState == State.LOOP)
 		{
-//			for every fourth frame...
-			if (frameCount %  determineDifficulty( ) == 0)
-//				move the word down by one pixel
-				wordsOnScreen.get(c).offset(0, 1);
-//			if the word reaches the shield...
-			if (wordsOnScreen.get(c).getLocY( ) > 420)
+			//		increment the frame count
+			frameCount++ ;
+			//		for every word on the screen...
+			for (int c = 0; c < wordsOnScreen.size( ); c++ )
 			{
-//				remove the word and take a life away
-				acceptableWords.remove(wordsOnScreen.get(c));
-				wordsOnScreen.remove(c);
-				
-//				decrement the counter
-				c--;
-				
-//				reset all the acceptable words
-				resetAcceptableWords( );
-				
-//				decrement the lives left
-				livesLeft--;
+				//			for every fourth frame...
+				if (frameCount % determineDifficulty( ) == 0)
+					//				move the word down by one pixel
+					wordsOnScreen.get(c).offset(0, 1);
+				//			if the word reaches the shield...
+				if (wordsOnScreen.get(c).getLocY( ) > 420)
+				{
+					//				remove the word and take a life away
+					acceptableWords.remove(wordsOnScreen.get(c));
+					wordsOnScreen.remove(c);
+
+					//				decrement the counter
+					c-- ;
+
+					//				reset all the acceptable words
+					resetAcceptableWords( );
+
+					//				decrement the lives left
+					livesLeft-- ;
+				}
 			}
+			//		create accumulator for the characters typed
+			int charactersTyped = 0;
+			for (int c = 0; c < clearedWords.size( ); c++ )
+			{
+				charactersTyped += clearedWords.get(c).getCharactersCleared( );
+			}
+			//		calculate the words per minute
+			wpm = (charactersTyped == 0 ? 1 : charactersTyped) * 720 /
+							(frameCount == 0 ? 1 : frameCount);
+			//		if there are no lives left, game over for the player
+			if (livesLeft < 1)
+			{
+				makeGameOver( );
+			}
+			//		if there is no gameover, the pool has no words, and no words on the screen
+			if ( gameState != State.GAME_OVER && !pool.hasMoreWords( ) && wordsOnScreen.isEmpty( ))
+				makeWin( );
 		}
-		
-//		create accumulator for the characters typed
-		int charactersTyped = 0;
-		for (int c = 0; c < clearedWords.size( ); c++)
-		{
-			charactersTyped += clearedWords.get(c).getCharactersCleared( );
-		}
-		
-//		calculate the words per minute
-		wpm = (charactersTyped == 0? 1: charactersTyped) * 720 / (frameCount == 0? 1: frameCount);
-		
-//		if there are no lives left, game over for the player
-		if(livesLeft < 1)
-		{
-			makeGameOver( );
-		}
-		
-//		if there is no gameover, the pool has no words, and no words on the screen
-		if(!gameOver && !pool.hasMoreWords( ) && wordsOnScreen.isEmpty( ))
-			makeWin();
 	}
 
 	/**
@@ -443,25 +437,12 @@ public class Tutor
 	 */
 	protected void makeWin()
 	{
-		win = true;
+		gameState = State.WON;
+		
 		score *= wpm;
 		score -= errors * ERROR_DEDUCTION;
 	}
 	
-	/**
-	 * return true if the players make a win. <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 25, 2012 <br>
-	 *
-	 * <hr>
-	 * @return
-	 */
-	public boolean isWin()
-	{
-		return win;
-	}
 
 	/**
 	 * Sets the things necessary for game over <br>        
@@ -475,7 +456,8 @@ public class Tutor
 	
 	protected void makeGameOver()
 	{
-		gameOver = true;
+		gameState = State.GAME_OVER;
+		
 		score *= wpm;
 		score -= errors * ERROR_DEDUCTION;
 	}
@@ -503,21 +485,6 @@ public class Tutor
 	}
 	
 	/**
-	 * Returns whether the game has been lost or not <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 21, 2012 <br>
-	 * Date last modified: Apr 21, 2012 <br>
-	 *
-	 * <hr>
-	 * @return boolean. True indicates game has been lost.
-	 */
-	public boolean isGameOver()
-	{
-		return gameOver;
-	}
-	
-	/**
 	 * Initializes the game. Meant to be overridden. <br>        
 	 *
 	 * <hr>
@@ -534,7 +501,9 @@ public class Tutor
 		}
 		
 //		initialize the acceptable word pool to all the words on the screen
-		acceptableWords = new ArrayList <Word>(wordsOnScreen);		
+		acceptableWords = new ArrayList <Word>(wordsOnScreen);
+		
+		gameState = State.LOOP;
 	}
 
 	/**
@@ -617,6 +586,21 @@ public class Tutor
 				System.out.println("Error in Tutor.render()! Game state variable = " + gameState);
 				break;
 		}
+	}
+
+	/**
+	 * Sets the state of the game. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 8, 2012 <br>
+	 * Date last modified: May 8, 2012 <br>
+	 *
+	 * <hr>
+	 * @param state State enum of the desired state
+	 */
+	public void setState(State state)
+	{
+		gameState = state;
 	}
 	
 	

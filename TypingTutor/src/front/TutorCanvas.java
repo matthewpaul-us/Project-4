@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
+import core.State;
 import core.Tutor;
 
 
@@ -96,7 +97,7 @@ public class TutorCanvas extends Canvas
 
 		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
 
-		game.drawGame(g);
+		game.render(g);
 
 		g.dispose( );
 		buffer.show( );
@@ -123,21 +124,6 @@ public class TutorCanvas extends Canvas
 
 		g.dispose( );
 		buffer.show( );
-	}
-	
-	/**
-	 * States whether the game has been lost or not <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 21, 2012 <br>
-	 * Date last modified: Apr 21, 2012 <br>
-	 *
-	 * <hr>
-	 * @return boolean. True indicates game has been lost.
-	 */
-	public boolean isGameOver()
-	{
-		return game.isGameOver( );
 	}
 	
 	/**
@@ -223,21 +209,6 @@ public class TutorCanvas extends Canvas
 	}
 
 	/**
-	 * Returns whether the game is won or not <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 24, 2012 <br>
-	 *
-	 * <hr>
-	 * @return True if the game is won
-	 */
-	public boolean isWin()
-	{
-		return game.isWin( );
-	}
-
-	/**
 	 * Clears the screen, renders the win screen, and shows it. <br>        
 	 *
 	 * <hr>
@@ -256,5 +227,20 @@ public class TutorCanvas extends Canvas
 
 		g.dispose( );
 		buffer.show( );
+	}
+	
+	/**
+	 * Sets the game state <br>        
+	 *
+	 * <hr>
+	 * Date created: May 8, 2012 <br>
+	 * Date last modified: May 8, 2012 <br>
+	 *
+	 * <hr>
+	 * @param state State enum to set
+	 */
+	public void setGameState(State state)
+	{
+		game.setState(state);
 	}
 }
