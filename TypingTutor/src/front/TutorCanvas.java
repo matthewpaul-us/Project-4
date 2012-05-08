@@ -216,7 +216,7 @@ public class TutorCanvas extends Canvas
 
 		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
 
-		game.renderGameOver(g);
+		game.drawGameOver(g);
 
 		g.dispose( );
 		buffer.show( );
@@ -252,7 +252,7 @@ public class TutorCanvas extends Canvas
 
 		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
 
-		game.renderWin(g);
+		game.drawWin(g);
 
 		g.dispose( );
 		buffer.show( );

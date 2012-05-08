@@ -91,6 +91,8 @@ public class Tutor
 //	true if player won the game
 	public boolean	win;
 	
+	private State gameState;
+	
 	
 	
 //////////////////
@@ -545,7 +547,7 @@ public class Tutor
 	 * <hr>
 	 * @param g
 	 */
-	public void renderGameOver(Graphics g)
+	public void drawGameOver(Graphics g)
 	{
 		g.drawString("Game Over!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
@@ -560,9 +562,61 @@ public class Tutor
 	 * <hr>
 	 * @param g
 	 */
-	public void renderWin(Graphics g)
+	public void drawWin(Graphics g)
 	{
 		g.drawString("You Won!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+	}
+	
+	/**
+	 * Renders a pause screen. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 8, 2012 <br>
+	 * Date last modified: May 8, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
+	public void drawPause(Graphics g)
+	{
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
+		
+		g.setColor(Color.WHITE);
+		g.drawString("PAUSED", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+	}
+	
+	/**
+	 * Render the game. Call this instead of the individual draw methods. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 8, 2012 <br>
+	 * Date last modified: May 8, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
+	public void render(Graphics g)
+	{
+		switch(gameState)
+		{
+			case LOOP:
+				drawGame(g);
+				break;
+			case GAME_OVER:
+				drawGameOver(g);
+				break;
+			case WON:
+				drawWin(g);
+				break;
+			case PAUSED:
+				drawPause(g);
+				break;
+			case ERROR:
+			default:
+				System.out.println("Error in Tutor.render()! Game state variable = " + gameState);
+				break;
+		}
 	}
 	
 	

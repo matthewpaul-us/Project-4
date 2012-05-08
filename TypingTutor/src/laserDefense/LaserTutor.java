@@ -353,10 +353,10 @@ public class LaserTutor extends Tutor
 	 *
 	 * <hr>
 	 * @param g the Graphics object to be drawn to.
-	 * @see core.Tutor#renderGameOver(java.awt.Graphics)
+	 * @see core.Tutor#drawGameOver(java.awt.Graphics)
 	 */
 	@Override
-	public void renderGameOver(Graphics g)
+	public void drawGameOver(Graphics g)
 	{
 		
 		g.drawImage(gameOverImage, 0, 0, null);
@@ -372,10 +372,10 @@ public class LaserTutor extends Tutor
 	 *
 	 * <hr>
 	 * @param g the Graphics object to be drawn to.
-	 * @see core.Tutor#renderWin(java.awt.Graphics)
+	 * @see core.Tutor#drawWin(java.awt.Graphics)
 	 */
 	@Override
-	public void renderWin(Graphics g)
+	public void drawWin(Graphics g)
 	{
 		g.drawImage(winImage, 0, 0, null);
 		drawHUD(g);
