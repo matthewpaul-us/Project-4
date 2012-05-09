@@ -130,7 +130,7 @@ public class Gui implements Runnable
 		panel.setLayout(null);
 
 //		create a new laser canvas
-		canvas = new TutorCanvas();
+		canvas = new LaserCanvas();
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
 		
