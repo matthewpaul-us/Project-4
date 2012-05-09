@@ -15,6 +15,7 @@ package front;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import core.State;
 import core.Tutor;
@@ -180,9 +181,15 @@ public class TutorCanvas extends Canvas
 	{
 		game.setState(state);
 	}
-	
-	public void togglePause()
+
+	public void mouseClicked(MouseEvent e)
 	{
-		game.togglePause( );
+		game.processMouse(e);
+	}
+
+
+	public void setPause(boolean b)
+	{
+		game.setPause(b);
 	}
 }

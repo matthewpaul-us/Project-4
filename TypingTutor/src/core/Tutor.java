@@ -15,10 +15,12 @@ package core;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import front.Gui;
+import front.HotSpot;
 
 
 /**
@@ -90,6 +92,8 @@ public class Tutor
 
 	//	true if the countdown has been completed before
 	private boolean countdown;
+	
+	private HotSpot titleSpot;
 
 	//////////////////
 	//	
@@ -505,8 +509,9 @@ public class Tutor
 
 		//		initialize the acceptable word pool to all the words on the screen
 		acceptableWords = new ArrayList <Word>(wordsOnScreen);
-
-		gameState = State.COUNTDOWN;
+		
+		titleSpot = new HotSpot(Gui.WIDTH / 2, Gui.HEIGHT / 2 + 30, 50, 20);
+		gameState = State.TITLE;
 	}
 
 	/**
@@ -572,6 +577,9 @@ public class Tutor
 	{
 		switch(gameState)
 		{
+			case TITLE:
+				drawTitleScreen(g);
+				break;
 			case COUNTDOWN:
 				drawCountDown(g);
 				break;
@@ -593,7 +601,34 @@ public class Tutor
 				break;
 		}
 	}
+	
+	/**
+	 * Draws the title Screen. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
+	private void drawTitleScreen(Graphics g)
+	{
+		g.drawString("Title Screen", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+		
+		titleSpot.drawHotSpot(g);
+	}
 
+	/**
+	 * Draws the Countdown <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 */
 	private void drawCountDown(Graphics g)
 	{
 		frameCount++;
@@ -630,7 +665,7 @@ public class Tutor
 	}
 
 	/**
-	 * Toggles the pause. <br>        
+	 * Toggles pause state. <br>        
 	 *
 	 * <hr>
 	 * Date created: May 8, 2012 <br>
@@ -643,6 +678,46 @@ public class Tutor
 		if (countdown)
 		{
 			if (gameState == State.PAUSED)
+				gameState = State.LOOP;
+			else
+				gameState = State.PAUSED;
+		}
+	}
+
+	/**
+	 * Checks to see if square has been clicked <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param e
+	 */
+	public void processMouse(MouseEvent e)
+	{
+		if (gameState == State.TITLE)
+		{
+			if (titleSpot.isClicked(e))
+				gameState = State.COUNTDOWN;
+		}
+	}
+
+	/**
+	 * Sets the pause state for the game. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param b Boolean of the pause. True causes the game to pause.
+	 */
+	public void setPause(boolean b)
+	{
+		if (countdown)
+		{
+			if (!b)
 				gameState = State.LOOP;
 			else
 				gameState = State.PAUSED;

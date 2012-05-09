@@ -19,6 +19,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -140,6 +142,7 @@ public class Gui implements Runnable
 
 //		add the specialized key listener to the canvas to handle keyboard input
 		canvas.addKeyListener(new TutorKeyListener());
+		canvas.addMouseListener(new TutorMouseClickListener( ));
 
 //		set the frame to exit on close, pack it, then display it
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -278,14 +281,14 @@ public class Gui implements Runnable
 		@Override
 		public void focusGained(FocusEvent arg0)
 		{
-			canvas.togglePause( );
+			canvas.setPause(false);
 		}
 
 //		if you look away, pause the game
 		@Override
 		public void focusLost(FocusEvent arg0)
 		{
-			canvas.togglePause( );
+			canvas.setPause(true);
 		}
 		
 	}
@@ -321,6 +324,55 @@ public class Gui implements Runnable
 			canvas.processCharacter(e);
 		}
 
+	}
+	
+	
+	/**
+	 * Mouse click listener to enable hotspots.<br>
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012<br>
+	 * Date last modified: May 9, 2012<br>
+	 * <hr>
+	 * @author Matthew Paul
+	 */
+	private class TutorMouseClickListener implements MouseListener
+	{
+
+		@Override
+		public void mouseClicked(MouseEvent e)
+		{
+			canvas.mouseClicked(e);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 	/**
