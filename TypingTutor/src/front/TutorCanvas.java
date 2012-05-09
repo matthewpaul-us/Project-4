@@ -13,7 +13,6 @@
 package front;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
@@ -47,6 +46,9 @@ public class TutorCanvas extends Canvas
 	
 //	The bufferStrategy used to write to the canvas
 	protected BufferStrategy buffer;
+	
+//	true if the focus has not been requested yet
+	boolean firstFocus;
 	
 	
 //////////////////
@@ -98,29 +100,6 @@ public class TutorCanvas extends Canvas
 		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
 
 		game.render(g);
-
-		g.dispose( );
-		buffer.show( );
-	}
-	
-	/**
-	 * Renders a pause Screen. <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 18, 2012 <br>
-	 * Date last modified: Apr 18, 2012 <br>
-	 *
-	 * <hr>
-	 */
-	public void renderPausedScreen()
-	{
-		Graphics g = buffer.getDrawGraphics( );
-
-		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
-		
-		g.setColor(Color.DARK_GRAY);
-		
-		g.drawString("PAUSED", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 
 		g.dispose( );
 		buffer.show( );
@@ -188,48 +167,6 @@ public class TutorCanvas extends Canvas
 	}
 
 	/**
-	 * Clears the screen, renders the gameover screen and shows it. <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 24, 2012 <br>
-	 *
-	 * <hr>
-	 */
-	public void renderGameOver()
-	{
-		Graphics g = buffer.getDrawGraphics( );
-
-		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
-
-		game.drawGameOver(g);
-
-		g.dispose( );
-		buffer.show( );
-	}
-
-	/**
-	 * Clears the screen, renders the win screen, and shows it. <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 24, 2012 <br>
-	 *
-	 * <hr>
-	 */
-	public void renderWinScreen()
-	{
-		Graphics g = buffer.getDrawGraphics( );
-
-		g.clearRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
-
-		game.drawWin(g);
-
-		g.dispose( );
-		buffer.show( );
-	}
-	
-	/**
 	 * Sets the game state <br>        
 	 *
 	 * <hr>
@@ -242,5 +179,10 @@ public class TutorCanvas extends Canvas
 	public void setGameState(State state)
 	{
 		game.setState(state);
+	}
+	
+	public void togglePause()
+	{
+		game.togglePause( );
 	}
 }

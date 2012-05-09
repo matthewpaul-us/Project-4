@@ -12,9 +12,6 @@
 
 package laserDefense;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import front.Gui;
 import front.TutorCanvas;
 
 
@@ -70,31 +67,6 @@ public class LaserCanvas extends TutorCanvas
 //METHODS
 //
 //////////////////
-	
-	/**
-	 * Renders a dark grey pause screen with the word pause in the middle <br>        
-	 *
-	 * <hr>
-	 * Date created: Apr 24, 2012 <br>
-	 * Date last modified: Apr 24, 2012 <br>
-	 *
-	 * <hr>
-	 * @see front.TutorCanvas#renderPausedScreen()
-	 */
-	@Override
-	public void renderPausedScreen()
-	{
-		Graphics g = buffer.getDrawGraphics( );
-
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
-		
-		g.setColor(Color.WHITE);
-		g.drawString("PAUSED", Gui.WIDTH / 2, Gui.HEIGHT / 2);
-
-		g.dispose( );
-		buffer.show( );
-	}
 	
 	/**
 	 * Resets the game and initializes it. <br>        

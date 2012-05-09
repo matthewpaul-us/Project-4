@@ -32,72 +32,73 @@ import front.Gui;
  */
 public class Tutor
 {
-//////////////////
-//	
-//FIELDS
-//	
-//////////////////
-//	How many points are deducted from the score for every error
+	//////////////////
+	//	
+	//FIELDS
+	//	
+	//////////////////
+	//	How many points are deducted from the score for every error
 	protected static final int	ERROR_DEDUCTION	= 30;
 
-//	how many lives to start out with
+	//	how many lives to start out with
 	protected static final int	DEFAULT_LIVES_LEFT	= 3;
 
-//	how many errors to start out with
+	//	how many errors to start out with
 	protected static final int	DEFAULT_ERRORS	= 0;
 
-//	the score to start at
+	//	the score to start at
 	protected static final int 	DEFAULT_SCORE = 0;
 
-//	how many points the player gets for clearing a word
+	//	how many points the player gets for clearing a word
 	protected static final int	CORRECT_WORD_SCORE	= 100;
 
-//	a list of words that are on the screen
+	//	a list of words that are on the screen
 	protected ArrayList<Word> wordsOnScreen,
-	
-//	a list of words that have the valid inputs. These are the ones that can be typed, given what was typed before
-							acceptableWords,
-							
-//	the list of words that have been successfully cleared
-							clearedWords;
-	
-//	the number of times a word can reach the end without being typed. After each word, it is decremented. When it's less than 1, game over
+
+	//	a list of words that have the valid inputs. These are the ones that can be typed, given what was typed before
+	acceptableWords,
+
+	//	the list of words that have been successfully cleared
+	clearedWords;
+
+	//	the number of times a word can reach the end without being typed. After each word, it is decremented. When it's less than 1, game over
 	protected int livesLeft;
-	
-//	Score for the player
+
+	//	Score for the player
 	protected int score;
-	
-//	the number of incorrectly typed characters
+
+	//	the number of incorrectly typed characters
 	protected int errors;
-	
-//	the buffer containing the typed characters
+
+	//	the buffer containing the typed characters
 	protected StringBuffer buffer;
-	
-//	the wordpool from which the game draws its words
+
+	//	the wordpool from which the game draws its words
 	protected WordPool pool;
-	
-//	a count of how many frames have passed since the game has started
+
+	//	a count of how many frames have passed since the game has started
 	protected int frameCount;
-	
-//	Word that was killed in the last update cycle. This mostly null. It is set to a word to do drawings but is reset to null afterwards
+
+	//	Word that was killed in the last update cycle. This mostly null. It is set to a word to do drawings but is reset to null afterwards
 	protected Word killedWord;
-		
-//	the words per minute of the player. Based on standard 5 character word
+
+	//	the words per minute of the player. Based on standard 5 character word
 	protected int wpm;
-	
-//	represents the state of the game
+
+	//	represents the state of the game
 	private State gameState;
-	
-	
-	
-//////////////////
-//	
-//CONSTRUCTORS
-//	
-//////////////////
-	
-	
-	
+
+	//	true if the countdown has been completed before
+	private boolean countdown;
+
+	//////////////////
+	//	
+	//CONSTRUCTORS
+	//	
+	//////////////////
+
+
+
 	/**
 	 * Full Constructor <br>        
 	 *
@@ -122,16 +123,16 @@ public class Tutor
 		this.wordsOnScreen = new ArrayList<Word>(wordsOnScreen);
 		this.acceptableWords = new ArrayList<Word>(acceptableWords);
 		this.clearedWords = new ArrayList<Word>(clearedWords);
-		
+
 		this.livesLeft = livesLeft;
 		this.errors = errors;
-		
+
 		this.buffer = new StringBuffer(buffer);
-		
+
 		FileOperator file = new FileOperator( );
-		
+
 		String [ ] lines = null;
-		
+
 		try
 		{
 			lines = file.read(FileOperator.WORD_FILE);
@@ -140,27 +141,29 @@ public class Tutor
 		{
 			e.printStackTrace();
 		}
-		
+
 		this.pool = createWordPool(lines);
-		
+
 		file = null;
+
+		countdown = false;
 	}
-	
+
 	protected WordPool createWordPool(String[] lines)
 	{
 		Word[] words = new Word[lines.length];
-		
+
 		Random r = new Random();
-		
+
 		for (int c = 0; c < words.length; c++)
 		{
 			words[c] = new Word(lines[c], r.nextInt(600), 0);
 		}
-		
+
 		return new WordPool(words);
 	}
-	
-	
+
+
 	/**
 	 * Constructor <br>        
 	 *
@@ -179,17 +182,17 @@ public class Tutor
 			DEFAULT_LIVES_LEFT,
 			DEFAULT_ERRORS,
 			new StringBuffer(""));
-		
+
 		ArrayList<Word> list = new ArrayList<Word>();
-		
+
 		for (String word: array)
 		{
 			list.add(new Word(word, 0, 0));
 		}
-		
+
 		this.wordsOnScreen = list;
 	}
-	
+
 	/**
 	 * No-Arg Constructor <br>        
 	 *
@@ -208,14 +211,14 @@ public class Tutor
 			DEFAULT_ERRORS,
 			new StringBuffer(""));
 	}
-	
-	
-//////////////////
-//
-//METHODS
-//
-//////////////////
-	
+
+
+	//////////////////
+	//
+	//METHODS
+	//
+	//////////////////
+
 	/**
 	 * Processes the character that the user has typed. <br>        
 	 *
@@ -228,76 +231,76 @@ public class Tutor
 	 */
 	public void processCharacter(KeyEvent key)
 	{
-//		get the character from the KeyEvent
-		char character = key.getKeyChar( );
-		
-//		assume the character was not found
-		boolean characterFound = false;
-		
-//		stick the character into the buffer
-		buffer.append(character);
-		
-//		for every word in the acceptable word list
-		for (int c = 0; c < acceptableWords.size( ); c++)
+//		if the countdown has already happened
+		if (countdown)
 		{
-//			if the character equals the next character in the word from the list
-			if (character == acceptableWords.get(c).getNextChar( ))
+			//		get the character from the KeyEvent
+			char character = key.getKeyChar( );
+			//		assume the character was not found
+			boolean characterFound = false;
+			//		stick the character into the buffer
+			buffer.append(character);
+			//		for every word in the acceptable word list
+			for (int c = 0; c < acceptableWords.size( ); c++ )
 			{
-//				the character has been found
-				characterFound = true;
-				
-//				Tell the word that they have had a correct character typed, so move pointer up one character
-				acceptableWords.get(c).advanceCharacter( );
-				
-//				if the character typed finished the word
-				if(acceptableWords.get(c).isCleared( ))
+				//			if the character equals the next character in the word from the list
+				if (character == acceptableWords.get(c).getNextChar( ))
 				{
-//					add the correct amount to the score
-					score += CORRECT_WORD_SCORE;
-					
-					killedWord = acceptableWords.get(c);
-					
-//					remove the word from the words on the screen and add another from the word pool
-					wordsOnScreen.remove(acceptableWords.get(c));
-					
-					if(pool.hasMoreWords( ))
-						wordsOnScreen.add(pool.getNextWord( ));
-					
-//					add the word to the list of cleared words
-					clearedWords.add(acceptableWords.get(c));
-					
-//					remove the word from the list of acceptable words
-					acceptableWords.remove(c);
-					
-//					set the acceptable words to all the words on the screen
-					resetAcceptableWords( );
+					//				the character has been found
+					characterFound = true;
+
+					//				Tell the word that they have had a correct character typed, so move pointer up one character
+					acceptableWords.get(c).advanceCharacter( );
+
+					//				if the character typed finished the word
+					if (acceptableWords.get(c).isCleared( ))
+					{
+						//					add the correct amount to the score
+						score += CORRECT_WORD_SCORE;
+
+						killedWord = acceptableWords.get(c);
+
+						//					remove the word from the words on the screen and add another from the word pool
+						wordsOnScreen.remove(acceptableWords.get(c));
+
+						if (pool.hasMoreWords( ))
+							wordsOnScreen.add(pool.getNextWord( ));
+
+						//					add the word to the list of cleared words
+						clearedWords.add(acceptableWords.get(c));
+
+						//					remove the word from the list of acceptable words
+						acceptableWords.remove(c);
+
+						//					set the acceptable words to all the words on the screen
+						resetAcceptableWords( );
+					}
 				}
 			}
-		}
-		
-//		if, by the end of the loop, the character was not found
-		if(!characterFound)
-		{
-//			increment error
-			errors++;
-			
-//			delete the wrong key from the buffer
-			buffer.deleteCharAt(buffer.length( ) - 1);
-		}
-		
-//		for every word in the acceptable word list
-		for (int i = 0; i < acceptableWords.size( ); i++)
-		{
-//			if the word's already typed characters does not equal what's in the buffer
-			if (!acceptableWords.get(i).getClearedString( ).equals(buffer.toString( )))
+			//		if, by the end of the loop, the character was not found
+			if ( !characterFound)
 			{
-//				reset the word that is being removed
-				acceptableWords.get(i).reset( );
-				
-//				remove the word from the list of acceptable words
-				acceptableWords.remove(i);
-//				decrement the iterating variable to keep subscripts in the correct place
-				i--;
+				//			increment error
+				errors++ ;
+
+				//			delete the wrong key from the buffer
+				buffer.deleteCharAt(buffer.length( ) - 1);
+			}
+			//		for every word in the acceptable word list
+			for (int i = 0; i < acceptableWords.size( ); i++ )
+			{
+				//			if the word's already typed characters does not equal what's in the buffer
+				if ( !acceptableWords.get(i).getClearedString( )
+								.equals(buffer.toString( )))
+				{
+					//				reset the word that is being removed
+					acceptableWords.get(i).reset( );
+
+					//				remove the word from the list of acceptable words
+					acceptableWords.remove(i);
+					//				decrement the iterating variable to keep subscripts in the correct place
+					i-- ;
+				}
 			}
 		}
 	}
@@ -311,22 +314,22 @@ public class Tutor
 	 *
 	 * <hr>
 	 */
-	
+
 	protected void resetAcceptableWords()
 	{
 		acceptableWords = new ArrayList<Word>(wordsOnScreen);
-		
-//		for every word in the acceptable word list
+
+		//		for every word in the acceptable word list
 		for (Word word: acceptableWords)
 		{
-//			reset the word's pointer back to 0
+			//			reset the word's pointer back to 0
 			word.reset( );
 		}
-		
-//		clear the buffer
+
+		//		clear the buffer
 		buffer.delete(0, buffer.length( ));
 	}
-	
+
 	/**
 	 * Draws the game. Meant to be overridded by the child class. <br>        
 	 *
@@ -340,32 +343,32 @@ public class Tutor
 	 */
 	public void drawGame(Graphics g)
 	{
-//		set the color to black and write the frame count in the middle of the screen
+		//		set the color to black and write the frame count in the middle of the screen
 		g.setColor(Color.BLACK);
 		g.drawString(String.valueOf(frameCount), Gui.WIDTH / 2, Gui.HEIGHT / 2);
-		
-//		prepare an output buffer
+
+		//		prepare an output buffer
 		StringBuffer output = new StringBuffer("");
-		
-//		draw each word that shows up on the screen
+
+		//		draw each word that shows up on the screen
 		for (Word word: wordsOnScreen)
 		{
 			word.drawWord(g);
 		}
-		
-//		store all acceptable words in the output
+
+		//		store all acceptable words in the output
 		for (Word word: acceptableWords)
 		{
 			output.append(String.valueOf(word.getCharacters( )) + " ");
 		}
-		
-//		draw the stats, the output, and the character buffer
+
+		//		draw the stats, the output, and the character buffer
 		g.drawString("Score: " +String.valueOf(score) + " Errors: " + String.valueOf(errors) +
 			" Lives Left: " + String.valueOf(livesLeft), 10, Gui.HEIGHT - 20);
 		g.drawString(output.toString( ), 10, Gui.HEIGHT - 10);
 		g.drawString(buffer.toString( ), 10, Gui.HEIGHT);
 	}
-	
+
 	/**
 	 * Updates the game. Meant to be overridden. <br>        
 	 *
@@ -438,11 +441,11 @@ public class Tutor
 	protected void makeWin()
 	{
 		gameState = State.WON;
-		
+
 		score *= wpm;
 		score -= errors * ERROR_DEDUCTION;
 	}
-	
+
 
 	/**
 	 * Sets the things necessary for game over <br>        
@@ -453,15 +456,15 @@ public class Tutor
 	 *
 	 * <hr>
 	 */
-	
+
 	protected void makeGameOver()
 	{
 		gameState = State.GAME_OVER;
-		
+
 		score *= wpm;
 		score -= errors * ERROR_DEDUCTION;
 	}
-	
+
 	/**
 	 * Determine the difficulty based on the words-per-minute <br>        
 	 *
@@ -483,7 +486,7 @@ public class Tutor
 		else
 			return 1;
 	}
-	
+
 	/**
 	 * Initializes the game. Meant to be overridden. <br>        
 	 *
@@ -499,11 +502,11 @@ public class Tutor
 		{
 			wordsOnScreen.add(pool.getNextWord( ));
 		}
-		
-//		initialize the acceptable word pool to all the words on the screen
+
+		//		initialize the acceptable word pool to all the words on the screen
 		acceptableWords = new ArrayList <Word>(wordsOnScreen);
-		
-		gameState = State.LOOP;
+
+		gameState = State.COUNTDOWN;
 	}
 
 	/**
@@ -535,7 +538,7 @@ public class Tutor
 	{
 		g.drawString("You Won!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
-	
+
 	/**
 	 * Renders a pause screen. <br>        
 	 *
@@ -550,11 +553,11 @@ public class Tutor
 	{
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
-		
+
 		g.setColor(Color.WHITE);
 		g.drawString("PAUSED", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
-	
+
 	/**
 	 * Render the game. Call this instead of the individual draw methods. <br>        
 	 *
@@ -569,6 +572,9 @@ public class Tutor
 	{
 		switch(gameState)
 		{
+			case COUNTDOWN:
+				drawCountDown(g);
+				break;
 			case LOOP:
 				drawGame(g);
 				break;
@@ -588,6 +594,26 @@ public class Tutor
 		}
 	}
 
+	private void drawCountDown(Graphics g)
+	{
+		frameCount++;
+
+		if (frameCount < 60)
+			g.drawString("3...", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+		else if (frameCount < 120)
+			g.drawString("2...", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+		else if (frameCount < 180)
+			g.drawString("1...", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+		else if (frameCount < 240)
+			g.drawString("GO!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
+		else
+		{
+			countdown = true;
+			frameCount = 0;
+			gameState = State.LOOP;
+		}
+	}
+
 	/**
 	 * Sets the state of the game. <br>        
 	 *
@@ -602,6 +628,26 @@ public class Tutor
 	{
 		gameState = state;
 	}
-	
-	
+
+	/**
+	 * Toggles the pause. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 8, 2012 <br>
+	 * Date last modified: May 8, 2012 <br>
+	 *
+	 * <hr>
+	 */
+	public void togglePause()
+	{
+		if (countdown)
+		{
+			if (gameState == State.PAUSED)
+				gameState = State.LOOP;
+			else
+				gameState = State.PAUSED;
+		}
+	}
+
+
 }

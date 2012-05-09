@@ -24,5 +24,5 @@ package core;
  */
 public enum State
 {
-	ERROR, LOOP, GAME_OVER, WON, PAUSED
+	ERROR,COUNTDOWN, LOOP, GAME_OVER, WON, PAUSED
 }

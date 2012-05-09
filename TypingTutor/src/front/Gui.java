@@ -128,7 +128,7 @@ public class Gui implements Runnable
 		panel.setLayout(null);
 
 //		create a new laser canvas
-		canvas = new LaserCanvas();
+		canvas = new TutorCanvas();
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
 		
@@ -278,14 +278,14 @@ public class Gui implements Runnable
 		@Override
 		public void focusGained(FocusEvent arg0)
 		{
-			canvas.setGameState(State.LOOP);
+			canvas.togglePause( );
 		}
 
 //		if you look away, pause the game
 		@Override
 		public void focusLost(FocusEvent arg0)
 		{
-			canvas.setGameState(State.PAUSED);
+			canvas.togglePause( );
 		}
 		
 	}
