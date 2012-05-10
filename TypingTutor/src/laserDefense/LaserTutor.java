@@ -14,6 +14,7 @@ package laserDefense;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,10 +23,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import core.FileOperator;
+import core.State;
 import core.Tutor;
 import core.Word;
 import core.WordPool;
 import front.Gui;
+import front.ImageHotSpot;
 
 
 /**
@@ -52,22 +55,36 @@ public class LaserTutor extends Tutor
 				  crosshairImage,
 				  gameOverImage,
 				  winImage,
+				  titleImage,
 				  lives3Image,
 				  lives2Image,
-				  lives1Image;
+				  lives1Image,
+				  threeImage,
+				  twoImage,
+				  oneImage,
+				  goImage;
 	
 //	files used for the images
 	File backgroundFile = new File("resources/laserBackground.gif");
 	File crosshairFile = new File("resources/laserCrossHairs.gif");
 	File gameOverFile = new File("resources/gameOverScreen.gif");
 	File winFile = new File("resources/winScreen.gif");
+	File titleFile = new File("resources/titleScreen.gif");
 	
 	File lives3File = new File("resources/shield3Lives.gif");
 	File lives2File = new File("resources/shield2Lives.gif");
 	File lives1File = new File("resources/shield1Life.gif");
 	
+	File threeFile = new File ("resources/3.gif");
+	File twoFile = new File ("resources/2.gif");
+	File oneFile = new File ("resources/1.gif");
+	File goFile = new File ("resources/go.gif");
+	
 //	formatter used for the score
 	DecimalFormat f = new DecimalFormat("#,##0");
+	
+	ImageHotSpot playButton;
+	File playButtonFile = new File("resources/playButton.gif");
 	
 
 //////////////////
@@ -138,6 +155,8 @@ public class LaserTutor extends Tutor
 		{
 			System.out.println(e.getMessage( ));
 		}
+		
+		playButton = new ImageHotSpot(138, 156, playButtonFile);
 	}
 
 	/**
@@ -153,6 +172,7 @@ public class LaserTutor extends Tutor
 	public LaserTutor(String [ ] array)
 	{
 		super(array);
+		playButton = new ImageHotSpot(138, 156, playButtonFile);
 	}
 
 	/**
@@ -174,6 +194,8 @@ public class LaserTutor extends Tutor
 		{
 			e.printStackTrace();
 		}
+		
+		playButton = new ImageHotSpot(138, 156, playButtonFile);
 	}
 	
 	
@@ -292,7 +314,6 @@ public class LaserTutor extends Tutor
 	 * <hr>
 	 * @param g the Graphics object to be drawn to.
 	 */
-	
 	protected void drawHUD(Graphics g)
 	{
 		g.setColor(Color.WHITE);
@@ -382,6 +403,78 @@ public class LaserTutor extends Tutor
 	}
 	
 	/**
+	 * Draws the countdown timer <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 * @see core.Tutor#drawCountDown(java.awt.Graphics)
+	 */
+	@Override
+	public void drawCountDown(Graphics g)
+	{
+		g.drawImage(backgroundImage, 0, 0, Gui.WIDTH, Gui.HEIGHT, null);
+		frameCount++;
+
+		if (frameCount < 60)
+			g.drawImage(threeImage, 250, 375, null);
+		else if (frameCount < 120)
+			g.drawImage(twoImage, 250, 375, null);
+		else if (frameCount < 180)
+			g.drawImage(oneImage, 250, 375, null);
+		else if (frameCount < 240)
+			g.drawImage(goImage, 250, 375, null);
+		else
+		{
+			countdown = true;
+			frameCount = 0;
+			gameState = State.LOOP;
+		}
+	}
+	
+	/**
+	 * Draws the title screen. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param g
+	 * @see core.Tutor#drawTitleScreen(java.awt.Graphics)
+	 */
+	@Override
+	public void drawTitleScreen(Graphics g)
+	{
+		g.drawImage(titleImage, 0, 0, null);
+		playButton.drawHotSpot(g);
+	}
+	
+	/**
+	 * Processes the mouse event. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param e MouseEvent to be checked
+	 * @see core.Tutor#processMouse(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void processMouse(MouseEvent e)
+	{
+		if (gameState == State.TITLE)
+		{
+			if (playButton.isClicked(e))
+				gameState = State.COUNTDOWN;
+		}
+	}
+	
+	/**
 	 * Loads all the necessary images. <br>        
 	 *
 	 * <hr>
@@ -397,10 +490,34 @@ public class LaserTutor extends Tutor
 			loadCrosshairImage();
 			loadGameOverImage();
 			loadWinImage();
+			loadTitleImage();
+			loadCountdownImages();
 			loadShieldImages();
-
 	}
 	
+	private void loadCountdownImages() throws IOException
+	{
+		threeImage = ImageIO.read(threeFile);
+		twoImage = ImageIO.read(twoFile);
+		oneImage = ImageIO.read(oneFile);
+		goImage = ImageIO.read(goFile);
+	}
+
+	/**
+	 * Loads the title image into memory. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @throws IOException
+	 */
+	private void loadTitleImage() throws IOException
+	{
+		titleImage = ImageIO.read(titleFile);
+	}
+
 	/**
 	 * Loads the shield images <br>        
 	 *

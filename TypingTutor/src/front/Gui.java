@@ -30,7 +30,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import core.State;
 import laserDefense.LaserCanvas;
 
 /**
@@ -130,7 +129,7 @@ public class Gui implements Runnable
 		panel.setLayout(null);
 
 //		create a new laser canvas
-		canvas = new TutorCanvas();
+		canvas = new LaserCanvas();
 		canvas.setBounds(0, 0, WIDTH, HEIGHT);
 		canvas.setIgnoreRepaint(true);
 		

@@ -182,12 +182,32 @@ public class TutorCanvas extends Canvas
 		game.setState(state);
 	}
 
+	/**
+	 * Processes a mouse click. Used for the hotspots on the title screen. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param e
+	 */
 	public void mouseClicked(MouseEvent e)
 	{
 		game.processMouse(e);
 	}
 
 
+	/**
+	 * Sets the pause. Passes the boolean down to the game. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 9, 2012 <br>
+	 * Date last modified: May 9, 2012 <br>
+	 *
+	 * <hr>
+	 * @param b
+	 */
 	public void setPause(boolean b)
 	{
 		game.setPause(b);

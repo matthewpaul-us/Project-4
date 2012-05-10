@@ -88,10 +88,10 @@ public class Tutor
 	protected int wpm;
 
 	//	represents the state of the game
-	private State gameState;
+	protected State gameState;
 
 	//	true if the countdown has been completed before
-	private boolean countdown;
+	protected boolean countdown;
 	
 	private HotSpot titleSpot;
 
@@ -524,7 +524,7 @@ public class Tutor
 	 * <hr>
 	 * @param g
 	 */
-	public void drawGameOver(Graphics g)
+	protected void drawGameOver(Graphics g)
 	{
 		g.drawString("Game Over!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
@@ -539,7 +539,7 @@ public class Tutor
 	 * <hr>
 	 * @param g
 	 */
-	public void drawWin(Graphics g)
+	protected void drawWin(Graphics g)
 	{
 		g.drawString("You Won!", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 	}
@@ -554,7 +554,7 @@ public class Tutor
 	 * <hr>
 	 * @param g
 	 */
-	public void drawPause(Graphics g)
+	protected void drawPause(Graphics g)
 	{
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, Gui.WIDTH, Gui.HEIGHT);
@@ -612,7 +612,7 @@ public class Tutor
 	 * <hr>
 	 * @param g
 	 */
-	private void drawTitleScreen(Graphics g)
+	protected void drawTitleScreen(Graphics g)
 	{
 		g.drawString("Title Screen", Gui.WIDTH / 2, Gui.HEIGHT / 2);
 		
@@ -620,7 +620,8 @@ public class Tutor
 	}
 
 	/**
-	 * Draws the Countdown <br>        
+	 * Draws the Countdown. If overridden, to successfully switch from title to game loop,
+	 * this method must set the gameState to the LOOP enum and set countdown to true. <br>        
 	 *
 	 * <hr>
 	 * Date created: May 9, 2012 <br>
@@ -629,7 +630,7 @@ public class Tutor
 	 * <hr>
 	 * @param g
 	 */
-	private void drawCountDown(Graphics g)
+	protected void drawCountDown(Graphics g)
 	{
 		frameCount++;
 
