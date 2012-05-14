@@ -158,6 +158,55 @@ public class LaserTutor extends Tutor
 		
 		playButton = new ImageHotSpot(138, 156, playButtonFile);
 	}
+	
+	public LaserTutor(File wordFile)
+	{
+//		create the array lists used
+		this.wordsOnScreen = new ArrayList<Word>();
+		this.acceptableWords = new ArrayList<Word>();
+		this.clearedWords = new ArrayList<Word>();
+		
+//		set the livesLeft and error
+		this.livesLeft = DEFAULT_LIVES_LEFT;
+		this.errors = DEFAULT_ERRORS;
+		
+//		set the buffer
+		this.buffer = new StringBuffer("");
+		
+//		create a file operator to read in the text file
+		FileOperator file = new FileOperator( );
+		
+		
+		String [ ] lines = null;
+		
+		try
+		{
+			file.setWordFile(wordFile);
+			lines = file.read(FileOperator.WORD_FILE);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+//		create the pool from the words
+		this.pool = createWordPool(lines);
+		
+//		set the file operator to be cleaned up
+		file = null;
+		
+//		load the images needed
+		try
+		{
+			loadImages( );
+		}
+		catch (IOException e)
+		{
+			System.out.println(e.getMessage( ));
+		}
+		
+		playButton = new ImageHotSpot(138, 156, playButtonFile);
+	}
 
 	/**
 	 * Constructor <br>        

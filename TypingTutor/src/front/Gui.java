@@ -25,10 +25,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import laserDefense.LaserCanvas;
 
@@ -54,7 +56,9 @@ public class Gui implements Runnable
 //////////////////
 	
 	
-//	The width of the game window. Controls the outer frame size
+	private static String FRAME_TITLE = "Laser Defense";
+
+	//	The width of the game window. Controls the outer frame size
 	public static final int	WIDTH	= 600;
 //	the height of the game window. Controls the outer frame size
 	public static final int	HEIGHT	= 600;
@@ -76,6 +80,7 @@ public class Gui implements Runnable
 	
 //	menu items for the gui
 	JMenuItem resetOption,
+			  changeFileOption,
 			  quitOption,
 			  laserOption,
 			  speedOption,
@@ -95,6 +100,8 @@ public class Gui implements Runnable
 
 //	running allows me to stop execution
 	boolean running = true;
+	
+	File wordFile = new File("/TypingTutor/resources/wordList.txt");
 
 	
 //////////////////
@@ -116,7 +123,7 @@ public class Gui implements Runnable
 	public Gui()
 	{
 //		create a frame with the title 
-		frame = new JFrame("Laser Defense");
+		frame = new JFrame(FRAME_TITLE + " - " + wordFile.getName( ));
 		
 //		load and set the custom icon
 		loadIcon();
@@ -207,11 +214,16 @@ public class Gui implements Runnable
 		resetOption.addActionListener(new TutorMenuListener( ));
 		resetOption.setMnemonic(KeyEvent.VK_R);
 		
+		changeFileOption = new JMenuItem("Load File");
+		changeFileOption.addActionListener(new TutorMenuListener( ));
+		changeFileOption.setMnemonic(KeyEvent.VK_F);
+		
 		quitOption = new JMenuItem("Quit Game");
 		quitOption.addActionListener(new TutorMenuListener( ));
 		quitOption.setMnemonic(KeyEvent.VK_Q);
 		
 		fileMenu.add(resetOption);
+		fileMenu.add(changeFileOption);
 		fileMenu.add(quitOption);
 		
 		aboutMenu = new JMenu("About");
@@ -236,7 +248,7 @@ public class Gui implements Runnable
 	 *
 	 * <hr>
 	 * Date created: Apr 20, 2012<br>
-	 * Date last modified: Apr 20, 2012<br>
+	 * Date last modified: May 14, 2012<br>
 	 * <hr>
 	 * @author Matthew Paul
 	 */
@@ -249,8 +261,15 @@ public class Gui implements Runnable
 //			if the button clicked was the reset, call the canvas's reset method
 			if(e.getSource( ) == resetOption)
 			{
-				canvas.reset();
+				canvas.reset(wordFile);
 			}
+			
+//			Activate the change file dialog if the change File button is clicked
+			if(e.getSource( ) == changeFileOption)
+			{
+				changeWordFile();
+			}
+			
 //			if its the quit button, close the JVM
 			else if (e.getSource( ) == quitOption)
 			{
@@ -262,6 +281,8 @@ public class Gui implements Runnable
 				new AboutDialog(frame);				
 			}
 		}
+
+		
 	}
 	
 	/**
@@ -426,6 +447,29 @@ public class Gui implements Runnable
 			else
 			{
 				//Do nothing. We are already late.
+			}
+		}
+	}
+	
+	private void changeWordFile()
+	{
+		int choice = JOptionPane.showConfirmDialog(canvas,
+						"Are you sure you want to change word files? Doing so will reset the game.",
+						"Change Word",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+		
+		if (choice == JOptionPane.YES_OPTION)
+		{
+			JFileChooser chooser = new JFileChooser( );
+			
+			choice = chooser.showOpenDialog(canvas);
+			if (choice == JFileChooser.APPROVE_OPTION)
+			{
+				wordFile = chooser.getSelectedFile( );
+				
+				frame.setTitle(FRAME_TITLE + " - " + wordFile.getName( ));
+				canvas.reset(wordFile);
 			}
 		}
 	}

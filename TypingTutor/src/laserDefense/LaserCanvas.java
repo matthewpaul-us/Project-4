@@ -12,6 +12,7 @@
 
 package laserDefense;
 
+import java.io.File;
 import front.TutorCanvas;
 
 
@@ -79,9 +80,17 @@ public class LaserCanvas extends TutorCanvas
 	 * @see front.TutorCanvas#reset()
 	 */
 	@Override
-	public void reset()
+	public void reset(File wordFile)
 	{
-		game = new LaserTutor( );
+		if (wordFile.exists( ))
+		{
+			game = new LaserTutor(wordFile);
+		}
+		else
+		{
+			game = new LaserTutor( );
+		}
+		
 		game.initialize( );
 	}
 

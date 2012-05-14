@@ -17,6 +17,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import core.State;
 import core.Tutor;
 
@@ -161,9 +162,16 @@ public class TutorCanvas extends Canvas
 	 *
 	 * <hr>
 	 */
-	public void reset()
+	public void reset(File wordFile)
 	{
-		game = new Tutor();
+		if (wordFile.exists( ))
+		{
+			game = new Tutor(wordFile);
+		}
+		else
+		{
+			game = new Tutor( );
+		}
 		game.initialize( );
 	}
 

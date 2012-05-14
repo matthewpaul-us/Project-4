@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -152,7 +153,66 @@ public class Tutor
 
 		countdown = false;
 	}
+	
+	
+	/**
+	 * Constructor <br>        
+	 *
+	 * <hr>
+	 * Date created: May 14, 2012 <br>
+	 * Date last modified: May 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @param wordFile file containing the words to be used
+	 */
+	public Tutor(File wordFile)
+	{
+//		create the array lists used
+		this.wordsOnScreen = new ArrayList<Word>();
+		this.acceptableWords = new ArrayList<Word>();
+		this.clearedWords = new ArrayList<Word>();
+		
+//		set the livesLeft and error
+		this.livesLeft = DEFAULT_LIVES_LEFT;
+		this.errors = DEFAULT_ERRORS;
+		
+//		set the buffer
+		this.buffer = new StringBuffer("");
+		
+//		create a file operator to read in the text file
+		FileOperator file = new FileOperator( );
+		
+		
+		String [ ] lines = null;
+		
+		try
+		{
+			file.setWordFile(wordFile);
+			lines = file.read(FileOperator.WORD_FILE);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+//		create the pool from the words
+		this.pool = createWordPool(lines);
+		
+//		set the file operator to be cleaned up
+		file = null;
+	}
 
+	/**
+	 * Creates a wordpool to use in the game. <br>        
+	 *
+	 * <hr>
+	 * Date created: May 14, 2012 <br>
+	 * Date last modified: May 14, 2012 <br>
+	 *
+	 * <hr>
+	 * @param lines
+	 * @return
+	 */
 	protected WordPool createWordPool(String[] lines)
 	{
 		Word[] words = new Word[lines.length];
