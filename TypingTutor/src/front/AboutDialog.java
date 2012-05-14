@@ -12,6 +12,7 @@
 
 package front;
 
+import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
@@ -55,6 +56,13 @@ public class AboutDialog extends JDialog
 //	constant to show the number of images used in the program
 	private static final String	IMAGE_NUMBER	= "9";
 
+	private static final String [ ]	HELPS	= {"You have to save earth from the nasty HOSTILE aliens!",
+		   									   "To target the aliens with your laser, you must type the words on the aliens' ships.",
+		   									   "You cannot let the aliens hit your shield more than three times. Anymore, and earth is no more!",
+		   									   "",
+		   									   "To change the word file used, click on \"Change File\" in the \"File\" menu.",
+		   									   "Good luck and have fun!"};
+	
 //	constant string array to contain the notable features of the project
 	private static final String [ ]	NOTABLES	= {"This was originally a Pool simulator. RIP friction",
 												   "The program uses a primitive implementation of multi-threading.",
@@ -71,6 +79,8 @@ public class AboutDialog extends JDialog
 
 //	the notable panel, so it can be created in its own method
 	private JPanel	notablePanel;
+
+	private JPanel	helpPanel;
 	
 	
 //////////////////
@@ -114,7 +124,14 @@ public class AboutDialog extends JDialog
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 //		create a new panel with a gridlayout to store our bordered panels
-		panel = new JPanel(new GridLayout(3, 0));
+		panel = new JPanel(new GridLayout(4, 0));
+		
+//		create the help panel and make its border
+		helpPanel = new JPanel(new GridLayout(0, 1, 0, 5));
+		helpPanel.setBorder(BorderFactory.createTitledBorder("Help"));
+		
+//		build the labels and add them to the info panel
+		buildHelpPanel();
 		
 //		create the info panel and make its border
 		JPanel infoPanel = new JPanel(new GridLayout(0, 1, 0, 5));
@@ -161,9 +178,10 @@ public class AboutDialog extends JDialog
 //		create a notable panel and call the buildNotablePanel() method
 		notablePanel = new JPanel(new GridLayout(0, 1, 0, 5));
 		notablePanel.setBorder(BorderFactory.createTitledBorder("Notes"));
-		buildNotablePanel(NOTABLES);
+		buildNotablePanel();
 		
-//		add the three panels to the base panel
+//		add the four panels to the base panel
+		panel.add(helpPanel);
 		panel.add(infoPanel);
 		panel.add(statsPanel);
 		panel.add(notablePanel);
@@ -183,6 +201,18 @@ public class AboutDialog extends JDialog
 
 
 	
+	private void buildHelpPanel()
+	{
+		JLabel label = null;
+		for (String note: HELPS)
+		{
+			label = new JLabel(note);
+			
+			helpPanel.add(label);
+		}
+	}
+
+
 	/**
 	 * Builds the notable panel using an array of strings <br>        
 	 *
@@ -193,10 +223,10 @@ public class AboutDialog extends JDialog
 	 * <hr>
 	 * @param array String array containing the words to adorn the panel. Do not add newlines
 	 */
-	private void buildNotablePanel(String[] array)
+	private void buildNotablePanel()
 	{
 		JLabel label = null;
-		for (String note: array)
+		for (String note: NOTABLES)
 		{
 			label = new JLabel(note);
 			
