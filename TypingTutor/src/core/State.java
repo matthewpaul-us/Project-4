@@ -24,5 +24,11 @@ package core;
  */
 public enum State
 {
-	ERROR, TITLE, COUNTDOWN, LOOP, GAME_OVER, WON, PAUSED
+	ERROR,		// Error state; should never have to use this
+	TITLE,		// Title screen state
+	COUNTDOWN,	// Countdown State
+	LOOP,		// The game loop
+	GAME_OVER,	// Game over
+	WON,		// Player has won
+	PAUSED		// Paused the game
 }

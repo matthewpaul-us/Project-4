@@ -12,7 +12,6 @@
 
 package front;
 
-import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
